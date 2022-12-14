@@ -15,7 +15,7 @@ export class PatientEntity {
   patientBirthDate: Date;
 
   @Column()
-  AMD: boolean;
+  AMDType: string;
 
   @Column()
   visualAcuity: string;
@@ -31,6 +31,9 @@ export class PatientEntity {
 
   @Column()
   injectionDate: Date;
+
+  @Column()
+  nextInspection: Date;
 
   @Column()
   missedInjection: boolean;
