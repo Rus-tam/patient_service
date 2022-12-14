@@ -1,29 +1,26 @@
 import {
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { PatientEntity } from './patient.entity';
 
 @Entity()
-export class MedicalExaminationEntity {
+export class TomographyEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   createdDate: Date;
 
-  @Column()
-  examinationResult: string;
+  @Column({ type: 'bytea' })
+  image: Uint8Array;
 
   @ManyToOne(
     () => PatientEntity,
-    (patient: PatientEntity) => patient.medicalExaminations,
+    (patient: PatientEntity) => patient.tomography,
   )
   patient: PatientEntity;
-
-  @DeleteDateColumn()
-  public deletedAt: Date;
 }

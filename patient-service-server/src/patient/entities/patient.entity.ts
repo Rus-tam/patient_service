@@ -1,6 +1,7 @@
 import { Column, PrimaryColumn, Entity, OneToMany } from 'typeorm';
 import { DeleteDateColumn } from 'typeorm';
 import { MedicalExaminationEntity } from './medicalExamination.entity';
+import { TomographyEntity } from './tomography.entity';
 
 @Entity()
 export class PatientEntity {
@@ -19,14 +20,14 @@ export class PatientEntity {
   @Column()
   visualAcuity: string;
 
-  // @Column()
-  // medicalExamination: string;
-
   @OneToMany(
     () => MedicalExaminationEntity,
     (medicalExaminations) => medicalExaminations.patient,
   )
-  medicalExcaminations: MedicalExaminationEntity[];
+  medicalExaminations: MedicalExaminationEntity[];
+
+  @OneToMany(() => TomographyEntity, (tomography) => tomography.patient)
+  tomography: TomographyEntity[];
 
   @Column()
   injectionDate: Date;
