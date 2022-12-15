@@ -1,5 +1,4 @@
-import { IsString, isString, IsDate, IsBoolean } from 'class-validator';
-import { MedicalExaminationEntity } from '../entities/medicalExamination.entity';
+import { IsString, IsDate, IsBoolean, IsPhoneNumber } from "class-validator";
 
 export class CreatePatientDto {
   @IsString()
@@ -8,9 +7,9 @@ export class CreatePatientDto {
   @IsDate()
   patientBirthDate: Date;
 
+  @IsPhoneNumber()
+  phoneNumber: string;
+
   @IsBoolean()
   AMDType: boolean;
-
-  @IsString()
-  visualAcuity: string;
 }

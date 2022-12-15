@@ -12,6 +12,6 @@ export class PatientService {
   ) {}
 
   async createPatient(patientData: CreatePatientDto) {
-    // Проверяем нет ли в базе данных повторяющихся послед
+    // Проверяем нет ли в базе данных повторяющихся пациентов
   }
 }

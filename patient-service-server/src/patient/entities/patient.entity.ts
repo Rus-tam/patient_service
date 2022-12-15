@@ -15,6 +15,9 @@ export class PatientEntity {
   patientBirthDate: Date;
 
   @Column()
+  phoneNumber: string;
+
+  @Column()
   AMDType: string;
 
   @Column()
@@ -37,6 +40,9 @@ export class PatientEntity {
 
   @Column()
   missedInjection: boolean;
+
+  @Column()
+  createdAt: Date;
 
   @DeleteDateColumn()
   public deletedAt: Date;
