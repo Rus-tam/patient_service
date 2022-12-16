@@ -3,6 +3,7 @@ import { AppService } from "./app.service";
 import { PatientService } from "./patient/patient.service";
 import { CreatePatientDto } from "./patient/dto/createPatient.dto";
 import { PatientEntity } from "./patient/entities/patient.entity";
+import { AllPatientsInfoInterface } from "./interfaces/allPatientsInfo.interface";
 
 @Controller()
 export class AppController {
@@ -11,5 +12,10 @@ export class AppController {
   @Post("/new-patient")
   async createPatient(@Body() patientData: CreatePatientDto): Promise<PatientEntity> {
     return this.patientService.createPatient(patientData);
+  }
+
+  @Get("/all-patients")
+  async getAllPatientsInfo(): Promise<AllPatientsInfoInterface[]> {
+    return this.patientService.getAllPatients();
   }
 }

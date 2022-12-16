@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 import { PatientEntity } from "./entities/patient.entity";
 import { CreatePatientDto } from "./dto/createPatient.dto";
 import { PatientError } from "../errors/patient.error";
+import { AllPatientsInfoInterface } from "../interfaces/allPatientsInfo.interface";
 
 @Injectable()
 export class PatientService {
@@ -31,14 +32,33 @@ export class PatientService {
       visualAcuity: "",
       medicalExaminations: [],
       tomography: [],
-      injectionDate: patientData.patientBirthDate,
-      nextInspectionDate: patientData.patientBirthDate,
+      injectionDate: "01.01.1970",
+      nextInspectionDate: "01.01.1970",
       missedInjection: false,
+      healthStatus: "sick",
       createdAt: new Date(),
     });
 
     await this.patientRepository.save(patient);
 
     return patient;
+  }
+
+  async getAllPatients(): Promise<AllPatientsInfoInterface[]> {
+    const allPatients = await this.patientRepository.find();
+    const allPatientsInfo: AllPatientsInfoInterface[] = [];
+
+    allPatients.forEach((patient) => {
+      allPatientsInfo.push({
+        patientName: patient.patientName,
+        patientBirthDate: patient.patientBirthDate,
+        phoneNumber: patient.phoneNumber,
+        AMDType: patient.AMDType,
+        visualAcuity: patient.visualAcuity,
+        healthStatus: patient.healthStatus,
+      });
+    });
+
+    return allPatientsInfo;
   }
 }

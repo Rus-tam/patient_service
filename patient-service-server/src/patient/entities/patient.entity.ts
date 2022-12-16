@@ -39,6 +39,9 @@ export class PatientEntity {
   missedInjection: boolean;
 
   @Column()
+  healthStatus: string;
+
+  @Column()
   createdAt: Date;
 
   @DeleteDateColumn()
