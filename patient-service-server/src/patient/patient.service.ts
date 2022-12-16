@@ -69,10 +69,11 @@ export class PatientService {
     return this.patientRepository.findOneBy({ id });
   }
 
-  async updatePatientCard(update: UpdateCardDto, id: number) {
+  async updatePatientCard(update: UpdateCardDto, id: number): Promise<PatientEntity> {
     const patient = await this.patientRepository.findOneBy({ id });
 
     const updatedPatient = {
+      id: patient.id,
       patientName: patient.patientName,
       patientBirthDate: patient.patientBirthDate,
       phoneNumber: update.phoneNumber,
@@ -86,6 +87,7 @@ export class PatientService {
       healthStatus: update.healthStatus,
       createdAt: patient.createdAt,
       updatedAt: new Date(),
+      deletedAt: patient.deletedAt,
     };
 
     await this.patientRepository.save(updatedPatient);

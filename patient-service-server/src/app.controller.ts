@@ -21,12 +21,12 @@ export class AppController {
   }
 
   @Post("/:id/update")
-  async updatePatientCard(@Body() update: UpdateCardDto, @Param() params) {
+  async updatePatientCard(@Body() update: UpdateCardDto, @Param() params): Promise<PatientEntity> {
     return this.patientService.updatePatientCard(update, parseInt(params.id));
   }
 
   @Get("/:id")
-  async getPatientById(@Param() params) {
+  async getPatientById(@Param() params): Promise<PatientEntity> {
     return this.patientService.getPatientById(parseInt(params.id));
   }
 }
