@@ -9,7 +9,4 @@ export class CreatePatientDto {
 
   @IsPhoneNumber()
   phoneNumber: string;
-
-  @IsBoolean()
-  AMDType: boolean;
 }
