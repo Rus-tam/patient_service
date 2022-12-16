@@ -5,6 +5,7 @@ import { PatientEntity } from "./entities/patient.entity";
 import { CreatePatientDto } from "./dto/createPatient.dto";
 import { PatientError } from "../errors/patient.error";
 import { AllPatientsInfoInterface } from "../interfaces/allPatientsInfo.interface";
+import { UpdateCardDto } from "./dto/updateCard.dto";
 
 @Injectable()
 export class PatientService {
@@ -61,4 +62,6 @@ export class PatientService {
 
     return allPatientsInfo;
   }
+
+  async updatePatientCard(update: UpdateCardDto) {}
 }
