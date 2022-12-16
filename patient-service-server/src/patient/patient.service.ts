@@ -38,6 +38,7 @@ export class PatientService {
       missedInjection: false,
       healthStatus: "sick",
       createdAt: new Date(),
+      updatedAt: null,
     });
 
     await this.patientRepository.save(patient);
@@ -51,6 +52,7 @@ export class PatientService {
 
     allPatients.forEach((patient) => {
       allPatientsInfo.push({
+        id: patient.id,
         patientName: patient.patientName,
         patientBirthDate: patient.patientBirthDate,
         phoneNumber: patient.phoneNumber,
@@ -63,5 +65,31 @@ export class PatientService {
     return allPatientsInfo;
   }
 
-  async updatePatientCard(update: UpdateCardDto) {}
+  async getPatientById(id: number) {
+    return this.patientRepository.findOneBy({ id });
+  }
+
+  async updatePatientCard(update: UpdateCardDto, id: number) {
+    const patient = await this.patientRepository.findOneBy({ id });
+
+    const updatedPatient = {
+      patientName: patient.patientName,
+      patientBirthDate: patient.patientBirthDate,
+      phoneNumber: update.phoneNumber,
+      AMDType: update.AMDType,
+      visualAcuity: update.visualAcuity,
+      medicalExaminations: [],
+      tomography: [],
+      injectionDate: update.injectionDate,
+      nextInspectionDate: update.nextInspectionDate,
+      missedInjection: false,
+      healthStatus: update.healthStatus,
+      createdAt: patient.createdAt,
+      updatedAt: new Date(),
+    };
+
+    await this.patientRepository.save(updatedPatient);
+
+    return updatedPatient;
+  }
 }

@@ -1,4 +1,5 @@
 export interface AllPatientsInfoInterface {
+  id: number;
   patientName: string;
   patientBirthDate: Date;
   phoneNumber: string;

@@ -44,6 +44,9 @@ export class PatientEntity {
   @Column()
   createdAt: Date;
 
+  @Column({ nullable: true })
+  updatedAt: Date | null;
+
   @DeleteDateColumn()
   public deletedAt: Date;
 }
