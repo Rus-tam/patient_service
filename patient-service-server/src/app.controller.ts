@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, HttpCode } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { PatientService } from "./patient/patient.service";
 import { CreatePatientDto } from "./patient/dto/createPatient.dto";
@@ -10,21 +10,31 @@ import { UpdateCardDto } from "./patient/dto/updateCard.dto";
 export class AppController {
   constructor(private readonly appService: AppService, private readonly patientService: PatientService) {}
 
+  @HttpCode(201)
   @Post("/new-patient")
   async createPatient(@Body() patientData: CreatePatientDto): Promise<PatientEntity> {
     return this.patientService.createPatient(patientData);
   }
 
+  @HttpCode(200)
   @Get("/all-patients")
   async getAllPatientsInfo(): Promise<AllPatientsInfoInterface[]> {
     return this.patientService.getAllPatients();
   }
 
+  @HttpCode(200)
+  @Get("/all-patients/sick")
+  async getAllSickPatients(): Promise<PatientEntity[]> {
+    return this.patientService.getAllSickPatients();
+  }
+
+  @HttpCode(200)
   @Post("/:id/update")
   async updatePatientCard(@Body() update: UpdateCardDto, @Param() params): Promise<PatientEntity> {
     return this.patientService.updatePatientCard(update, parseInt(params.id));
   }
 
+  @HttpCode(200)
   @Get("/:id")
   async getPatientById(@Param() params): Promise<PatientEntity> {
     return this.patientService.getPatientById(parseInt(params.id));

@@ -94,4 +94,8 @@ export class PatientService {
 
     return updatedPatient;
   }
+
+  async getAllSickPatients(): Promise<PatientEntity[]> {
+    return this.patientRepository.find({ where: [{ healthStatus: "sick" }] });
+  }
 }
