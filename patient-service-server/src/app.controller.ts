@@ -10,33 +10,46 @@ import { UpdateCardDto } from "./patient/dto/updateCard.dto";
 export class AppController {
   constructor(private readonly appService: AppService, private readonly patientService: PatientService) {}
 
-  @HttpCode(201)
   @Post("/new-patient")
   async createPatient(@Body() patientData: CreatePatientDto): Promise<PatientEntity> {
     return this.patientService.createPatient(patientData);
   }
 
-  @HttpCode(200)
   @Get("/all-patients")
   async getAllPatientsInfo(): Promise<AllPatientsInfoInterface[]> {
     return this.patientService.getAllPatients();
   }
 
-  @HttpCode(200)
+  // @Get("/all-patients/sick")
+  // async getAllSickPatients(): Promise<PatientEntity[]> {
+  //   return this.patientService.getAllSickPatients();
+  // }
+
   @Get("/all-patients/sick")
-  async getAllSickPatients(): Promise<PatientEntity[]> {
-    return this.patientService.getAllSickPatients();
+  async getAllSickPatients() {
+    // return this.patientService.getAllSickPatients();
+    console.log(new Date().toLocaleDateString());
+
+    console.log(new Date(new Date().setDate(new Date().getDate() + 7)).toLocaleDateString());
   }
 
-  @HttpCode(200)
   @Post("/:id/update")
   async updatePatientCard(@Body() update: UpdateCardDto, @Param() params): Promise<PatientEntity> {
     return this.patientService.updatePatientCard(update, parseInt(params.id));
   }
 
-  @HttpCode(200)
   @Get("/:id")
   async getPatientById(@Param() params): Promise<PatientEntity> {
     return this.patientService.getPatientById(parseInt(params.id));
+  }
+
+  @Get("/all-patients/healthy")
+  async getAllHealthyPatients(): Promise<PatientEntity[]> {
+    return this.patientService.getAllHealthyPatients();
+  }
+
+  @Get("patients-list")
+  async getPatientsList() {
+    return this.patientService.createPatientsList();
   }
 }
