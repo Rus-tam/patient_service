@@ -6,6 +6,7 @@ import { CreatePatientDto } from "./dto/createPatient.dto";
 import { PatientError } from "../errors/patient.error";
 import { AllPatientsInfoInterface } from "../interfaces/allPatientsInfo.interface";
 import { UpdateCardDto } from "./dto/updateCard.dto";
+import { NextWeekPatientsInterface } from "../interfaces/nextWeekPatients.interface";
 
 @Injectable()
 export class PatientService {
@@ -95,10 +96,19 @@ export class PatientService {
     return updatedPatient;
   }
 
-  async checkNextWeekPatients(injectionDate: Date) {
-    const patients = this.patientRepository.findBy({ injectionDate });
+  async checkNextWeekPatients(injectionDate: Date): Promise<NextWeekPatientsInterface> {
+    const AMDWet: PatientEntity[] = [];
+    const AMDDry: PatientEntity[] = [];
+    const patients = await this.patientRepository.findBy({ injectionDate });
+    patients.forEach((patient) => {
+      if (patient.AMDType === "Wet") {
+        AMDWet.push(patient);
+      } else {
+        AMDDry.push(patient);
+      }
+    });
 
-    return patients;
+    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
   async getAllHealthyPatients(): Promise<PatientEntity[]> {

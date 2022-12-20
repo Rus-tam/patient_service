@@ -7,6 +7,7 @@ import { AllPatientsInfoInterface } from "./interfaces/allPatientsInfo.interface
 import { UpdateCardDto } from "./patient/dto/updateCard.dto";
 import { DateDto } from "./patient/dto/date.dto";
 import { type } from "os";
+import { NextWeekPatientsInterface } from "./interfaces/nextWeekPatients.interface";
 const moment = require("moment");
 
 @Controller()
@@ -29,12 +30,10 @@ export class AppController {
   // }
 
   @Post("/check-next-week")
-  async getAllSickPatients(@Body() dateObj: DateDto) {
+  async getAllSickPatients(@Body() dateObj: DateDto): Promise<NextWeekPatientsInterface> {
     const date = dateObj.date;
     const parsedDate = moment(date, "DD.MM.YYYY").format();
     return this.patientService.checkNextWeekPatients(new Date(parsedDate));
-    // console.log(date);
-    // console.log(new Date(parsedDate));
   }
 
   @Post("/:id/update")
