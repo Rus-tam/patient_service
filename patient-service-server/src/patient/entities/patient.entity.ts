@@ -29,8 +29,8 @@ export class PatientEntity {
   @OneToMany(() => TomographyEntity, (tomography) => tomography.patient)
   tomography: TomographyEntity[];
 
-  @Column({ type: "date" })
-  injectionDate: Date;
+  @Column({ type: "date", nullable: true })
+  injectionDate: Date | null;
 
   @Column({ type: "date" })
   nextInspectionDate: Date;

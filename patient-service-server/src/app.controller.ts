@@ -5,6 +5,9 @@ import { CreatePatientDto } from "./patient/dto/createPatient.dto";
 import { PatientEntity } from "./patient/entities/patient.entity";
 import { AllPatientsInfoInterface } from "./interfaces/allPatientsInfo.interface";
 import { UpdateCardDto } from "./patient/dto/updateCard.dto";
+import { DateDto } from "./patient/dto/date.dto";
+import { type } from "os";
+const moment = require("moment");
 
 @Controller()
 export class AppController {
@@ -25,12 +28,13 @@ export class AppController {
   //   return this.patientService.getAllSickPatients();
   // }
 
-  @Get("/all-patients/sick")
-  async getAllSickPatients() {
-    // return this.patientService.getAllSickPatients();
-    console.log(new Date().toLocaleDateString());
-
-    console.log(new Date(new Date().setDate(new Date().getDate() + 7)).toLocaleDateString());
+  @Post("/check-next-week")
+  async getAllSickPatients(@Body() dateObj: DateDto) {
+    const date = dateObj.date;
+    const parsedDate = moment(date, "DD.MM.YYYY").format();
+    return this.patientService.checkNextWeekPatients(new Date(parsedDate));
+    // console.log(date);
+    // console.log(new Date(parsedDate));
   }
 
   @Post("/:id/update")
@@ -46,10 +50,5 @@ export class AppController {
   @Get("/all-patients/healthy")
   async getAllHealthyPatients(): Promise<PatientEntity[]> {
     return this.patientService.getAllHealthyPatients();
-  }
-
-  @Get("patients-list")
-  async getPatientsList() {
-    return this.patientService.createPatientsList();
   }
 }

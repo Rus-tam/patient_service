@@ -95,15 +95,13 @@ export class PatientService {
     return updatedPatient;
   }
 
-  async getAllSickPatients(): Promise<PatientEntity[]> {
-    return this.patientRepository.find({ where: [{ healthStatus: "sick" }] });
+  async checkNextWeekPatients(injectionDate: Date) {
+    const patients = this.patientRepository.findBy({ injectionDate });
+
+    return patients;
   }
 
   async getAllHealthyPatients(): Promise<PatientEntity[]> {
     return this.patientRepository.find({ where: [{ healthStatus: "healthy" }] });
-  }
-
-  async createPatientsList() {
-    return this.patientRepository.findOne({ where: [{ healthStatus: "healthy" }] });
   }
 }
