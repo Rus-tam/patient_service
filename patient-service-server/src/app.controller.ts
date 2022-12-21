@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, HttpCode } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, HttpCode, Delete } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { PatientService } from "./patient/patient.service";
 import { CreatePatientDto } from "./patient/dto/createPatient.dto";
@@ -28,6 +28,11 @@ export class AppController {
   //   return this.patientService.getAllSickPatients();
   // }
 
+  @Post("/find-by-surname")
+  async findBySurname(@Body() surnameInfo): Promise<PatientEntity[]> {
+    return this.patientService.findPatientBySurname(surnameInfo.surname);
+  }
+
   @Post("/check-next-week")
   async getAllSickPatients(@Body() dateObj: DateDto): Promise<NextWeekPatientsInterface> {
     const date = dateObj.date;
@@ -48,5 +53,10 @@ export class AppController {
   @Get("/all-patients/healthy")
   async getAllHealthyPatients(): Promise<PatientEntity[]> {
     return this.patientService.getAllHealthyPatients();
+  }
+
+  @Delete("/delete/:id")
+  async deletePatient(@Param() params): Promise<void> {
+    await this.patientService.deletePatient(parseInt(params.id));
   }
 }

@@ -117,7 +117,15 @@ export class PatientService {
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
+  async findPatientBySurname(surname: string): Promise<PatientEntity[]> {
+    return this.patientRepository.findBy({ surname });
+  }
+
   async getAllHealthyPatients(): Promise<PatientEntity[]> {
     return this.patientRepository.find({ where: [{ healthStatus: "healthy" }] });
+  }
+
+  async deletePatient(id: number): Promise<void> {
+    await this.patientRepository.delete({ id });
   }
 }
