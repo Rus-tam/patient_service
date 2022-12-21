@@ -18,7 +18,7 @@ export class PatientService {
   async createPatient(patientData: CreatePatientDto): Promise<PatientEntity> {
     // Проверяем нет ли в базе карточки пациента
     const existingPatient = await this.patientRepository.find({
-      where: [{ phoneNumber: patientData.phoneNumber }, { patientName: patientData.patientName }],
+      where: [{ phoneNumber: patientData.phoneNumber, name: patientData.name, surname: patientData.surname }],
     });
     if (existingPatient[0]) {
       Logger.error("There is patient with such name and phone number");
@@ -27,7 +27,9 @@ export class PatientService {
 
     // Создаем карточку пациента
     const patient = this.patientRepository.create({
-      patientName: patientData.patientName,
+      name: patientData.name,
+      surname: patientData.surname,
+      patronymic: patientData.patronymic,
       patientBirthDate: patientData.patientBirthDate,
       phoneNumber: patientData.phoneNumber,
       AMDType: "",
@@ -54,7 +56,9 @@ export class PatientService {
     allPatients.forEach((patient) => {
       allPatientsInfo.push({
         id: patient.id,
-        patientName: patient.patientName,
+        name: patient.name,
+        surname: patient.surname,
+        patronymic: patient.patronymic,
         patientBirthDate: patient.patientBirthDate,
         phoneNumber: patient.phoneNumber,
         AMDType: patient.AMDType,
@@ -75,7 +79,9 @@ export class PatientService {
 
     const updatedPatient = {
       id: patient.id,
-      patientName: patient.patientName,
+      name: patient.name,
+      surname: patient.surname,
+      patronymic: patient.patronymic,
       patientBirthDate: patient.patientBirthDate,
       phoneNumber: update.phoneNumber,
       AMDType: update.AMDType,

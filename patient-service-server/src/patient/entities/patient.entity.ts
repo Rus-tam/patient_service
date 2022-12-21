@@ -9,7 +9,13 @@ export class PatientEntity {
   id: number;
 
   @Column()
-  patientName: string;
+  name: string;
+
+  @Column()
+  surname: string;
+
+  @Column()
+  patronymic: string;
 
   @Column({ type: "date" })
   patientBirthDate: Date;

@@ -2,7 +2,13 @@ import { IsString, IsDate, IsBoolean, IsPhoneNumber } from "class-validator";
 
 export class CreatePatientDto {
   @IsString()
-  patientName: string;
+  name: string;
+
+  @IsString()
+  surname: string;
+
+  @IsString()
+  patronymic: string;
 
   @IsDate()
   patientBirthDate: Date;
