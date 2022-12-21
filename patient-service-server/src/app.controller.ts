@@ -33,11 +33,9 @@ export class AppController {
     return this.patientService.findPatientBySurname(surnameInfo.surname);
   }
 
-  @Post("/check-next-week")
-  async getAllSickPatients(@Body() dateObj: DateDto): Promise<NextWeekPatientsInterface> {
-    const date = dateObj.date;
-    const parsedDate = moment(date, "DD.MM.YYYY").format();
-    return this.patientService.checkNextWeekPatients(new Date(parsedDate));
+  @Get("/check-next-week")
+  async getAllSickPatients(): Promise<NextWeekPatientsInterface> {
+    return this.patientService.checkNextWeekPatients();
   }
 
   @Post("/:id/update")

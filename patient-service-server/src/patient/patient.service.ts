@@ -7,6 +7,7 @@ import { PatientError } from "../errors/patient.error";
 import { AllPatientsInfoInterface } from "../interfaces/allPatientsInfo.interface";
 import { UpdateCardDto } from "./dto/updateCard.dto";
 import { NextWeekPatientsInterface } from "../interfaces/nextWeekPatients.interface";
+const moment = require("moment");
 
 @Injectable()
 export class PatientService {
@@ -102,10 +103,11 @@ export class PatientService {
     return updatedPatient;
   }
 
-  async checkNextWeekPatients(injectionDate: Date): Promise<NextWeekPatientsInterface> {
+  async checkNextWeekPatients(): Promise<NextWeekPatientsInterface> {
     const AMDWet: PatientEntity[] = [];
     const AMDDry: PatientEntity[] = [];
-    const patients = await this.patientRepository.findBy({ injectionDate });
+    const plusSevenDays = moment(new Date(), "DD.MM.YYYY").add(7, "days");
+    const patients = await this.patientRepository.findBy({ injectionDate: plusSevenDays });
     patients.forEach((patient) => {
       if (patient.AMDType === "Wet") {
         AMDWet.push(patient);
