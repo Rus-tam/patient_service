@@ -5,7 +5,6 @@ import { CreatePatientDto } from "./patient/dto/createPatient.dto";
 import { PatientEntity } from "./patient/entities/patient.entity";
 import { AllPatientsInfoInterface } from "./interfaces/allPatientsInfo.interface";
 import { UpdateCardDto } from "./patient/dto/updateCard.dto";
-import { DateDto } from "./patient/dto/date.dto";
 import { NextWeekPatientsInterface } from "./interfaces/nextWeekPatients.interface";
 const moment = require("moment");
 
