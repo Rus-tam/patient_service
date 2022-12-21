@@ -109,7 +109,7 @@ export class PatientService {
     const plusSevenDays = moment(new Date(), "DD.MM.YYYY").add(7, "days");
     const patients = await this.patientRepository.findBy({ injectionDate: plusSevenDays });
     patients.forEach((patient) => {
-      if (patient.AMDType === "Wet") {
+      if (patient.AMDType === "wet") {
         AMDWet.push(patient);
       } else {
         AMDDry.push(patient);
