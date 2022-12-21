@@ -10,6 +10,9 @@ export class UpdateCardDto {
   @IsString()
   visualAcuity: string;
 
+  @IsString()
+  examinationResult: string;
+
   @IsDate()
   injectionDate: Date;
 

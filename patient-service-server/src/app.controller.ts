@@ -6,11 +6,16 @@ import { PatientEntity } from "./patient/entities/patient.entity";
 import { AllPatientsInfoInterface } from "./interfaces/allPatientsInfo.interface";
 import { UpdateCardDto } from "./patient/dto/updateCard.dto";
 import { NextWeekPatientsInterface } from "./interfaces/nextWeekPatients.interface";
+import { MedicalExaminationService } from "./patient/medicalExamination.service";
 const moment = require("moment");
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService, private readonly patientService: PatientService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly patientService: PatientService,
+    private readonly medicalExaminationService: MedicalExaminationService,
+  ) {}
 
   @Post("/new-patient")
   async createPatient(@Body() patientData: CreatePatientDto): Promise<PatientEntity> {
@@ -44,12 +49,13 @@ export class AppController {
 
   @Get("/:id")
   async getPatientById(@Param() params): Promise<PatientEntity> {
+    console.log(await this.medicalExaminationService.getAllMedExaminations());
     return this.patientService.getPatientById(parseInt(params.id));
   }
 
-  @Get("/all-patients/healthy")
-  async getAllHealthyPatients(): Promise<PatientEntity[]> {
-    return this.patientService.getAllHealthyPatients();
+  @Get("/allmedexam")
+  async getAllMedExams() {
+    return this.medicalExaminationService.getAllMedExaminations();
   }
 
   @Delete("/delete/:id")

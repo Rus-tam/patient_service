@@ -1,11 +1,5 @@
-import {
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  DeleteDateColumn,
-  Entity,
-} from 'typeorm';
-import { PatientEntity } from './patient.entity';
+import { Column, PrimaryGeneratedColumn, ManyToOne, DeleteDateColumn, Entity } from "typeorm";
+import { PatientEntity } from "./patient.entity";
 
 @Entity()
 export class MedicalExaminationEntity {
@@ -15,13 +9,10 @@ export class MedicalExaminationEntity {
   @Column()
   createdDate: Date;
 
-  @Column()
+  @Column({ type: "text" })
   examinationResult: string;
 
-  @ManyToOne(
-    () => PatientEntity,
-    (patient: PatientEntity) => patient.medicalExaminations,
-  )
+  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.medicalExaminations)
   patient: PatientEntity;
 
   @DeleteDateColumn()

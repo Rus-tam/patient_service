@@ -7,6 +7,7 @@ import { PatientError } from "../errors/patient.error";
 import { AllPatientsInfoInterface } from "../interfaces/allPatientsInfo.interface";
 import { UpdateCardDto } from "./dto/updateCard.dto";
 import { NextWeekPatientsInterface } from "../interfaces/nextWeekPatients.interface";
+import { MedicalExaminationService } from "./medicalExamination.service";
 const moment = require("moment");
 
 @Injectable()
@@ -14,6 +15,7 @@ export class PatientService {
   constructor(
     @InjectRepository(PatientEntity)
     private patientRepository: Repository<PatientEntity>,
+    private readonly medicalExaminationService: MedicalExaminationService,
   ) {}
 
   async createPatient(patientData: CreatePatientDto): Promise<PatientEntity> {
@@ -99,9 +101,14 @@ export class PatientService {
     };
 
     await this.patientRepository.save(updatedPatient);
+    await this.medicalExaminationService.updateMedicalExamination(updatedPatient, update.examinationResult);
 
     return updatedPatient;
   }
+
+  // async getMedicalExaminations(id: number) {
+  //
+  // }
 
   async checkNextWeekPatients(): Promise<NextWeekPatientsInterface> {
     const AMDWet: PatientEntity[] = [];
