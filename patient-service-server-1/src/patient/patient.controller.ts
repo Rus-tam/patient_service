@@ -3,10 +3,14 @@ import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
+import { MedicalExaminationService } from "./medicalExamination.service";
 
 @Controller("patient")
 export class PatientController {
-  constructor(private readonly patientService: PatientService) {}
+  constructor(
+    private readonly patientService: PatientService,
+    private readonly medicalExaminationService: MedicalExaminationService,
+  ) {}
 
   @Post("/create")
   async createNewCard(@Body() cardInfo: CreatePatientCardDto): Promise<PatientEntity> {
@@ -25,6 +29,8 @@ export class PatientController {
 
   @Post("/:id/examinations")
   async createNewExamination(@Param("id") id: number, @Body() examination: MedicalExaminationDto) {
-    // const patientCard = await this.patientService.
+    const patientCard = await this.patientService.getPatientById(id);
+
+    return this.medicalExaminationService.newMedicalExamination(examination, patientCard);
   }
 }
