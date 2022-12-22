@@ -1,11 +1,5 @@
-import {
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  DeleteDateColumn,
-  Entity,
-} from 'typeorm';
-import { PatientEntity } from './patient.entity';
+import { Column, PrimaryGeneratedColumn, ManyToOne, DeleteDateColumn, Entity } from "typeorm";
+import { PatientEntity } from "./patient.entity";
 
 @Entity()
 export class MedicalExaminationEntity {
@@ -13,7 +7,7 @@ export class MedicalExaminationEntity {
   id: number;
 
   @Column()
-  createdDate: Date;
+  createdAt: Date;
 
   @Column()
   AMDType: string;
@@ -21,19 +15,16 @@ export class MedicalExaminationEntity {
   @Column()
   visualAcuity: string;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: "date", nullable: true })
   injectionDate: Date | null;
 
-  @Column({ type: 'date' })
-  nextInspectionDate: Date;
+  @Column({ type: "date", nullable: true })
+  nextInspectionDate: Date | null;
 
-  @Column({ type: 'text' })
+  @Column({ type: "text" })
   examinationResult: string;
 
-  @ManyToOne(
-    () => PatientEntity,
-    (patient: PatientEntity) => patient.medicalExaminations,
-  )
+  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.medicalExaminations)
   patient: PatientEntity;
 
   @DeleteDateColumn()

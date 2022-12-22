@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param } from "@nestjs/common";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientEntity } from "./entities/patient.entity";
+import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 
 @Controller("patient")
 export class PatientController {
@@ -15,5 +16,15 @@ export class PatientController {
   @Get("/cards")
   async getAllPatientsCards(): Promise<PatientEntity[]> {
     return this.patientService.getAllPatientCards();
+  }
+
+  @Get("/:id")
+  async getPatientById(@Param("id") id: number) {
+    return this.patientService.getPatientById(id);
+  }
+
+  @Post("/:id/examinations")
+  async createNewExamination(@Param("id") id: number, @Body() examination: MedicalExaminationDto) {
+    // const patientCard = await this.patientService.
   }
 }

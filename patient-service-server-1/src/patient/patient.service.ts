@@ -58,4 +58,11 @@ export class PatientService {
       throw new NotFoundException(PatientError.NotFound);
     }
   }
+
+  async getPatientById(id: number): Promise<PatientEntity> {
+    return this.patientRepository.findOne({
+      relations: ["medicalExaminations", "tomography"],
+      where: { id },
+    });
+  }
 }
