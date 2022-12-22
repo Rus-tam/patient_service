@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, HttpCode, Delete } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, HttpCode, Delete, Logger } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { PatientService } from "./patient/patient.service";
 import { CreatePatientDto } from "./patient/dto/createPatient.dto";
@@ -7,6 +7,7 @@ import { AllPatientsInfoInterface } from "./interfaces/allPatientsInfo.interface
 import { UpdateCardDto } from "./patient/dto/updateCard.dto";
 import { NextWeekPatientsInterface } from "./interfaces/nextWeekPatients.interface";
 import { MedicalExaminationService } from "./patient/medicalExamination.service";
+import { MedicalExaminationEntity } from "./patient/entities/medicalExamination.entity";
 const moment = require("moment");
 
 @Controller()
@@ -53,9 +54,18 @@ export class AppController {
     return this.patientService.getPatientById(parseInt(params.id));
   }
 
-  @Get("/allmedexam")
-  async getAllMedExams() {
-    return this.medicalExaminationService.getAllMedExaminations();
+  // @Get("/allmedexam")
+  // async getAllMedExams(): Promise<MedicalExaminationEntity[]> {
+  //   try {
+  //     return this.medicalExaminationService.getAllMedExaminations();
+  //   } catch (err) {
+  //     Logger.error("Error");
+  //   }
+  // }
+
+  @Get("/:id/medexam")
+  async getMedExamById(@Param() params) {
+    return this.medicalExaminationService.getMedExamByPatientId(parseInt(params.id));
   }
 
   @Delete("/delete/:id")

@@ -23,9 +23,14 @@ export class MedicalExaminationService {
     return newMedicalExamination;
   }
 
-  async getAllMedExaminations() {
+  async getAllMedExaminations(): Promise<MedicalExaminationEntity[]> {
     return this.medicalExaminationRepository.find({
       relations: ["patient"],
     });
+  }
+
+  async getMedExamByPatientId(id: number) {
+    const medExams = await this.medicalExaminationRepository.findBy({ id });
+    return medExams;
   }
 }
