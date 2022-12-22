@@ -22,6 +22,19 @@ export class PatientController {
     return this.patientService.getAllPatientCards();
   }
 
+  @Get("/check")
+  async checkSevenDaysPatients() {
+    console.log(await this.medicalExaminationService.checkSevenDaysPatientList());
+    return this.medicalExaminationService.checkSevenDaysPatientList();
+  }
+
+  // Временно потом удалить
+  @Get("/all-med-exam")
+  async getAllMedExams() {
+    console.log(await this.medicalExaminationService.getAllMedExaminations());
+    return this.medicalExaminationService.getAllMedExaminations();
+  }
+
   @Get("/:id")
   async getPatientById(@Param("id") id: number) {
     return this.patientService.getPatientById(id);
