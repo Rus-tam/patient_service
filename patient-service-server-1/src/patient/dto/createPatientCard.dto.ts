@@ -1,4 +1,4 @@
-import { IsString, IsDate, IsPhoneNumber, IsBoolean } from 'class-validator';
+import { IsString, IsDate, IsPhoneNumber, IsBoolean } from "class-validator";
 
 export class CreatePatientCardDto {
   @IsString()
@@ -15,7 +15,4 @@ export class CreatePatientCardDto {
 
   @IsPhoneNumber()
   phone: string;
-
-  @IsBoolean()
-  missedInjection: boolean;
 }
