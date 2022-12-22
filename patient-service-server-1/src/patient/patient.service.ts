@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, Logger } from "@nestjs/common";
+import { ConflictException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PatientEntity } from "./entities/patient.entity";
 import { Repository } from "typeorm";
@@ -12,7 +12,7 @@ export class PatientService {
     private patientRepository: Repository<PatientEntity>,
   ) {}
 
-  async createPatientCard(cardData: CreatePatientCardDto) {
+  async createPatientCard(cardData: CreatePatientCardDto): Promise<PatientEntity> {
     // Проверяем нет ли в базе карточки пациента
     const existingPatient = await this.patientRepository.find({
       where: [
@@ -44,5 +44,18 @@ export class PatientService {
     await this.patientRepository.save(newCard);
 
     return newCard;
+  }
+
+  async getAllPatientCards(): Promise<PatientEntity[]> {
+    const patientCards = await this.patientRepository.find({
+      relations: ["medicalExaminations", "tomography"],
+    });
+
+    if (patientCards.length > 0) {
+      return patientCards;
+    } else {
+      Logger.error("There is no one patient card in database");
+      throw new NotFoundException(PatientError.NotFound);
+    }
   }
 }
