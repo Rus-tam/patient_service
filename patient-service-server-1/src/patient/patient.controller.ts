@@ -24,27 +24,11 @@ export class PatientController {
     return this.patientService.getAllPatientCards();
   }
 
-  @Get("/check")
-  async checkSevenDaysPatients() {
-    console.log(await this.medicalExaminationService.checkSevenDaysPatientList());
-    return this.medicalExaminationService.checkSevenDaysPatientList();
-  }
-
   // Временно потом удалить
   @Get("/all-med-exam")
   async getAllMedExams() {
     console.log(await this.medicalExaminationService.getAllMedExaminations());
     return this.medicalExaminationService.getAllMedExaminations();
-  }
-
-  @Get("/missed-examinations")
-  async getMissedInjectionPatients(): Promise<MinPatientInfoInterface[]> {
-    return this.medicalExaminationService.checkMissedPatientList();
-  }
-
-  @Get("/current-day-patients")
-  async getCurrentDayPatients(): Promise<PatientListInterface> {
-    return this.medicalExaminationService.getCurrentDatePatientsList();
   }
 
   @Get("/:id")

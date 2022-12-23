@@ -35,59 +35,18 @@ export class MedicalExaminationService {
     return this.medicalExaminationRepository.find({ relations: ["patient"] });
   }
 
-  async checkMissedPatientList(): Promise<MinPatientInfoInterface[]> {
-    const patients: MinPatientInfoInterface[] = [];
-    const currentDate = moment(new Date(), "DD.MM.YYYY");
-    const missedMedExam = await this.medicalExaminationRepository.find({
+  async findByDates(injectionDate: Date, nextInspectionDate: Date): Promise<MedicalExaminationEntity[]> {
+    return this.medicalExaminationRepository.find({
       relations: ["patient"],
-      where: [{ injectionDate: LessThan(currentDate), nextInspectionDate: LessThan(currentDate) }],
+      where: [{ injectionDate, nextInspectionDate }],
     });
-
-    missedMedExam.forEach((elem) => patients.push(this.makeMinPatientInfoObj(elem)));
-
-    return patients;
   }
 
-  async checkSevenDaysPatientList(): Promise<PatientListInterface> {
-    const AMDWet: MinPatientInfoInterface[] = [];
-    const AMDDry: MinPatientInfoInterface[] = [];
-    const currentDate = moment(new Date()).format("DD.MM.YYYY");
-    const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days");
-    const medicalExaminations = await this.medicalExaminationRepository.find({
-      relations: ["patient"],
-      where: [{ injectionDate: plusSevenDays, nextInspectionDate: plusSevenDays }],
-    });
-    medicalExaminations.forEach((elem) => {
-      const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
-      if (minPatientInfo.AMDType === "wet") {
-        AMDWet.push(minPatientInfo);
-      } else {
-        AMDDry.push(minPatientInfo);
-      }
-    });
-
-    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
-  }
-
-  async getCurrentDatePatientsList(): Promise<PatientListInterface> {
-    const AMDWet: MinPatientInfoInterface[] = [];
-    const AMDDry: MinPatientInfoInterface[] = [];
-    const currentDate = moment(new Date(), "DD.MM.YYYY");
-    const medicalExams = await this.medicalExaminationRepository.find({
+  async findByCurrentDates(currentDate: Date) {
+    return this.medicalExaminationRepository.find({
       relations: ["patient"],
       where: [{ injectionDate: Equal(currentDate), nextInspectionDate: Equal(currentDate) }],
     });
-
-    medicalExams.forEach((elem) => {
-      const minPatientInfo = this.makeMinPatientInfoObj(elem);
-      if (minPatientInfo.AMDType === "wet") {
-        AMDWet.push(minPatientInfo);
-      } else {
-        AMDDry.push(minPatientInfo);
-      }
-    });
-
-    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
   makeMinPatientInfoObj(medExam: MedicalExaminationEntity): MinPatientInfoInterface {
