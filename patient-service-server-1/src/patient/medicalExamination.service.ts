@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
-import { LessThanOrEqual, Repository, LessThan } from "typeorm";
+import { Repository, LessThan, Equal } from "typeorm";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { PatientEntity } from "./entities/patient.entity";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
@@ -34,7 +34,7 @@ export class MedicalExaminationService {
     return this.medicalExaminationRepository.find({ relations: ["patient"] });
   }
 
-  async checkMissedInjection(): Promise<MinPatientInfoInterface[]> {
+  async checkMissedPatientList(): Promise<MinPatientInfoInterface[]> {
     const patients: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date(), "DD.MM.YYYY");
     const missedMedExam = await this.medicalExaminationRepository.find({
@@ -42,18 +42,7 @@ export class MedicalExaminationService {
       where: [{ injectionDate: LessThan(currentDate), nextInspectionDate: LessThan(currentDate) }],
     });
 
-    missedMedExam.forEach((elem) =>
-      patients.push({
-        name: elem.patient.name,
-        surname: elem.patient.surname,
-        patronymic: elem.patient.patronymic,
-        patientBirthDate: elem.patient.patientBirthDate,
-        phone: elem.patient.phone,
-        AMDType: elem.AMDType,
-        injectionDate: elem.injectionDate,
-        nextInspectionDate: elem.nextInspectionDate,
-      }),
-    );
+    missedMedExam.forEach((elem) => patients.push(this.makeMinPatientInfoObj(elem)));
 
     return patients;
   }
@@ -71,16 +60,7 @@ export class MedicalExaminationService {
       where: [{ injectionDate: plusSevenDays, nextInspectionDate: plusSevenDays }],
     });
     medicalExaminations.forEach((elem) => {
-      const minPatientInfo: MinPatientInfoInterface = {
-        name: elem.patient.name,
-        surname: elem.patient.surname,
-        patronymic: elem.patient.patronymic,
-        patientBirthDate: elem.patient.patientBirthDate,
-        phone: elem.patient.phone,
-        AMDType: elem.AMDType,
-        injectionDate: elem.injectionDate,
-        nextInspectionDate: elem.nextInspectionDate,
-      };
+      const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
       if (minPatientInfo.AMDType === "wet") {
         AMDWet.push(minPatientInfo);
       } else {
@@ -89,5 +69,42 @@ export class MedicalExaminationService {
     });
 
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
+  }
+
+  async getCurrentDatePatientsList(): Promise<{
+    injectionDate: MinPatientInfoInterface[];
+    nextInspectionDate: MinPatientInfoInterface[];
+  }> {
+    const AMDWet: MinPatientInfoInterface[] = [];
+    const AMDDry: MinPatientInfoInterface[] = [];
+    const currentDate = moment(new Date(), "DD.MM.YYYY");
+    const medicalExams = await this.medicalExaminationRepository.find({
+      relations: ["patient"],
+      where: [{ injectionDate: Equal(currentDate), nextInspectionDate: Equal(currentDate) }],
+    });
+
+    medicalExams.forEach((elem) => {
+      const minPatientInfo = this.makeMinPatientInfoObj(elem);
+      if (minPatientInfo.AMDType === "wet") {
+        AMDWet.push(minPatientInfo);
+      } else {
+        AMDDry.push(minPatientInfo);
+      }
+    });
+
+    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
+  }
+
+  makeMinPatientInfoObj(medExam: MedicalExaminationEntity): MinPatientInfoInterface {
+    return {
+      name: medExam.patient.name,
+      surname: medExam.patient.surname,
+      patronymic: medExam.patient.patronymic,
+      patientBirthDate: medExam.patient.patientBirthDate,
+      phone: medExam.patient.phone,
+      AMDType: medExam.AMDType,
+      injectionDate: medExam.injectionDate,
+      nextInspectionDate: medExam.nextInspectionDate,
+    };
   }
 }

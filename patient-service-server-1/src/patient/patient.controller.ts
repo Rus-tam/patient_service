@@ -38,7 +38,7 @@ export class PatientController {
 
   @Get("missed-examinations")
   async getMissedInjectionPatients(): Promise<MinPatientInfoInterface[]> {
-    return this.medicalExaminationService.checkMissedInjection();
+    return this.medicalExaminationService.checkMissedPatientList();
   }
 
   @Get("/:id")
