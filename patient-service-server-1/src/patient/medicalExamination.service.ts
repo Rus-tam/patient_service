@@ -58,20 +58,33 @@ export class MedicalExaminationService {
     return patients;
   }
 
-  async checkSevenDaysPatientList() {
-    const AMDWet: PatientEntity[] = [];
-    const AMDDry: PatientEntity[] = [];
+  async checkSevenDaysPatientList(): Promise<{
+    injectionDate: MinPatientInfoInterface[];
+    nextInspectionDate: MinPatientInfoInterface[];
+  }> {
+    const AMDWet: MinPatientInfoInterface[] = [];
+    const AMDDry: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
     const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days");
     const medicalExaminations = await this.medicalExaminationRepository.find({
       relations: ["patient"],
       where: [{ injectionDate: plusSevenDays, nextInspectionDate: plusSevenDays }],
     });
-    medicalExaminations.forEach((examination) => {
-      if (examination.AMDType === "wet") {
-        AMDWet.push(examination.patient);
+    medicalExaminations.forEach((elem) => {
+      const minPatientInfo: MinPatientInfoInterface = {
+        name: elem.patient.name,
+        surname: elem.patient.surname,
+        patronymic: elem.patient.patronymic,
+        patientBirthDate: elem.patient.patientBirthDate,
+        phone: elem.patient.phone,
+        AMDType: elem.AMDType,
+        injectionDate: elem.injectionDate,
+        nextInspectionDate: elem.nextInspectionDate,
+      };
+      if (minPatientInfo.AMDType === "wet") {
+        AMDWet.push(minPatientInfo);
       } else {
-        AMDDry.push(examination.patient);
+        AMDDry.push(minPatientInfo);
       }
     });
 
