@@ -49,16 +49,10 @@ export class MedicalExaminationService {
     });
   }
 
-  makeMinPatientInfoObj(medExam: MedicalExaminationEntity): MinPatientInfoInterface {
-    return {
-      name: medExam.patient.name,
-      surname: medExam.patient.surname,
-      patronymic: medExam.patient.patronymic,
-      patientBirthDate: medExam.patient.patientBirthDate,
-      phone: medExam.patient.phone,
-      AMDType: medExam.AMDType,
-      injectionDate: medExam.injectionDate,
-      nextInspectionDate: medExam.nextInspectionDate,
-    };
+  async findByMissedDates(currentDate: Date) {
+    return this.medicalExaminationRepository.find({
+      relations: ["patient"],
+      where: [{ injectionDate: LessThan(currentDate), nextInspectionDate: LessThan(currentDate) }],
+    });
   }
 }

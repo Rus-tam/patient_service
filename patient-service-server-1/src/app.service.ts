@@ -3,7 +3,6 @@ import { MedicalExaminationService } from "./patient/medicalExamination.service"
 import { PatientListInterface } from "./interfaces/patientList.interface";
 import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
 import { MedicalExaminationEntity } from "./patient/entities/medicalExamination.entity";
-import { Equal, LessThan } from "typeorm";
 const moment = require("moment");
 
 @Injectable()

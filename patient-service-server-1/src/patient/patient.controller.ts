@@ -4,8 +4,6 @@ import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { MedicalExaminationService } from "./medicalExamination.service";
-import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
-import { PatientListInterface } from "../interfaces/patientList.interface";
 
 @Controller("patient")
 export class PatientController {
