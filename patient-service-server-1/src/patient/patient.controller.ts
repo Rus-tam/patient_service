@@ -4,6 +4,7 @@ import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { MedicalExaminationService } from "./medicalExamination.service";
+import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 
 @Controller("patient")
 export class PatientController {
@@ -33,6 +34,11 @@ export class PatientController {
   async getAllMedExams() {
     console.log(await this.medicalExaminationService.getAllMedExaminations());
     return this.medicalExaminationService.getAllMedExaminations();
+  }
+
+  @Get("missed-examinations")
+  async getMissedInjectionPatients(): Promise<MinPatientInfoInterface[]> {
+    return this.medicalExaminationService.checkMissedInjection();
   }
 
   @Get("/:id")

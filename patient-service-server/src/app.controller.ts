@@ -43,6 +43,11 @@ export class AppController {
     return this.patientService.checkNextWeekPatients();
   }
 
+  // @Get("/missed-examinations")
+  // async getMissedExaminationPatients() {
+  //   return this.medicalExaminationService.checkMissedInjection();
+  // }
+
   @Post("/:id/update")
   async updatePatientCard(@Body() update: UpdateCardDto, @Param() params): Promise<PatientEntity> {
     return this.patientService.updatePatientCard(update, parseInt(params.id));

@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
-import { Repository } from "typeorm";
+import { LessThanOrEqual, Repository, LessThan } from "typeorm";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { PatientEntity } from "./entities/patient.entity";
-import { moveMessagePortToContext } from "worker_threads";
+import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 const moment = require("moment");
 
 @Injectable()
@@ -34,17 +34,39 @@ export class MedicalExaminationService {
     return this.medicalExaminationRepository.find({ relations: ["patient"] });
   }
 
+  async checkMissedInjection(): Promise<MinPatientInfoInterface[]> {
+    const patients: MinPatientInfoInterface[] = [];
+    const currentDate = moment(new Date(), "DD.MM.YYYY");
+    const missedMedExam = await this.medicalExaminationRepository.find({
+      relations: ["patient"],
+      where: [{ injectionDate: LessThan(currentDate), nextInspectionDate: LessThan(currentDate) }],
+    });
+
+    missedMedExam.forEach((elem) =>
+      patients.push({
+        name: elem.patient.name,
+        surname: elem.patient.surname,
+        patronymic: elem.patient.patronymic,
+        patientBirthDate: elem.patient.patientBirthDate,
+        phone: elem.patient.phone,
+        AMDType: elem.AMDType,
+        injectionDate: elem.injectionDate,
+        nextInspectionDate: elem.nextInspectionDate,
+      }),
+    );
+
+    return patients;
+  }
+
   async checkSevenDaysPatientList() {
     const AMDWet: PatientEntity[] = [];
     const AMDDry: PatientEntity[] = [];
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
     const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days");
-    console.log("FFFFFFF", plusSevenDays);
     const medicalExaminations = await this.medicalExaminationRepository.find({
       relations: ["patient"],
-      where: [{ injectionDate: plusSevenDays }],
+      where: [{ injectionDate: plusSevenDays, nextInspectionDate: plusSevenDays }],
     });
-    console.log("HHHHHH", medicalExaminations);
     medicalExaminations.forEach((examination) => {
       if (examination.AMDType === "wet") {
         AMDWet.push(examination.patient);
