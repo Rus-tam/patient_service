@@ -5,6 +5,7 @@ import { Repository, LessThan, Equal } from "typeorm";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { PatientEntity } from "./entities/patient.entity";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
+import { PatientListInterface } from "../interfaces/patientList.interface";
 const moment = require("moment");
 
 @Injectable()
@@ -47,10 +48,7 @@ export class MedicalExaminationService {
     return patients;
   }
 
-  async checkSevenDaysPatientList(): Promise<{
-    injectionDate: MinPatientInfoInterface[];
-    nextInspectionDate: MinPatientInfoInterface[];
-  }> {
+  async checkSevenDaysPatientList(): Promise<PatientListInterface> {
     const AMDWet: MinPatientInfoInterface[] = [];
     const AMDDry: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
@@ -71,10 +69,7 @@ export class MedicalExaminationService {
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
-  async getCurrentDatePatientsList(): Promise<{
-    injectionDate: MinPatientInfoInterface[];
-    nextInspectionDate: MinPatientInfoInterface[];
-  }> {
+  async getCurrentDatePatientsList(): Promise<PatientListInterface> {
     const AMDWet: MinPatientInfoInterface[] = [];
     const AMDDry: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date(), "DD.MM.YYYY");

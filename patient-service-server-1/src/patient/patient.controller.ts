@@ -5,6 +5,7 @@ import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { MedicalExaminationService } from "./medicalExamination.service";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
+import { PatientListInterface } from "../interfaces/patientList.interface";
 
 @Controller("patient")
 export class PatientController {
@@ -36,9 +37,14 @@ export class PatientController {
     return this.medicalExaminationService.getAllMedExaminations();
   }
 
-  @Get("missed-examinations")
+  @Get("/missed-examinations")
   async getMissedInjectionPatients(): Promise<MinPatientInfoInterface[]> {
     return this.medicalExaminationService.checkMissedPatientList();
+  }
+
+  @Get("/current-day-patients")
+  async getCurrentDayPatients(): Promise<PatientListInterface> {
+    return this.medicalExaminationService.getCurrentDatePatientsList();
   }
 
   @Get("/:id")
