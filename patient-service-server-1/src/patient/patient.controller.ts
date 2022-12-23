@@ -1,15 +1,18 @@
-import { Controller, Post, Body, Get, Param } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param, UseInterceptors, UploadedFile } from "@nestjs/common";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { MedicalExaminationService } from "./medicalExamination.service";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { TomographyService } from "./tomography.service";
 
 @Controller("patient")
 export class PatientController {
   constructor(
     private readonly patientService: PatientService,
     private readonly medicalExaminationService: MedicalExaminationService,
+    private readonly tomographyService: TomographyService,
   ) {}
 
   @Post("/create")
@@ -38,6 +41,14 @@ export class PatientController {
   async createNewExamination(@Param("id") id: number, @Body() examination: MedicalExaminationDto) {
     const patientCard = await this.patientService.getPatientById(id);
 
-    return this.medicalExaminationService.newMedicalExamination(examination, patientCard);
+    return this.medicalExaminationService.createMedicalExamination(examination, patientCard);
+  }
+
+  @Post("/:id/tomography")
+  @UseInterceptors(FileInterceptor("file"))
+  async createNewTomographyPic(@Param("id") id: number, @UploadedFile() file: Express.Multer.File) {
+    const patient = await this.patientService.getPatientById(id);
+
+    return this.tomographyService.createTomographyPic(file, patient);
   }
 }

@@ -7,14 +7,15 @@ import { TomographyEntity } from "./entities/tomography.entity";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { ConfigModule } from "@nestjs/config";
 import { MedicalExaminationService } from "./medicalExamination.service";
+import { TomographyService } from "./tomography.service";
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([PatientEntity, MedicalExaminationEntity, TomographyEntity]),
     ConfigModule,
   ],
-  providers: [PatientService, MedicalExaminationService],
+  providers: [PatientService, MedicalExaminationService, TomographyService],
   controllers: [PatientController],
-  exports: [PatientService, MedicalExaminationService],
+  exports: [PatientService, MedicalExaminationService, TomographyService],
 })
 export class PatientModule {}

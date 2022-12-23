@@ -4,9 +4,6 @@ import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { Repository, LessThan, Equal } from "typeorm";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { PatientEntity } from "./entities/patient.entity";
-import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
-import { PatientListInterface } from "../interfaces/patientList.interface";
-const moment = require("moment");
 
 @Injectable()
 export class MedicalExaminationService {
@@ -15,7 +12,7 @@ export class MedicalExaminationService {
     private medicalExaminationRepository: Repository<MedicalExaminationEntity>,
   ) {}
 
-  async newMedicalExamination(examination: MedicalExaminationDto, patient: PatientEntity) {
+  async createMedicalExamination(examination: MedicalExaminationDto, patient: PatientEntity) {
     const newMedicalExamination = this.medicalExaminationRepository.create({
       createdAt: new Date(),
       AMDType: examination.AMDType,

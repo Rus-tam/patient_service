@@ -1,11 +1,5 @@
-import {
-  Column,
-  DeleteDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { PatientEntity } from './patient.entity';
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { PatientEntity } from "./patient.entity";
 
 @Entity()
 export class TomographyEntity {
@@ -15,12 +9,12 @@ export class TomographyEntity {
   @Column()
   createdDate: Date;
 
-  @Column({ type: 'bytea' })
+  @Column({ type: "bytea" })
   image: Uint8Array;
 
-  @ManyToOne(
-    () => PatientEntity,
-    (patient: PatientEntity) => patient.tomography,
-  )
+  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.tomography)
   patient: PatientEntity;
+
+  @DeleteDateColumn()
+  public deletedAt: Date;
 }
