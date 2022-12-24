@@ -7,6 +7,7 @@ import { MedicalExaminationService } from "./medicalExamination.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { TomographyService } from "./tomography.service";
 import { ExaminationResultsInterface } from "../interfaces/examinationResults.interface";
+import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 
 @Controller("patient")
 export class PatientController {
@@ -24,6 +25,11 @@ export class PatientController {
   @Get("/cards")
   async getAllPatientsCards(): Promise<PatientEntity[]> {
     return this.patientService.getAllPatientCards();
+  }
+
+  @Get("/:surname")
+  async getPatientBySurname(@Param("surname") surname: string): Promise<MinPatientInfoInterface[]> {
+    return this.patientService.getPatientBySurname(surname);
   }
 
   // Временно потом удалить

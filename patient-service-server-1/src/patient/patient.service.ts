@@ -4,6 +4,7 @@ import { PatientEntity } from "./entities/patient.entity";
 import { Repository } from "typeorm";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
+import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 
 @Injectable()
 export class PatientService {
@@ -29,9 +30,9 @@ export class PatientService {
     }
 
     const newCard = this.patientRepository.create({
-      name: cardData.name,
-      surname: cardData.surname,
-      patronymic: cardData.patronymic,
+      name: cardData.name.toLowerCase(),
+      surname: cardData.surname.toLowerCase(),
+      patronymic: cardData.patronymic.toLowerCase(),
       patientBirthDate: cardData.patientBirthDate,
       phone: cardData.phone,
       medicalExaminations: [],
@@ -57,6 +58,26 @@ export class PatientService {
       Logger.error("There is no one patient card in database");
       throw new NotFoundException(PatientError.NotFound);
     }
+  }
+
+  async getPatientBySurname(surname: string): Promise<MinPatientInfoInterface[]> {
+    const minPatientsInfo: MinPatientInfoInterface[] = [];
+    const patients = await this.patientRepository.find({
+      where: { surname },
+    });
+
+    patients.forEach((patient) => {
+      minPatientsInfo.push({
+        id: patient.id,
+        name: patient.name,
+        surname: patient.surname,
+        patronymic: patient.patronymic,
+        patientBirthDate: patient.patientBirthDate,
+        phone: patient.phone,
+      });
+    });
+
+    return minPatientsInfo;
   }
 
   async getPatientById(id: number): Promise<PatientEntity> {

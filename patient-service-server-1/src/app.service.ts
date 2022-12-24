@@ -58,6 +58,7 @@ export class AppService {
 
   makeMinPatientInfoObj(medExam: MedicalExaminationEntity): MinPatientInfoInterface {
     return {
+      id: medExam.patient.id,
       name: medExam.patient.name,
       surname: medExam.patient.surname,
       patronymic: medExam.patient.patronymic,
