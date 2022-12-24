@@ -9,6 +9,9 @@ export class TomographyEntity {
   @Column()
   createdDate: Date;
 
+  @Column()
+  fileName: string;
+
   @Column({ type: "bytea" })
   image: Uint8Array;
 

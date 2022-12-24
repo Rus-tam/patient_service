@@ -14,6 +14,7 @@ export class TomographyService {
 
   async createTomographyPic(file: Express.Multer.File, patient: PatientEntity) {
     const newTomography = this.tomographyRepository.create({
+      fileName: file.filename,
       createdDate: new Date(),
       image: file.buffer,
       patient,
