@@ -39,7 +39,6 @@ const NewPatientCard = () => {
           <Form.Group className="mb-3" controlId="name">
             <Form.Label>Имя</Form.Label>
             <Form.Control type="text" placeholder="Введите имя пациента" />
-            {/*<Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>*/}
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="surname">

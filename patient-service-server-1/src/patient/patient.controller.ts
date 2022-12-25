@@ -8,6 +8,7 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { TomographyService } from "./tomography.service";
 import { ExaminationResultsInterface } from "../interfaces/examinationResults.interface";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
+import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 
 @Controller("patient")
 export class PatientController {
@@ -45,27 +46,27 @@ export class PatientController {
   }
 
   @Post("/:id/examinations")
-  @UseInterceptors(FileInterceptor("file"))
   async createNewExamination(
     @Param("id") id: number,
     @Body() examination: MedicalExaminationDto,
-    @UploadedFile() file: Express.Multer.File,
-  ): Promise<ExaminationResultsInterface> {
+  ): Promise<MedicalExaminationEntity> {
     const patientCard = await this.patientService.getPatientById(id);
     const medicalExam = await this.medicalExaminationService.createMedicalExamination(
       examination,
       patientCard,
     );
-    const tomography = await this.tomographyService.createTomographyPic(file, patientCard);
 
-    return { medicalExam, tomography };
+    return medicalExam;
   }
 
-  // @Post("/:id/tomography")
-  // @UseInterceptors(FileInterceptor("file"))
-  // async createNewTomographyPic(@Param("id") id: number, @UploadedFile() file: Express.Multer.File) {
-  //   const patient = await this.patientService.getPatientById(id);
-  //
-  //   return this.tomographyService.createTomographyPic(file, patient);
-  // }
+  @Post("/:id/tomography")
+  @UseInterceptors(FileInterceptor("file"))
+  async createNewTomographyPic(@Param("id") id: number, @UploadedFile() file: Express.Multer.File) {
+    const patientCard = await this.patientService.getPatientById(id);
+
+    console.log(id);
+    console.log(file);
+
+    return this.tomographyService.createTomographyPic(file, patientCard);
+  }
 }
