@@ -4,11 +4,18 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import moment from "moment";
 
-const PatientCard = () => {
+const MedExam = () => {
   const param = useParams();
-  const [tomographyFile, setTomographyFile] = useState("");
-  const id = param.id;
+  let AMDType = "";
+  // const [medExams, setMedExams] = useState({
+  //   AMDType: "",
+  //   visualAcuity: "",
+  //   injectionDate: "",
+  //   nextInspectionDate: "",
+  //   examinationResult: "",
+  // });
   const [patientData, setPatientData] = useState({
     name: "",
     surname: "",
@@ -18,6 +25,7 @@ const PatientCard = () => {
     medicalExaminations: [],
     tomography: [],
   });
+  const id = param.id;
   useEffect(() => {
     axios.get(`http://localhost:5000/patient/${id}`).then((resp) => {
       setPatientData(resp.data);
@@ -27,15 +35,29 @@ const PatientCard = () => {
   const uploadMedExams = async (e) => {
     e.preventDefault();
 
-    const medExam = e.target[0].value;
-    setTomographyFile(e.target[1].files[0]);
-
+    if (e.target[0].checked) {
+      AMDType = "wet";
+    } else {
+      AMDType = "dry";
+    }
+    const tomographyFile = e.target[6].files[0];
     console.log(tomographyFile);
+
+    const medExams = {
+      AMDType: AMDType,
+      visualAcuity: e.target[2].value,
+      injectionDate: moment(e.target[3].value).toDate(),
+      nextInspectionDate: moment(e.target[4].value).toDate(),
+      examinationResult: e.target[5].value,
+    };
+
+    console.log(medExams);
 
     const formData = new FormData();
     formData.append("file", tomographyFile);
     try {
-      const response = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
+      const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
+      const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -72,6 +94,35 @@ const PatientCard = () => {
       </p>
 
       <Form onSubmit={uploadMedExams}>
+        <Form.Group className="mb-3" controlId="AMDType">
+          <Form.Label>
+            <strong>Тип ВМД: </strong>
+          </Form.Label>
+          <Form.Check type="radio" label="Влажная" name="AMDType" value="wet" />
+          <Form.Check type="radio" label="Сухая" name="AMDType" value="dry" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="visualAcuity">
+          <Form.Label>
+            <strong>Острота зрения: </strong>
+          </Form.Label>
+          <Form.Control as="textarea" rows={2} placeholder="Введите данные по остроте зрения" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="injectionDate">
+          <Form.Label>
+            <strong>Дата инъекции: </strong>
+          </Form.Label>
+          <Form.Control type="date" name="injectionDate" placeholder="Дата инъекции" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="nextInspectionDate">
+          <Form.Label>
+            <strong>Дата следующего осмотра: </strong>
+          </Form.Label>
+          <Form.Control type="date" name="nextInspectionDate" placeholder="Дата следующего осмотра" />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="medicalexam">
           <Form.Label>
             <strong>Результаты осмотра: </strong>
@@ -92,10 +143,8 @@ const PatientCard = () => {
           </Button>
         </div>
       </Form>
-      <hr />
-      <h2 className="mb-3 pt-3">Результаты осмотра</h2>
     </div>
   );
 };
 
-export default PatientCard;
+export default MedExam;

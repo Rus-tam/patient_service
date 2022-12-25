@@ -53,7 +53,7 @@ const NewPatientCard = () => {
 
           <Form.Group className="mb-3" controlId="birthdate">
             <Form.Label>Дата рождения</Form.Label>
-            <Form.Control type="date" name="birthdate" placeholder="Birth date" />
+            <Form.Control type="date" name="birthdate" placeholder="Введите дату рождения" />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="phone">
