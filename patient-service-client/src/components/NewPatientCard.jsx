@@ -21,10 +21,10 @@ const NewPatientCard = () => {
       });
 
       if (request.status === 201) {
-        navigate("http://localhost:5000/patient/create");
+        navigate(`/patient-card/${request.data.id}`);
       }
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.log(err);
     }
   };
 

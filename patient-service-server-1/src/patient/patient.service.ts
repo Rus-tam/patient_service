@@ -82,8 +82,8 @@ export class PatientService {
 
   async getPatientById(id: number): Promise<PatientEntity> {
     return this.patientRepository.findOne({
-      relations: ["medicalExaminations", "tomography"],
       where: { id },
+      relations: ["medicalExaminations", "tomography"],
     });
   }
 }
