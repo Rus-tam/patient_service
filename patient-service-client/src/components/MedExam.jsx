@@ -54,7 +54,12 @@ const MedExam = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      navigate(`patient-card/${id}`);
+
+      if (medExamRes.status === 201 && tomographyRes.status === 201) {
+        navigate({
+          pathname: `/patient-card/${id}`,
+        });
+      }
     } catch (err) {
       console.log(err);
     }

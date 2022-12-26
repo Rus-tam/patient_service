@@ -76,6 +76,9 @@ const PatientCard = () => {
         <strong>Результаты осмотра: </strong> <br />
         {lastExamination.examinationResult}
       </p>
+      <hr />
+
+      <h2 className="mb-3 pt-3">История осмотров: </h2>
     </div>
   );
 };
