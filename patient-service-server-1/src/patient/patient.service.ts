@@ -30,9 +30,9 @@ export class PatientService {
     }
 
     const newCard = this.patientRepository.create({
-      name: cardData.name.toLowerCase(),
-      surname: cardData.surname.toLowerCase(),
-      patronymic: cardData.patronymic.toLowerCase(),
+      name: cardData.name.toUpperCase(),
+      surname: cardData.surname.toUpperCase(),
+      patronymic: cardData.patronymic.toUpperCase(),
       patientBirthDate: cardData.patientBirthDate,
       phone: cardData.phone,
       medicalExaminations: [],
@@ -63,7 +63,7 @@ export class PatientService {
   async getPatientBySurname(surname: string): Promise<MinPatientInfoInterface[]> {
     const minPatientsInfo: MinPatientInfoInterface[] = [];
     const patients = await this.patientRepository.find({
-      where: { surname },
+      where: { surname: surname.toUpperCase() },
     });
 
     patients.forEach((patient) => {

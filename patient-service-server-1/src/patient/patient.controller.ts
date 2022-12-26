@@ -40,6 +40,11 @@ export class PatientController {
     return this.medicalExaminationService.getAllMedExaminations();
   }
 
+  @Get("med-exam/:id")
+  async getMedExamById(@Param("id") id: number): Promise<MedicalExaminationEntity> {
+    return this.medicalExaminationService.getById(id);
+  }
+
   @Get("/:id")
   async getPatientById(@Param("id") id: number) {
     return this.patientService.getPatientById(id);

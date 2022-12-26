@@ -10,6 +10,7 @@ const PatientCard = () => {
   const navigate = useNavigate();
   const param = useParams();
   const [patientData, setPatientData] = useState({
+    id: "",
     name: "",
     surname: "",
     patronymic: "",
@@ -36,9 +37,9 @@ const PatientCard = () => {
   });
 
   // Переадресация на страницу с данными медиц. осмотра
-  const navigateToMedExam = (medExamId, id) => {
+  const navigateToMedExam = (medExamId) => {
     navigate({
-      pathname: `/patient-card/${id}/medexam/${medExamId}`,
+      pathname: `/medexam/${medExamId}`,
     });
   };
 
@@ -119,7 +120,9 @@ const PatientCard = () => {
             <ul>
               {patientData.medicalExaminations.map((element) => (
                 <li key={element.id} className="pb-2">
-                  <Button variant="outline-success">{moment(element.createdAt).format("YYYY-MM-DD").toString()}</Button>
+                  <Button onClick={() => navigateToMedExam(id, element.id)} variant="outline-success">
+                    {moment(element.createdAt).format("YYYY-MM-DD").toString()}
+                  </Button>
                 </li>
               ))}
             </ul>

@@ -52,4 +52,11 @@ export class MedicalExaminationService {
       where: [{ injectionDate: LessThan(currentDate), nextInspectionDate: LessThan(currentDate) }],
     });
   }
+
+  async getById(id: number): Promise<MedicalExaminationEntity> {
+    return this.medicalExaminationRepository.findOne({
+      relations: ["patient"],
+      where: [{ id }],
+    });
+  }
 }

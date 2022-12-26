@@ -14,8 +14,8 @@ function App() {
           <Route exact path="/" element={<StartPage />}></Route>
           <Route path="/new-patient-card" element={<NewPatientCard />}></Route>
           <Route path="/patient-card/:id" element={<PatientCard />}></Route>
-          <Route path="/med-examination/:id" element={<MedExam />}></Route>
-          <Route path="/patient-card/:id/medexam/:medExamId" element={<MedExamById />}></Route>
+          <Route path="patient/med-examination/:id" element={<MedExam />}></Route>
+          <Route path="/medexam/:medExamId" element={<MedExamById />}></Route>
         </Routes>
       </div>
     </Router>

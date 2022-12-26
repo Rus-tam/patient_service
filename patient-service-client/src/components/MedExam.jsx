@@ -8,7 +8,7 @@ import moment from "moment";
 
 const MedExam = () => {
   const navigate = useNavigate();
-  const param = useParams();
+  const { id } = useParams();
   let AMDType = "";
   const [patientData, setPatientData] = useState({
     name: "",
@@ -19,7 +19,6 @@ const MedExam = () => {
     medicalExaminations: [],
     tomography: [],
   });
-  const id = param.id;
   useEffect(() => {
     axios.get(`http://localhost:5000/patient/${id}`).then((resp) => {
       setPatientData(resp.data);
