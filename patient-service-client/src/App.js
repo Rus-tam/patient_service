@@ -4,6 +4,7 @@ import StartPage from "./components/StartPage";
 import NewPatientCard from "./components/NewPatientCard";
 import PatientCard from "./components/PatientCard";
 import MedExam from "./components/MedExam";
+import MedExamById from "./components/MedExamById";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/new-patient-card" element={<NewPatientCard />}></Route>
           <Route path="/patient-card/:id" element={<PatientCard />}></Route>
           <Route path="/med-examination/:id" element={<MedExam />}></Route>
+          <Route path="/patient-card/:id/medexam/:medExamId" element={<MedExamById />}></Route>
         </Routes>
       </div>
     </Router>
