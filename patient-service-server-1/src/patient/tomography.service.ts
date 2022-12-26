@@ -13,7 +13,6 @@ export class TomographyService {
   ) {}
 
   async createTomographyPic(file: Express.Multer.File, patient: PatientEntity) {
-    console.log(file);
     const newTomography = this.tomographyRepository.create({
       fileName: file.originalname,
       createdDate: new Date(),
@@ -26,19 +25,7 @@ export class TomographyService {
     return newTomography;
   }
 
-  // async newMedicalExamination(examination: MedicalExaminationDto, patient: PatientEntity) {
-  //   const newMedicalExamination = this.medicalExaminationRepository.create({
-  //     createdAt: new Date(),
-  //     AMDType: examination.AMDType,
-  //     visualAcuity: examination.visualAcuity,
-  //     injectionDate: examination.injectionDate,
-  //     nextInspectionDate: examination.nextInspectionDate,
-  //     examinationResult: examination.examinationResult,
-  //     patient,
-  //   });
-  //
-  //   await this.medicalExaminationRepository.save(newMedicalExamination);
-  //
-  //   return newMedicalExamination;
-  // }
+  async getTomographyFileById(id: number): Promise<TomographyEntity> {
+    return this.tomographyRepository.findOne({ where: { id } });
+  }
 }

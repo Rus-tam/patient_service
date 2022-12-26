@@ -1,4 +1,14 @@
-import { Controller, Post, Body, Get, Param, UseInterceptors, UploadedFile } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  UseInterceptors,
+  UploadedFile,
+  Res,
+  StreamableFile,
+} from "@nestjs/common";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientEntity } from "./entities/patient.entity";
@@ -6,9 +16,10 @@ import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { MedicalExaminationService } from "./medicalExamination.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { TomographyService } from "./tomography.service";
-import { ExaminationResultsInterface } from "../interfaces/examinationResults.interface";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
+import { Readable } from "stream";
+import { Response } from "express";
 
 @Controller("patient")
 export class PatientController {
@@ -31,6 +42,23 @@ export class PatientController {
   @Get("/surname/:surname")
   async getPatientBySurname(@Param("surname") surname: string): Promise<MinPatientInfoInterface[]> {
     return this.patientService.getPatientBySurname(surname);
+  }
+
+  @Get("/tomography/:tomogrId/download")
+  async downLoadTomographyFile(
+    @Param("tomogrId") tomogrId: number,
+    @Res({ passthrough: true }) response: Response,
+  ): Promise<StreamableFile> {
+    const tomography = await this.tomographyService.getTomographyFileById(tomogrId);
+    const file = tomography.image;
+
+    const stream = Readable.from(file);
+    response.set({
+      "Content-Disposition": `inline; filename="${tomography.fileName}"`,
+      "Content-Type": "octet-stream",
+    });
+
+    return new StreamableFile(stream);
   }
 
   // Временно потом удалить

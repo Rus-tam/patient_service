@@ -43,6 +43,11 @@ const PatientCard = () => {
     });
   };
 
+  // Загрузка результатов томографии
+  const downloadAndRedirect = (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div>
       <NavBar />
@@ -92,19 +97,6 @@ const PatientCard = () => {
 
       <h2 className="mb-3 pt-3">История осмотров: </h2>
 
-      {/*<div className="d-flex align-items-center">*/}
-      {/*  <div className="row text-center mb-4">*/}
-      {/*    <div className="col-md-4">*/}
-      {/*      <h4>Первый столбец</h4>*/}
-      {/*    </div>*/}
-      {/*    <div className="col-md-4">*/}
-      {/*      <h4>Второй столбец</h4>*/}
-      {/*    </div>*/}
-      {/*    <div className="col-md-4">*/}
-      {/*      <h4>Третий столбец</h4>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
       <Container>
         <Row className="justify-content-md-center">
           <Col className="pb-2">
@@ -132,7 +124,14 @@ const PatientCard = () => {
             <ul>
               {patientData.tomography.map((element) => (
                 <li key={element.id} className="pb-2">
-                  <Button variant="outline-success">{moment(element.createdAt).format("YYYY-MM-DD").toString()}</Button>
+                  <Button
+                    onClick={() =>
+                      downloadAndRedirect(`http://localhost:5000/patient/tomography/${element.id}/download`)
+                    }
+                    variant="outline-success"
+                  >
+                    {moment(element.createdAt).format("YYYY-MM-DD").toString()}
+                  </Button>
                 </li>
               ))}
             </ul>
