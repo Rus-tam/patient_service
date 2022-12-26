@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
 
 const MedExam = () => {
+  const navigate = useNavigate();
   const param = useParams();
   let AMDType = "";
-  // const [medExams, setMedExams] = useState({
-  //   AMDType: "",
-  //   visualAcuity: "",
-  //   injectionDate: "",
-  //   nextInspectionDate: "",
-  //   examinationResult: "",
-  // });
   const [patientData, setPatientData] = useState({
     name: "",
     surname: "",
@@ -51,8 +45,6 @@ const MedExam = () => {
       examinationResult: e.target[5].value,
     };
 
-    console.log(medExams);
-
     const formData = new FormData();
     formData.append("file", tomographyFile);
     try {
@@ -62,6 +54,7 @@ const MedExam = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      navigate(`patient-card/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +64,7 @@ const MedExam = () => {
     <div>
       <NavBar />
 
-      <h2 className="mb-3 pt-3">Карта пациента</h2>
+      <h2 className="mb-3 pt-3">Результаты осмотра</h2>
       <hr />
       <p>
         <strong>Имя пациента: </strong>
@@ -137,7 +130,7 @@ const MedExam = () => {
           <Form.Control type="file" />
         </Form.Group>
 
-        <div className="d-grid gap-2">
+        <div className="d-grid gap-2 pb-3">
           <Button variant="primary" type="submit" size="lg">
             Загрузить в базу данных
           </Button>

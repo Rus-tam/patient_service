@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 
 const NavBar = () => {
   return (
-    <div>
+    <div className="pb-3">
       <Navbar expand="lg" bg="light" variant="light">
         <Container>
           <Navbar.Brand href="/">
