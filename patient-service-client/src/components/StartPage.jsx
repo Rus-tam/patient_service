@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
 import moment from "moment";
-import { Button } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -26,13 +26,63 @@ const StartPage = () => {
     });
   }, [setInjectionList, setInspectionList]);
 
-  console.log(inspectionList);
   return (
     <div>
       <NavBar />
 
       <h2 className="mb-3 pt-3">Пациенты на сегодня ({moment(new Date()).format("YYYY-MM-DD")})</h2>
       <hr />
+      <h2 className="mb-3 pt-3">Пациенты на инъекцию</h2>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Дата рождения</th>
+            <th>Телефон</th>
+          </tr>
+        </thead>
+        <tbody>
+          {injectionList.map((elem, index) => (
+            <tr key={elem.id}>
+              <td>{index + 1}</td>
+              <td>{elem.surname}</td>
+              <td>{elem.name}</td>
+              <td>{elem.patronymic}</td>
+              <td>{elem.patientBirthDate}</td>
+              <td>{elem.phone}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+
+      <h2 className="mb-3 pt-3">Пациенты на осмотр</h2>
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Дата рождения</th>
+            <th>Телефон</th>
+          </tr>
+        </thead>
+        <tbody>
+          {inspectionList.map((elem, index) => (
+            <tr key={elem.id}>
+              <td>{index + 1}</td>
+              <td>{elem.surname}</td>
+              <td>{elem.name}</td>
+              <td>{elem.patronymic}</td>
+              <td>{elem.patientBirthDate}</td>
+              <td>{elem.phone}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
 
       <div className="d-grid gap-2 pb-3">
         <Button className="btn btn-link" variant="outline-light">
