@@ -4,6 +4,7 @@ import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { Repository, LessThan, Equal } from "typeorm";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { PatientEntity } from "./entities/patient.entity";
+import moment from "moment";
 
 @Injectable()
 export class MedicalExaminationService {

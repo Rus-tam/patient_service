@@ -26,8 +26,6 @@ const PatientCard = () => {
     });
   }, [setPatientData]);
 
-  console.log(patientData);
-
   // Поиск последних результатов осмотра
   let examinationId = 0;
   let lastExamination = {};
@@ -35,6 +33,11 @@ const PatientCard = () => {
     // eslint-disable-next-line no-unused-expressions
     examination.id > examinationId ? (lastExamination = examination) : null;
   });
+  if (lastExamination.AMDType === "dry") {
+    lastExamination.AMDType = "Сухая";
+  } else if (lastExamination.AMDType === "wet") {
+    lastExamination.AMDType = "Влажная";
+  }
 
   // Переадресация на страницу с данными медиц. осмотра
   const navigateToMedExam = (medExamId) => {
@@ -75,7 +78,7 @@ const PatientCard = () => {
       </p>
       <p>
         <strong>Тип ВМД: </strong>
-        {lastExamination.AMDType === "dry" ? "сухая" : "влажная"}
+        {lastExamination.AMDType}
       </p>
       <p>
         <strong>Острота зрения: </strong>
@@ -93,6 +96,7 @@ const PatientCard = () => {
         <strong>Результаты осмотра: </strong> <br />
         {lastExamination.examinationResult}
       </p>
+      <Button onClick={() => navigate({ pathname: `/patient/med-examination/${id}` })}>Новое обследование</Button>
       <hr />
 
       <h2 className="mb-3 pt-3">История осмотров: </h2>

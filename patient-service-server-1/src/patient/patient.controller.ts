@@ -83,6 +83,9 @@ export class PatientController {
     @Param("id") id: number,
     @Body() examination: MedicalExaminationDto,
   ): Promise<MedicalExaminationEntity> {
+    console.log("///////////");
+    console.log(examination);
+    console.log("////////////");
     const patientCard = await this.patientService.getPatientById(id);
     const medicalExam = await this.medicalExaminationService.createMedicalExamination(
       examination,

@@ -39,8 +39,8 @@ const MedExam = () => {
     const medExams = {
       AMDType: AMDType,
       visualAcuity: e.target[2].value,
-      injectionDate: moment(e.target[3].value).toDate(),
-      nextInspectionDate: moment(e.target[4].value).toDate(),
+      injectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
+      nextInspectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
       examinationResult: e.target[5].value,
     };
 
