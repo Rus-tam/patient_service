@@ -18,6 +18,12 @@ const NavBar = () => {
             <Nav.Link href="/new-patient-card">
               <h4>Новый пациент</h4>
             </Nav.Link>
+            <Nav.Link href="/seven-days-list">
+              <h4>Список на обзвон</h4>
+            </Nav.Link>
+            <Nav.Link href="missed-list">
+              <h4>Список пропустивших прием</h4>
+            </Nav.Link>
             <Nav.Link href="/find-patient">
               <h4>Найти пациента</h4>
             </Nav.Link>

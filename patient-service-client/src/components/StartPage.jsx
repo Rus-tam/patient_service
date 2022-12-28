@@ -82,7 +82,7 @@ const StartPage = () => {
           </thead>
           <tbody>
             {inspectionList.map((elem, index) => (
-              <tr key={elem.id}>
+              <tr key={elem.phone}>
                 <td>{index + 1}</td>
                 <td>{elem.surname}</td>
                 <td>{elem.name}</td>
@@ -96,12 +96,6 @@ const StartPage = () => {
             ))}
           </tbody>
         </Table>
-
-        <div className="d-grid gap-2 pb-3">
-          <Button className="btn btn-link" variant="outline-light">
-            Link Button
-          </Button>
-        </div>
       </div>
     );
   } else {
