@@ -37,7 +37,7 @@ const StartPage = () => {
 
         <h2 className="mb-3 pt-3">Пациенты на сегодня ({moment(new Date()).format("YYYY-MM-DD")})</h2>
         <hr />
-        <h2 className="mb-3 pt-3">Пациенты на инъекцию</h2>
+        <h3 className="mb-3 pt-3">Пациенты на инъекцию</h3>
         <Table striped>
           <thead>
             <tr>
@@ -67,7 +67,7 @@ const StartPage = () => {
           </tbody>
         </Table>
 
-        <h2 className="mb-3 pt-3">Пациенты на осмотр</h2>
+        <h3 className="mb-3 pt-3">Пациенты на осмотр</h3>
         <Table striped>
           <thead>
             <tr>

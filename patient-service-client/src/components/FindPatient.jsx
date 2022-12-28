@@ -10,8 +10,11 @@ const FindPatient = () => {
   const findPatientById = async (e) => {
     e.preventDefault();
     const surname = e.target[0].value.toUpperCase();
-    const resp = await axios.get(`http://localhost:5000/patient/surname/${surname}`);
-    setPatientList(resp.data);
+    if (surname) {
+      const resp = await axios.get(`http://localhost:5000/patient/surname/${surname}`);
+      setPatientList(resp.data);
+    }
+
     e.target[0].value = "";
   };
 

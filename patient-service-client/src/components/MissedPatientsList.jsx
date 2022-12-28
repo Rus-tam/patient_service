@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
 import axios from "axios";
-import moment from "moment/moment";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
