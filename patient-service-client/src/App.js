@@ -7,6 +7,7 @@ import MedExam from "./components/MedExam";
 import MedExamById from "./components/MedExamById";
 import FindPatient from "./components/FindPatient";
 import CallList from "./components/CallList";
+import MissedPatientsList from "./components/MissedPatientsList";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/medexam/:medExamId" element={<MedExamById />}></Route>
           <Route path="/find-patient" element={<FindPatient />}></Route>
           <Route path="/seven-days-list" element={<CallList />}></Route>
+          <Route path="/missed-list" element={<MissedPatientsList />}></Route>
         </Routes>
       </div>
     </Router>

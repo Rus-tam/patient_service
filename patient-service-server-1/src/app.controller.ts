@@ -1,7 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { PatientListInterface } from "./interfaces/patientList.interface";
-import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
 
 @Controller()
 export class AppController {
@@ -18,7 +17,7 @@ export class AppController {
   }
 
   @Get("check/get-missed-list")
-  async getMissedList(): Promise<MinPatientInfoInterface[]> {
+  async getMissedList(): Promise<PatientListInterface> {
     return this.appService.getMissedPatientList();
   }
 }

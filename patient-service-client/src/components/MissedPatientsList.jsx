@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
-import moment from "moment";
 import axios from "axios";
+import moment from "moment/moment";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const CallList = () => {
-  const [plusSevenDaysInjectionList, setPlusSevenDaysInjectionList] = useState([]);
-  const [plusSevenDaysInspectionList, setPlusSevenDaysInspectionList] = useState([]);
+const MissedPatientsList = () => {
+  const [missedInjectionList, setMissedInjectionList] = useState([]);
+  const [missedInspectionList, setMissedInspectionList] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/check/seven-days-list").then((resp) => {
-      setPlusSevenDaysInjectionList(resp.data.injectionDate);
-      setPlusSevenDaysInspectionList(resp.data.nextInspectionDate);
+    axios.get("http://localhost:5000/check/get-missed-list").then((resp) => {
+      setMissedInjectionList(resp.data.injectionDate);
+      setMissedInspectionList(resp.data.nextInspectionDate);
     });
-  }, [setPlusSevenDaysInjectionList, setPlusSevenDaysInspectionList]);
+  }, [setMissedInjectionList, setMissedInspectionList]);
 
   return (
     <div>
       <NavBar />
 
-      <h2 className="mb-3 pt-3">
-        Список пациентов на {moment(new Date()).add(7, "days").format("YYYY-MM-DD").toString()}
-      </h2>
+      <h2 className="mb-3 pt-3">Список пациентов пропустивших прием</h2>
       <hr />
 
-      <h3 className="mb-3 pt-3">Пициенты на инъекцию</h3>
+      <h3 className="mb-3 pt-3">Пациенты на инъекцию</h3>
 
       <Table striped>
         <thead>
@@ -40,7 +38,7 @@ const CallList = () => {
           </tr>
         </thead>
         <tbody>
-          {plusSevenDaysInjectionList.map((elem, index) => (
+          {missedInjectionList.map((elem, index) => (
             <tr key={elem.id}>
               <td>{index + 1}</td>
               <td>{elem.surname}</td>
@@ -57,7 +55,7 @@ const CallList = () => {
       </Table>
       <hr />
 
-      <h3 className="mb-3 pt-3">Пациенты на осмотр</h3>
+      <h3 className="mb-3 pt-3">Пациенты на обследование</h3>
       <Table striped>
         <thead>
           <tr>
@@ -71,7 +69,7 @@ const CallList = () => {
           </tr>
         </thead>
         <tbody>
-          {plusSevenDaysInspectionList.map((elem, index) => (
+          {missedInspectionList.map((elem, index) => (
             <tr key={elem.id}>
               <td>{index + 1}</td>
               <td>{elem.surname}</td>
@@ -90,4 +88,4 @@ const CallList = () => {
   );
 };
 
-export default CallList;
+export default MissedPatientsList;
