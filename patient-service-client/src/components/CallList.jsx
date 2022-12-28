@@ -4,6 +4,7 @@ import moment from "moment";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import TableComp from "./layout/Table";
 
 const CallList = () => {
   const [plusSevenDaysInjectionList, setPlusSevenDaysInjectionList] = useState([]);
@@ -26,66 +27,11 @@ const CallList = () => {
       <hr />
 
       <h3 className="mb-3 pt-3">Пициенты на инъекцию</h3>
-
-      <Table striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Дата рождения</th>
-            <th>Телефон</th>
-            <th>Карта пациента</th>
-          </tr>
-        </thead>
-        <tbody>
-          {plusSevenDaysInjectionList.map((elem, index) => (
-            <tr key={elem.id}>
-              <td>{index + 1}</td>
-              <td>{elem.surname}</td>
-              <td>{elem.name}</td>
-              <td>{elem.patronymic}</td>
-              <td>{elem.patientBirthDate}</td>
-              <td>{elem.phone}</td>
-              <td>
-                <Link to={{ pathname: `/patient-card/${elem.id}` }}>Открыть</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <TableComp list={plusSevenDaysInjectionList} />
       <hr />
 
       <h3 className="mb-3 pt-3">Пациенты на осмотр</h3>
-      <Table striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Дата рождения</th>
-            <th>Телефон</th>
-            <th>Карта пациента</th>
-          </tr>
-        </thead>
-        <tbody>
-          {plusSevenDaysInspectionList.map((elem, index) => (
-            <tr key={elem.id}>
-              <td>{index + 1}</td>
-              <td>{elem.surname}</td>
-              <td>{elem.name}</td>
-              <td>{elem.patronymic}</td>
-              <td>{elem.patientBirthDate}</td>
-              <td>{elem.phone}</td>
-              <td>
-                <Link to={{ pathname: `/patient-card/${elem.id}` }}>Открыть</Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <TableComp list={plusSevenDaysInspectionList} />
     </div>
   );
 };

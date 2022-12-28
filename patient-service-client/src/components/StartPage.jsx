@@ -4,6 +4,7 @@ import moment from "moment";
 import { Button, Table } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import TableComp from "./layout/Table";
 
 const StartPage = () => {
   const navigate = useNavigate();
@@ -38,64 +39,10 @@ const StartPage = () => {
         <h2 className="mb-3 pt-3">Пациенты на сегодня ({moment(new Date()).format("YYYY-MM-DD")})</h2>
         <hr />
         <h3 className="mb-3 pt-3">Пациенты на инъекцию</h3>
-        <Table striped>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Фамилия</th>
-              <th>Имя</th>
-              <th>Отчество</th>
-              <th>Дата рождения</th>
-              <th>Телефон</th>
-              <th>Карта пациента</th>
-            </tr>
-          </thead>
-          <tbody>
-            {injectionList.map((elem, index) => (
-              <tr key={elem.id}>
-                <td>{index + 1}</td>
-                <td>{elem.surname}</td>
-                <td>{elem.name}</td>
-                <td>{elem.patronymic}</td>
-                <td>{elem.patientBirthDate}</td>
-                <td>{elem.phone}</td>
-                <td>
-                  <Link to={{ pathname: `/patient-card/${elem.id}` }}>Открыть</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <TableComp list={injectionList} />
 
         <h3 className="mb-3 pt-3">Пациенты на осмотр</h3>
-        <Table striped>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Фамилия</th>
-              <th>Имя</th>
-              <th>Отчество</th>
-              <th>Дата рождения</th>
-              <th>Телефон</th>
-              <th>Карта пациента</th>
-            </tr>
-          </thead>
-          <tbody>
-            {inspectionList.map((elem, index) => (
-              <tr key={elem.phone}>
-                <td>{index + 1}</td>
-                <td>{elem.surname}</td>
-                <td>{elem.name}</td>
-                <td>{elem.patronymic}</td>
-                <td>{elem.patientBirthDate}</td>
-                <td>{elem.phone}</td>
-                <td>
-                  <Link to={{ pathname: `/patient-card/${elem.id}` }}>Открыть</Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <TableComp list={inspectionList} />
       </div>
     );
   } else {
