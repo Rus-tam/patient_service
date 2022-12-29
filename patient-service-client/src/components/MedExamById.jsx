@@ -25,8 +25,6 @@ const MedExamById = () => {
     });
   }, [setMedExam]);
 
-  console.log(medExam);
-
   return (
     <div>
       <NavBar />

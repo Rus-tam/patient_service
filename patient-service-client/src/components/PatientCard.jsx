@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NavBar from "./layout/Navbar";
 import axios from "axios";
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import moment from "moment";
 import Button from "react-bootstrap/Button";
 

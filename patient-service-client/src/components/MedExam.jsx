@@ -34,7 +34,6 @@ const MedExam = () => {
       AMDType = "dry";
     }
     const tomographyFile = e.target[6].files[0];
-    console.log(tomographyFile);
 
     const medExams = {
       AMDType: AMDType,
