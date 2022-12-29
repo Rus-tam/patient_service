@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import NavBar from "./layout/Navbar";
 import axios from "axios";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Table } from "react-bootstrap";
 import moment from "moment";
 import Button from "react-bootstrap/Button";
 
@@ -100,48 +100,53 @@ const PatientCard = () => {
       <hr />
 
       <h2 className="mb-3 pt-3">История осмотров: </h2>
+      <Table striped>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Дата осмотра</th>
+            <th>Результаты осмотра</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patientData.medicalExaminations.map((elem, index) => (
+            <tr key={elem.id}>
+              <td>{index + 1}</td>
+              <td>{moment(elem.createdAt).format("YYYY-MM-DD HH:MM")}</td>
+              <td>
+                <Link to={{ pathname: `/medexam/${elem.id}` }}>Открыть</Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
 
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col className="pb-2">
-            <strong>Дата осмотра: </strong>
-          </Col>
-          <Col className="pb-2">
-            <strong>Дата томографии: </strong>
-          </Col>
-        </Row>
-
-        <Row className="justify-content-md-center">
-          <Col>
-            <ul>
-              {patientData.medicalExaminations.map((element) => (
-                <li key={element.id} className="pb-2">
-                  <Button onClick={() => navigateToMedExam(id, element.id)} variant="outline-success">
-                    {moment(element.createdAt).format("YYYY-MM-DD").toString()}
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </Col>
-
-          <Col>
-            <ul>
-              {patientData.tomography.map((element) => (
-                <li key={element.id} className="pb-2">
-                  <Button
-                    onClick={() =>
-                      downloadAndRedirect(`http://localhost:5000/patient/tomography/${element.id}/download`)
-                    }
-                    variant="outline-success"
-                  >
-                    {moment(element.createdAt).format("YYYY-MM-DD").toString()}
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </Col>
-        </Row>
-      </Container>
+      <h2 className="mb-3 pt-3">Снимки томографии: </h2>
+      <Table striped>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Дата томографии</th>
+            <th>Результат томографии</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patientData.tomography.map((elem, index) => (
+            <tr key={elem.id}>
+              <td>{index + 1}</td>
+              <td>{moment(elem.createdDate).format("YYYY-MM-DD HH:MM")}</td>
+              <td>
+                <Link
+                  to={""}
+                  onClick={() => downloadAndRedirect(`http://localhost:5000/patient/tomography/${elem.id}/download`)}
+                >
+                  Загрузить
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
     </div>
   );
 };
