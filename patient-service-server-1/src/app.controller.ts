@@ -25,7 +25,7 @@ export class AppController {
 
   @Post("playground")
   async sendMessage(@Body() patientInfo: MinPatientInfoInterface[]) {
-    const date = moment(new Date(), "DD.MM.YYYY").toDate();
+    const date: string = moment(new Date()).format("DD-MM-YYYY").toString();
     await this.appService.sendMessageToWhatsapp(patientInfo, date);
   }
 }

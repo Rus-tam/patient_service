@@ -67,13 +67,12 @@ export class AppService {
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
-  async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface[], date: Date) {
+  async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface[], date: string) {
     let name: string = "";
     let surname: string = "";
     let patronymic: string = "";
     let phone: string = "";
     let FIO: string = "";
-    let dateStr = date.toString();
 
     patientInfo.forEach((patient) => {
       phone += patient.phone + ",";
@@ -82,7 +81,7 @@ export class AppService {
 
     const FIOtotal = Buffer.from(FIO, "utf-8").toString();
 
-    const process: any = spawn("python", ["./src/python/script.py", FIOtotal, phone, dateStr]);
+    const process: any = spawn("python", ["./src/python/script.py", FIOtotal, phone, date]);
 
     process.stdout.on("data", (data) => {
       console.log("typescript data", data.toString());

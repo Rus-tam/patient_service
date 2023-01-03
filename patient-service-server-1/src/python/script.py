@@ -12,11 +12,11 @@ phones = phone_numbers.split(',')
 
 # print(phones[:(len(phones) - 1)])
 
-for i in range(0, len(phones)):
+for i in range(0, len(phones[:(len(phones) - 1)])):
     current_time = datetime.datetime.now()
     hour = current_time.hour
-    minute = current_time.minute + 1
-    message = f"Уважаемый {names[i]}, приглашаем вас посетить нашу клинику {date[i]}"
+    minute = current_time.minute + 2
+    message = f"Уважаемый {names[i]}, приглашаем вас посетить нашу клинику {date}"
     pywhatkit.sendwhatmsg(phones[i], message, hour, minute, 32, True, 2)
 
 
