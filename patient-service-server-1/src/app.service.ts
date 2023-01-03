@@ -3,6 +3,7 @@ import { MedicalExaminationService } from "./patient/medicalExamination.service"
 import { PatientListInterface } from "./interfaces/patientList.interface";
 import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
 import { MedicalExaminationEntity } from "./patient/entities/medicalExamination.entity";
+import { spawn } from "child_process";
 const moment = require("moment");
 
 @Injectable()
@@ -63,6 +64,25 @@ export class AppService {
     });
 
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
+  }
+
+  async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface) {
+    const name = patientInfo.name;
+    const phone = patientInfo.phone;
+    const message = Buffer.from("Привет. Как дела?", "utf-8").toString();
+    const process: any = spawn("python", ["./src/python/script.py", phone, message]);
+
+    process.stdout.on("data", (data) => {
+      console.log("typescript data", data.toString());
+    });
+
+    process.stderr.on("data", (data) => {
+      console.log("stderr", data.toString());
+    });
+
+    process.on("close", (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
   }
 
   makeMinPatientInfoObj(medExam: MedicalExaminationEntity): MinPatientInfoInterface {

@@ -4,6 +4,7 @@
 .env
 start-server.bat
 Текстовый документ.txt
+PyWhatKit_DB.txt
 
 # Logs
 logs
