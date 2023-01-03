@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
 import moment from "moment";
 import axios from "axios";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import TableComp from "./layout/Table";
 
@@ -16,6 +16,10 @@ const CallList = () => {
       setPlusSevenDaysInspectionList(resp.data.nextInspectionDate);
     });
   }, [setPlusSevenDaysInjectionList, setPlusSevenDaysInspectionList]);
+
+  const sendMessage = async () => {
+    const resp = await axios.get("http://localhost:5000/send-message");
+  };
 
   return (
     <div>
@@ -32,6 +36,12 @@ const CallList = () => {
 
       <h3 className="mb-3 pt-3">Пациенты на осмотр</h3>
       <TableComp list={plusSevenDaysInspectionList} />
+
+      <div className="pt-3">
+        <Button variant="primary" type="submit" onClick={sendMessage}>
+          Оповестить по Whatsapp
+        </Button>
+      </div>
     </div>
   );
 };

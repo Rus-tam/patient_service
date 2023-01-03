@@ -23,9 +23,17 @@ export class AppController {
     return this.appService.getMissedPatientList();
   }
 
-  @Post("playground")
-  async sendMessage(@Body() patientInfo: MinPatientInfoInterface[]) {
-    const date: string = moment(new Date()).format("DD-MM-YYYY").toString();
-    await this.appService.sendMessageToWhatsapp(patientInfo, date);
+  @Get("send-message")
+  async sendMessage() {
+    const patientsList = await this.appService.sevenDaysPatientList();
+    const patients = [...patientsList.injectionDate, ...patientsList.nextInspectionDate];
+    const plusSevenDays = moment(new Date()).add(7, "days").format("DD-MM-YYYY").toString();
+    await this.appService.sendMessageToWhatsapp(patients, plusSevenDays);
   }
+
+  // @Post("playground")
+  // async sendMessage(@Body() patientInfo: MinPatientInfoInterface[]) {
+  //   const date: string = moment(new Date()).format("DD-MM-YYYY").toString();
+  //   await this.appService.sendMessageToWhatsapp(patientInfo, date);
+  // }
 }

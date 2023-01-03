@@ -76,7 +76,7 @@ export class AppService {
 
     patientInfo.forEach((patient) => {
       phone += patient.phone + ",";
-      FIO += `${patient.surname}` + " " + `${patient.name}` + " " + `${patient.patronymic}` + ",";
+      FIO += `${patient.name}` + " " + `${patient.patronymic}` + ",";
     });
 
     const FIOtotal = Buffer.from(FIO, "utf-8").toString();
