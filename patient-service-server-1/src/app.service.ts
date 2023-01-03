@@ -4,6 +4,7 @@ import { PatientListInterface } from "./interfaces/patientList.interface";
 import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
 import { MedicalExaminationEntity } from "./patient/entities/medicalExamination.entity";
 import { spawn } from "child_process";
+import { copyPathResolve } from "@nestjs/cli/lib/compiler/helpers/copy-path-resolve";
 const moment = require("moment");
 
 @Injectable()
@@ -66,11 +67,22 @@ export class AppService {
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
-  async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface) {
-    const name = patientInfo.name;
-    const phone = patientInfo.phone;
-    const message = Buffer.from("Привет. Как дела?", "utf-8").toString();
-    const process: any = spawn("python", ["./src/python/script.py", phone, message]);
+  async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface[], date: Date) {
+    let name: string = "";
+    let surname: string = "";
+    let patronymic: string = "";
+    let phone: string = "";
+    let FIO: string = "";
+    let dateStr = date.toString();
+
+    patientInfo.forEach((patient) => {
+      phone += patient.phone + ",";
+      FIO += `${patient.surname}` + " " + `${patient.name}` + " " + `${patient.patronymic}` + ",";
+    });
+
+    const FIOtotal = Buffer.from(FIO, "utf-8").toString();
+
+    const process: any = spawn("python", ["./src/python/script.py", FIOtotal, phone, dateStr]);
 
     process.stdout.on("data", (data) => {
       console.log("typescript data", data.toString());

@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { PatientListInterface } from "./interfaces/patientList.interface";
 import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
+const moment = require("moment");
 
 @Controller()
 export class AppController {
@@ -23,7 +24,8 @@ export class AppController {
   }
 
   @Post("playground")
-  async sendMessage(@Body() patientInfo: MinPatientInfoInterface) {
-    await this.appService.sendMessageToWhatsapp(patientInfo);
+  async sendMessage(@Body() patientInfo: MinPatientInfoInterface[]) {
+    const date = moment(new Date(), "DD.MM.YYYY").toDate();
+    await this.appService.sendMessageToWhatsapp(patientInfo, date);
   }
 }
