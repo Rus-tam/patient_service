@@ -19,6 +19,8 @@ const CallList = () => {
 
   const sendMessage = async () => {
     const resp = await axios.get("http://localhost:5000/send-message");
+    console.log(resp.status);
+    window.location.reload();
   };
 
   return (

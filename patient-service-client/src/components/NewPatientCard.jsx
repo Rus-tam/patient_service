@@ -57,7 +57,7 @@ const NewPatientCard = () => {
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="phone">
-            <Form.Label>Номер телефона</Form.Label>
+            <Form.Label>Номер телефона в формате +7XXXXXXXXXX</Form.Label>
             <Form.Control type="tel" name="phone" placeholder="Номер телефона" />
           </Form.Group>
 
