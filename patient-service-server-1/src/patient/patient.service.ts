@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
+const moment = require("moment");
 
 @Injectable()
 export class PatientService {
@@ -87,9 +88,9 @@ export class PatientService {
     });
   }
 
-  async setLastVisit(date: Date, id: number): Promise<PatientEntity> {
+  async setLastVisit(id: number): Promise<PatientEntity> {
     const patient = await this.patientRepository.findOne({ where: { id } });
-    patient.lastVisit = date;
+    patient.lastVisit = moment(new Date(), "YYYY-MM-DD").toDate();
 
     await this.patientRepository.save(patient);
     return patient;

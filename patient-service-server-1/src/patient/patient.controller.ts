@@ -20,7 +20,6 @@ import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface"
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { Readable } from "stream";
 import { Response } from "express";
-const moment = require("moment");
 
 @Controller("patient")
 export class PatientController {
@@ -69,13 +68,6 @@ export class PatientController {
     return this.medicalExaminationService.getAllMedExaminations();
   }
 
-  // Временно потом удалить
-  @Post("/:id")
-  async setLastDate(@Param("id") id: number) {
-    const parsedDate = moment(new Date()).format("YYYY-MM-DD");
-    return this.patientService.setLastVisit(parsedDate, id);
-  }
-
   @Get("med-exam/:id")
   async getMedExamById(@Param("id") id: number): Promise<MedicalExaminationEntity> {
     return this.medicalExaminationService.getById(id);
@@ -91,7 +83,8 @@ export class PatientController {
     @Param("id") id: number,
     @Body() examination: MedicalExaminationDto,
   ): Promise<MedicalExaminationEntity> {
-    const patientCard = await this.patientService.getPatientById(id);
+    // const patientCard = await this.patientService.getPatientById(id);
+    const patientCard = await this.patientService.setLastVisit(id);
     const medicalExam = await this.medicalExaminationService.createMedicalExamination(
       examination,
       patientCard,
