@@ -55,17 +55,22 @@ export class AppService {
   async getMissedPatientList(): Promise<PatientListInterface> {
     const AMDWet: MinPatientInfoInterface[] = [];
     const AMDDry: MinPatientInfoInterface[] = [];
-    const patients: MinPatientInfoInterface[] = [];
-    const currentDate = moment(new Date(), "DD.MM.YYYY").toDate();
-    // const missedMedExam = await this.medicalExaminationsService.findByMissedDates(currentDate);
-    // missedMedExam.forEach((elem) => {
-    //   const minPatientInfo = this.makeMinPatientInfoObj(elem);
-    //   if (minPatientInfo.AMDType === "wet") {
-    //     AMDWet.push(minPatientInfo);
-    //   } else {
-    //     AMDDry.push(minPatientInfo);
-    //   }
-    // });
+    const missedPatientsList = await this.patientService.getMissedVisitPatients();
+
+    for (let patient of missedPatientsList) {
+      let examId = 0;
+      patient.medicalExaminations.forEach((exam) => {
+        exam.id > examId ? (examId = exam.id) : null;
+      });
+
+      const missedExam = await this.medicalExaminationsService.getById(examId);
+      const minPatientInfo = this.makeMinPatientInfoObj(missedExam);
+      if (minPatientInfo.AMDType === "wet") {
+        AMDWet.push(minPatientInfo);
+      } else {
+        AMDDry.push(minPatientInfo);
+      }
+    }
 
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }

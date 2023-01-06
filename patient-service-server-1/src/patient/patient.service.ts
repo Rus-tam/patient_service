@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PatientEntity } from "./entities/patient.entity";
-import { Repository } from "typeorm";
+import { LessThan, Repository } from "typeorm";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
@@ -94,5 +94,13 @@ export class PatientService {
 
     await this.patientRepository.save(patient);
     return patient;
+  }
+
+  async getMissedVisitPatients(): Promise<PatientEntity[]> {
+    const currentDate = moment(new Date(), "DD.MM.YYYY").toDate();
+    return this.patientRepository.find({
+      relations: ["medicalExaminations"],
+      where: [{ lastVisit: LessThan(currentDate) }],
+    });
   }
 }

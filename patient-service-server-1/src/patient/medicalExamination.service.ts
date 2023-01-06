@@ -46,13 +46,6 @@ export class MedicalExaminationService {
     });
   }
 
-  async findByMissedDates(currentDate: Date) {
-    return this.medicalExaminationRepository.find({
-      relations: ["patient"],
-      where: [{ injectionDate: LessThan(currentDate), nextInspectionDate: LessThan(currentDate) }],
-    });
-  }
-
   async getById(id: number): Promise<MedicalExaminationEntity> {
     return this.medicalExaminationRepository.findOne({
       relations: ["patient"],
