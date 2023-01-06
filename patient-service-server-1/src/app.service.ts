@@ -4,12 +4,15 @@ import { PatientListInterface } from "./interfaces/patientList.interface";
 import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
 import { MedicalExaminationEntity } from "./patient/entities/medicalExamination.entity";
 import { spawn } from "child_process";
-import { copyPathResolve } from "@nestjs/cli/lib/compiler/helpers/copy-path-resolve";
+import { PatientService } from "./patient/patient.service";
 const moment = require("moment");
 
 @Injectable()
 export class AppService {
-  constructor(private readonly medicalExaminationsService: MedicalExaminationService) {}
+  constructor(
+    private readonly medicalExaminationsService: MedicalExaminationService,
+    private readonly patientService: PatientService,
+  ) {}
 
   async sevenDaysPatientList(): Promise<PatientListInterface> {
     const AMDWet: MinPatientInfoInterface[] = [];
@@ -54,15 +57,15 @@ export class AppService {
     const AMDDry: MinPatientInfoInterface[] = [];
     const patients: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date(), "DD.MM.YYYY").toDate();
-    const missedMedExam = await this.medicalExaminationsService.findByMissedDates(currentDate);
-    missedMedExam.forEach((elem) => {
-      const minPatientInfo = this.makeMinPatientInfoObj(elem);
-      if (minPatientInfo.AMDType === "wet") {
-        AMDWet.push(minPatientInfo);
-      } else {
-        AMDDry.push(minPatientInfo);
-      }
-    });
+    // const missedMedExam = await this.medicalExaminationsService.findByMissedDates(currentDate);
+    // missedMedExam.forEach((elem) => {
+    //   const minPatientInfo = this.makeMinPatientInfoObj(elem);
+    //   if (minPatientInfo.AMDType === "wet") {
+    //     AMDWet.push(minPatientInfo);
+    //   } else {
+    //     AMDDry.push(minPatientInfo);
+    //   }
+    // });
 
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }

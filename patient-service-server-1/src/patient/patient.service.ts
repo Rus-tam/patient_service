@@ -37,9 +37,9 @@ export class PatientService {
       phone: cardData.phone,
       medicalExaminations: [],
       tomography: [],
-      missedInjection: false,
       createdAt: new Date(),
       updatedAt: null,
+      lastVisit: null,
     });
 
     await this.patientRepository.save(newCard);
@@ -85,5 +85,13 @@ export class PatientService {
       where: { id },
       relations: ["medicalExaminations", "tomography"],
     });
+  }
+
+  async setLastVisit(date: Date, id: number): Promise<PatientEntity> {
+    const patient = await this.patientRepository.findOne({ where: { id } });
+    patient.lastVisit = date;
+
+    await this.patientRepository.save(patient);
+    return patient;
   }
 }

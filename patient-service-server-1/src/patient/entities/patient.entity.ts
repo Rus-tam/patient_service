@@ -1,7 +1,7 @@
-import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from 'typeorm';
-import { DeleteDateColumn } from 'typeorm';
-import { MedicalExaminationEntity } from './medicalExamination.entity';
-import { TomographyEntity } from './tomography.entity';
+import { Column, PrimaryGeneratedColumn, Entity, OneToMany } from "typeorm";
+import { DeleteDateColumn } from "typeorm";
+import { MedicalExaminationEntity } from "./medicalExamination.entity";
+import { TomographyEntity } from "./tomography.entity";
 
 @Entity()
 export class PatientEntity {
@@ -17,23 +17,20 @@ export class PatientEntity {
   @Column()
   patronymic: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: "date" })
   patientBirthDate: Date;
 
   @Column()
   phone: string;
 
-  @OneToMany(
-    () => MedicalExaminationEntity,
-    (medicalExaminations) => medicalExaminations.patient,
-  )
+  @OneToMany(() => MedicalExaminationEntity, (medicalExaminations) => medicalExaminations.patient)
   medicalExaminations: MedicalExaminationEntity[];
 
   @OneToMany(() => TomographyEntity, (tomography) => tomography.patient)
   tomography: TomographyEntity[];
 
-  @Column()
-  missedInjection: boolean;
+  @Column({ nullable: true })
+  lastVisit: Date | null;
 
   @Column()
   createdAt: Date;
