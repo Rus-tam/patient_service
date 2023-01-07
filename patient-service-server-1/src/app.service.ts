@@ -5,6 +5,7 @@ import { MinPatientInfoInterface } from "./interfaces/minPatientInfo.interface";
 import { MedicalExaminationEntity } from "./patient/entities/medicalExamination.entity";
 import { spawn } from "child_process";
 import { PatientService } from "./patient/patient.service";
+import { PatientEntity } from "./patient/entities/patient.entity";
 const moment = require("moment");
 
 @Injectable()
@@ -52,23 +53,34 @@ export class AppService {
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
-  async getMissedPatientList(): Promise<PatientListInterface> {
+  async getMissedPatientList() {
+    const missedPatients: PatientEntity[] = [];
     const AMDWet: MinPatientInfoInterface[] = [];
     const AMDDry: MinPatientInfoInterface[] = [];
-    const missedPatientsList = await this.patientService.getMissedVisitPatients();
 
-    for (let patient of missedPatientsList) {
+    const allPatients = await this.patientService.getAllPatientCards();
+    const examIds = [];
+    const lastExams: MedicalExaminationEntity[] = [];
+    allPatients.forEach((patient) => {
       let examId = 0;
       patient.medicalExaminations.forEach((exam) => {
         exam.id > examId ? (examId = exam.id) : null;
       });
-
-      const missedExam = await this.medicalExaminationsService.getById(examId);
-      const minPatientInfo = this.makeMinPatientInfoObj(missedExam);
-      if (minPatientInfo.AMDType === "wet") {
-        AMDWet.push(minPatientInfo);
-      } else {
-        AMDDry.push(minPatientInfo);
+      examIds.push(examId);
+    });
+    for (let id of examIds) {
+      const lastExam = await this.medicalExaminationsService.getById(id);
+      if (
+        moment(new Date()).isAfter(lastExam.injectionDate) ||
+        moment(new Date()).isAfter(lastExam.nextInspectionDate)
+      ) {
+        const minPatientInfo = this.makeMinPatientInfoObj(lastExam);
+        if (minPatientInfo.AMDType === "wet") {
+          AMDWet.push(minPatientInfo);
+        } else {
+          AMDDry.push(minPatientInfo);
+        }
+        lastExams.push(lastExam);
       }
     }
 

@@ -50,7 +50,7 @@ export class PatientService {
 
   async getAllPatientCards(): Promise<PatientEntity[]> {
     const patientCards = await this.patientRepository.find({
-      relations: ["medicalExaminations", "tomography"],
+      relations: ["medicalExaminations"],
     });
 
     if (patientCards.length > 0) {
@@ -94,13 +94,5 @@ export class PatientService {
 
     await this.patientRepository.save(patient);
     return patient;
-  }
-
-  async getMissedVisitPatients(): Promise<PatientEntity[]> {
-    const currentDate = moment(new Date(), "DD.MM.YYYY").toDate();
-    return this.patientRepository.find({
-      relations: ["medicalExaminations"],
-      where: [{ lastVisit: LessThan(currentDate) }],
-    });
   }
 }

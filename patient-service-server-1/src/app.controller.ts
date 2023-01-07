@@ -19,7 +19,7 @@ export class AppController {
   }
 
   @Get("check/get-missed-list")
-  async getMissedList(): Promise<PatientListInterface> {
+  async getMissedList() {
     return this.appService.getMissedPatientList();
   }
 
