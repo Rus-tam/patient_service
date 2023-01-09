@@ -67,23 +67,51 @@ const MedExam = () => {
   const uploadMedExams = async (e) => {
     e.preventDefault();
 
+    console.log(e);
+
+    const formData = new FormData();
+    let tomographyFile;
+    let medExams = {};
+    let formOfDisease = "";
+
     if (e.target[0].checked) {
       AMDType = "wet";
     } else {
       AMDType = "dry";
     }
-    const tomographyFile = e.target[6].files[0];
 
-    const medExams = {
-      AMDType: AMDType,
-      visualAcuity: e.target[2].value,
-      injectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
-      nextInspectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
-      examinationResult: e.target[5].value,
-    };
+    if (AMDType === "wet") {
+      tomographyFile = e.target[6].files[0];
 
-    const formData = new FormData();
-    formData.append("file", tomographyFile);
+      medExams = {
+        AMDType: AMDType,
+        visualAcuity: e.target[2].value,
+        injectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
+        nextInspectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
+        examinationResult: e.target[5].value,
+      };
+
+      formData.append("file", tomographyFile);
+    } else {
+      tomographyFile = e.target[9].files[0];
+
+      e.target[6].checked ? (formOfDisease = "primary") : (formOfDisease = "secondary");
+
+      medExams = {
+        AMDType: AMDType,
+        visualAcuity: e.target[2].value,
+        injectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
+        nextInspectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
+        examinationResult: e.target[5].value,
+        formOfDisease: formOfDisease,
+        VEGFTherapyHistory: e.target[8].value,
+      };
+
+      formData.append("file", tomographyFile);
+    }
+
+    console.log(formData);
+
     try {
       const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
       const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
