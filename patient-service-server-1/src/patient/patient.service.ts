@@ -61,6 +61,10 @@ export class PatientService {
     }
   }
 
+  async getAllPatientsCardsMin(): Promise<PatientEntity[]> {
+    return await this.patientRepository.find();
+  }
+
   async getPatientBySurname(surname: string): Promise<MinPatientInfoInterface[]> {
     const minPatientsInfo: MinPatientInfoInterface[] = [];
     const patients = await this.patientRepository.find({

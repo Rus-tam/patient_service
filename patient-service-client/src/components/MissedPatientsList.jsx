@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
 import axios from "axios";
-import { Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import TableComp from "./layout/Table";
 
 const MissedPatientsList = () => {

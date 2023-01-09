@@ -12,20 +12,20 @@ const NavBar = () => {
             <h4>Patient Service</h4>
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">
-              <h4>Домой</h4>
-            </Nav.Link>
             <Nav.Link href="/new-patient-card">
-              <h4>Новый пациент</h4>
+              <h5>Новый пациент</h5>
             </Nav.Link>
             <Nav.Link href="/seven-days-list">
-              <h4>Список на обзвон</h4>
+              <h5>Список на обзвон</h5>
             </Nav.Link>
             <Nav.Link href="missed-list">
-              <h4>Список пропустивших прием</h4>
+              <h5>Список пропустивших прием</h5>
             </Nav.Link>
             <Nav.Link href="/find-patient">
-              <h4>Найти пациента</h4>
+              <h5>Найти пациента</h5>
+            </Nav.Link>
+            <Nav.Link href="/all-patients">
+              <h5>Все пациенты</h5>
             </Nav.Link>
           </Nav>
         </Container>

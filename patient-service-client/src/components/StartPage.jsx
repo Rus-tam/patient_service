@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "./layout/Navbar";
 import moment from "moment";
-import { Button, Table } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import TableComp from "./layout/Table";
 
 const StartPage = () => {
-  const navigate = useNavigate();
   const [injectionList, setInjectionList] = useState([
     {
       name: "",

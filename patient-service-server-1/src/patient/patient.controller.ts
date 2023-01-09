@@ -39,6 +39,11 @@ export class PatientController {
     return this.patientService.getAllPatientCards();
   }
 
+  @Get("/cards-min-info")
+  async getAllPatientsCardsMin(): Promise<PatientEntity[]> {
+    return this.patientService.getAllPatientsCardsMin();
+  }
+
   @Get("/surname/:surname")
   async getPatientBySurname(@Param("surname") surname: string): Promise<MinPatientInfoInterface[]> {
     return this.patientService.getPatientBySurname(surname);

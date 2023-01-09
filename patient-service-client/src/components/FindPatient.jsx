@@ -7,12 +7,16 @@ import { Link } from "react-router-dom";
 
 const FindPatient = () => {
   const [patientList, setPatientList] = useState([]);
-  const findPatientById = async (e) => {
+  const findPatientBySurname = async (e) => {
     e.preventDefault();
     const surname = e.target[0].value.toUpperCase();
     if (surname) {
       const resp = await axios.get(`http://localhost:5000/patient/surname/${surname}`);
-      setPatientList(resp.data);
+      if (resp.status === 200) {
+        setPatientList(resp.data);
+      } else {
+        alert("Проблемы с базой данных");
+      }
     }
 
     e.target[0].value = "";
@@ -53,7 +57,7 @@ const FindPatient = () => {
     <div>
       <NavBar />
       <h2 className="mb-3 pt-3">Поиск пациента по фамилии</h2>
-      <Form className="mb-3" onSubmit={findPatientById}>
+      <Form className="mb-3" onSubmit={findPatientBySurname}>
         <Form.Group className="mb-3" controlId="findBySurname">
           <Form.Control type="text" placeholder="Введите фамилию пациента"></Form.Control>
         </Form.Group>
