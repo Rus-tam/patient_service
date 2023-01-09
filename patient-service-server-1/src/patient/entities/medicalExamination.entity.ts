@@ -24,6 +24,12 @@ export class MedicalExaminationEntity {
   @Column({ type: "text" })
   examinationResult: string;
 
+  @Column({ nullable: true })
+  formOfDisease: string;
+
+  @Column({ nullable: true, type: "text" })
+  VEGFTherapyHistory: string;
+
   @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.medicalExaminations)
   patient: PatientEntity;
 

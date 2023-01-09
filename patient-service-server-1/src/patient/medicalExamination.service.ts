@@ -20,6 +20,8 @@ export class MedicalExaminationService {
       injectionDate: examination.injectionDate,
       nextInspectionDate: examination.nextInspectionDate,
       examinationResult: examination.examinationResult,
+      formOfDisease: examination.formOfDisease,
+      VEGFTherapyHistory: examination.VEGFTherapyHistory,
       patient,
     });
 

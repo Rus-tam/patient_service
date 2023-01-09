@@ -63,7 +63,6 @@ const MedExam = () => {
       </Form.Group>
     </div>
   );
-  console.log(additionalFields);
 
   const uploadMedExams = async (e) => {
     e.preventDefault();

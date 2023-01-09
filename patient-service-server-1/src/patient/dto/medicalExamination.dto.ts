@@ -1,4 +1,5 @@
 import { IsDate, IsString } from "class-validator";
+import { Column } from "typeorm";
 
 export class MedicalExaminationDto {
   @IsString()
@@ -15,4 +16,10 @@ export class MedicalExaminationDto {
 
   @IsString()
   examinationResult: string;
+
+  @IsString()
+  formOfDisease: string;
+
+  @IsString()
+  VEGFTherapyHistory: string;
 }

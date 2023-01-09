@@ -90,12 +90,7 @@ export class PatientController {
   ): Promise<MedicalExaminationEntity> {
     // const patientCard = await this.patientService.getPatientById(id);
     const patientCard = await this.patientService.setLastVisit(id);
-    const medicalExam = await this.medicalExaminationService.createMedicalExamination(
-      examination,
-      patientCard,
-    );
-
-    return medicalExam;
+    return this.medicalExaminationService.createMedicalExamination(examination, patientCard);
   }
 
   @Post("/:id/tomography")
