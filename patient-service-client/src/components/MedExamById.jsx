@@ -169,6 +169,7 @@ const MedExamById = () => {
       </Form>
 
       <Button
+        className="mb-3"
         onClick={() =>
           navigate({
             pathname: `/patient-card/${medExam.patient.id}`,
