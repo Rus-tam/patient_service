@@ -62,6 +62,27 @@ export class MedicalExaminationService {
     });
   }
 
+  async updateMedExam(id: number, update: MedicalExaminationDto) {
+    const examination = await this.getById(id);
+
+    const updatedExam = {
+      id: id,
+      createdAt: examination.createdAt,
+      AMDType: examination.AMDType,
+      visualAcuity: update.visualAcuity,
+      injectionDate: update.injectionDate,
+      nextInspectionDate: update.nextInspectionDate,
+      examinationResult: update.examinationResult,
+      formOfDisease: update.formOfDisease,
+      VEGFTherapyHistory: update.VEGFTherapyHistory,
+      patient: examination.patient,
+    };
+
+    await this.medicalExaminationRepository.update(id, updatedExam);
+
+    return updatedExam;
+  }
+
   async getById(id: number): Promise<MedicalExaminationEntity> {
     return this.medicalExaminationRepository.findOne({
       relations: ["patient"],

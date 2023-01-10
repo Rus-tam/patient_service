@@ -8,6 +8,7 @@ import {
   UploadedFile,
   Res,
   StreamableFile,
+  Put,
 } from "@nestjs/common";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
@@ -71,6 +72,11 @@ export class PatientController {
   async getAllMedExams() {
     console.log(await this.medicalExaminationService.getAllMedExaminations());
     return this.medicalExaminationService.getAllMedExaminations();
+  }
+
+  @Put("med-exam/:id/update")
+  async updateMedExamById(@Param("id") id: number, @Body() update: MedicalExaminationDto) {
+    return this.medicalExaminationService.updateMedExam(id, update);
   }
 
   @Get("med-exam/:id")

@@ -4,7 +4,6 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import moment from "moment";
 
 const MedExamById = () => {
   const navigate = useNavigate();
@@ -22,8 +21,8 @@ const MedExamById = () => {
     VEGFTherapyHistory: "",
   });
 
-  const [injectionDate, setInjectionDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
-  const [nextInspectionDate, setNextInspectionDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
+  const [injectionDate, setInjectionDate] = useState();
+  const [nextInspectionDate, setNextInspectionDate] = useState();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/patient/med-exam/${medExamId}`).then((resp) => {
@@ -33,7 +32,28 @@ const MedExamById = () => {
     });
   }, [setMedExam, setInjectionDate, setNextInspectionDate]);
 
-  const saveChanges = (e) => {};
+  const saveChanges = async (e) => {
+    e.preventDefault();
+    console.log(e);
+
+    if (medExam.AMDType === "wet") {
+      const update = {
+        visualAcuity: e.target[0].value,
+        injectionDate: e.target[1].value,
+        nextInspectionDate: e.target[2].value,
+        examinationResult: e.target[3].value,
+      };
+
+      const resp = await axios.put(`http://localhost:5000/patient/med-exam/${medExamId}/update`, update);
+      if (resp.status === 200) {
+        navigate({
+          pathname: `/patient-card/${medExam.patient.id}`,
+        });
+      } else {
+        alert("Произошла ошибка");
+      }
+    }
+  };
 
   const setInjection = (e) => {
     setInjectionDate(e.target.value);
@@ -73,7 +93,13 @@ const MedExamById = () => {
             <Form.Label>
               <strong>Дата инъекции: </strong>
             </Form.Label>
-            <Form.Control type="date" name="injectionDate" placeholder="Дата инъекции" defaultValue={injectionDate} />
+            <Form.Control
+              type="date"
+              name="injectionDate"
+              placeholder="Дата инъекции"
+              onChange={setInjection}
+              defaultValue={injectionDate}
+            />
           </Form.Group>
         )}
 
