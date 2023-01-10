@@ -34,9 +34,9 @@ const PatientCard = () => {
     examination.id > examinationId ? (lastExamination = examination) : null;
   });
   if (lastExamination.AMDType === "dry") {
-    lastExamination.AMDType = "Сухая";
+    lastExamination.AMDType = "dry";
   } else if (lastExamination.AMDType === "wet") {
-    lastExamination.AMDType = "Влажная";
+    lastExamination.AMDType = "wet";
   }
 
   // Переадресация на страницу с данными медиц. осмотра
@@ -78,20 +78,37 @@ const PatientCard = () => {
       </p>
       <p>
         <strong>Тип ВМД: </strong>
-        {lastExamination.AMDType}
+        {lastExamination.AMDType === "wet" ? "Влажная" : "Сухая"}
       </p>
       <p>
         <strong>Острота зрения: </strong>
         {lastExamination.visualAcuity}
       </p>
-      <p>
-        <strong>Назначенная дата инъекции: </strong>
-        {lastExamination.injectionDate}
-      </p>
+      {lastExamination.AMDType === "wet" && (
+        <p>
+          <strong>Назначенная дата инъекции: </strong>
+          {lastExamination.injectionDate}
+        </p>
+      )}
+
       <p>
         <strong>Назначенная дата осмотра: </strong>
         {lastExamination.nextInspectionDate}
       </p>
+
+      {lastExamination.AMDType === "dry" && (
+        <div>
+          <p>
+            <strong>Форма заболевания: </strong>
+            {lastExamination.formOfDisease === "primary" ? "Первичная" : "Вторичная"}
+          </p>
+          <p>
+            <strong>Данные по ранее проводимой анти-VEGF терапии: </strong> <br />
+            {lastExamination.VEGFTherapyHistory}
+          </p>
+        </div>
+      )}
+
       <p>
         <strong>Результаты осмотра: </strong> <br />
         {lastExamination.examinationResult}
