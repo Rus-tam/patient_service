@@ -22,7 +22,11 @@ const PatientCard = () => {
   const id = param.id;
   useEffect(() => {
     axios.get(`http://localhost:5000/patient/${id}`).then((resp) => {
-      setPatientData(resp.data);
+      if (resp.status === 200) {
+        setPatientData(resp.data);
+      } else {
+        alert("Произошла ошибка");
+      }
     });
   }, [setPatientData]);
 
