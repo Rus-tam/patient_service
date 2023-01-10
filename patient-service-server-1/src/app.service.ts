@@ -20,17 +20,28 @@ export class AppService {
     const AMDDry: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
     const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days").toDate();
-    const medicalExaminations = await this.medicalExaminationsService.findByDates(
-      plusSevenDays,
-      plusSevenDays,
-    );
-    medicalExaminations.forEach((elem) => {
+    const injections = await this.medicalExaminationsService.findByInjectionDate(plusSevenDays);
+    const inspections = await this.medicalExaminationsService.findByNextInspectionDate(plusSevenDays);
+    // const medicalExaminations = await this.medicalExaminationsService.findByDates(
+    //   plusSevenDays,
+    //   plusSevenDays,
+    // );
+    // medicalExaminations.forEach((elem) => {
+    //   const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
+    //   if (minPatientInfo.AMDType === "wet") {
+    //     AMDWet.push(minPatientInfo);
+    //   } else {
+    //     AMDDry.push(minPatientInfo);
+    //   }
+    // });
+
+    injections.forEach((elem) => {
       const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
-      if (minPatientInfo.AMDType === "wet") {
-        AMDWet.push(minPatientInfo);
-      } else {
-        AMDDry.push(minPatientInfo);
-      }
+      AMDWet.push(minPatientInfo);
+    });
+    inspections.forEach((elem) => {
+      const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
+      AMDDry.push(minPatientInfo);
     });
 
     return { injectionDate: AMDWet, nextInspectionDate: AMDDry };

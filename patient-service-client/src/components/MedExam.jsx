@@ -5,6 +5,7 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
+import DryAMDFormFragment from "./layout/DryAMDFormFragment";
 
 const MedExam = () => {
   const navigate = useNavigate();
@@ -30,40 +31,6 @@ const MedExam = () => {
     setAdditionalFields(e.target.value);
   };
 
-  // Фрагмент
-  const fragment = (
-    <div>
-      <Form.Group className="mb-3" controlId="formOfDisease">
-        <Form.Label>
-          <strong>Форма заболевания: </strong>
-        </Form.Label>
-        <Form.Check
-          type="radio"
-          label="Первичная"
-          name="formOfDisease"
-          value="primary"
-          // checked={additionalFields === "primary"}
-          // onChange={dryAMD}
-        />
-        <Form.Check
-          type="radio"
-          label="Вторичная"
-          name="formOfDisease"
-          value="secondary"
-          // checked={additionalFields === "dry"}
-          // onChange={dryAMD}
-        />
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="VEGFTherapyHistory">
-        <Form.Label>
-          <strong>Данные по ранее проводимой анти-VEGF терапия,</strong>
-        </Form.Label>
-        <Form.Control as="textarea" rows={4} placeholder="Введите результаты" />
-      </Form.Group>
-    </div>
-  );
-
   const uploadMedExams = async (e) => {
     e.preventDefault();
 
@@ -74,11 +41,9 @@ const MedExam = () => {
     let medExams = {};
     let formOfDisease = "";
 
-    if (e.target[0].checked) {
-      AMDType = "wet";
-    } else {
-      AMDType = "dry";
-    }
+    e.target[0].checked ? (AMDType = "wet") : (AMDType = "dry");
+
+    console.log("AMDType", AMDType);
 
     if (AMDType === "wet") {
       tomographyFile = e.target[6].files[0];
@@ -93,18 +58,17 @@ const MedExam = () => {
 
       formData.append("file", tomographyFile);
     } else {
-      tomographyFile = e.target[9].files[0];
+      tomographyFile = e.target[8].files[0];
 
       e.target[6].checked ? (formOfDisease = "primary") : (formOfDisease = "secondary");
 
       medExams = {
         AMDType: AMDType,
         visualAcuity: e.target[2].value,
-        injectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
-        nextInspectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
-        examinationResult: e.target[5].value,
+        nextInspectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
+        examinationResult: e.target[4].value,
         formOfDisease: formOfDisease,
-        VEGFTherapyHistory: e.target[8].value,
+        VEGFTherapyHistory: e.target[7].value,
       };
 
       formData.append("file", tomographyFile);
@@ -186,12 +150,14 @@ const MedExam = () => {
           <Form.Control as="textarea" rows={2} placeholder="Введите данные по остроте зрения" />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="injectionDate">
-          <Form.Label>
-            <strong>Дата инъекции: </strong>
-          </Form.Label>
-          <Form.Control type="date" name="injectionDate" placeholder="Дата инъекции" />
-        </Form.Group>
+        {additionalFields === "wet" && (
+          <Form.Group className="mb-3" controlId="injectionDate">
+            <Form.Label>
+              <strong>Дата инъекции: </strong>
+            </Form.Label>
+            <Form.Control type="date" name="injectionDate" placeholder="Дата инъекции" />
+          </Form.Group>
+        )}
 
         <Form.Group className="mb-3" controlId="nextInspectionDate">
           <Form.Label>
@@ -207,7 +173,7 @@ const MedExam = () => {
           <Form.Control as="textarea" rows={4} placeholder="Введите результаты осмотра" />
         </Form.Group>
 
-        {additionalFields === "dry" && fragment}
+        {additionalFields === "dry" && DryAMDFormFragment}
 
         <Form.Group controlId="tomography" className="mb-3">
           <Form.Label>

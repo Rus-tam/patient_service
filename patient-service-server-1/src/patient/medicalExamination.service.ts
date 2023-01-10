@@ -41,6 +41,20 @@ export class MedicalExaminationService {
     });
   }
 
+  async findByInjectionDate(injectionDate: Date): Promise<MedicalExaminationEntity[]> {
+    return this.medicalExaminationRepository.find({
+      relations: ["patient"],
+      where: [{ injectionDate }],
+    });
+  }
+
+  async findByNextInspectionDate(nextInspectionDate: Date): Promise<MedicalExaminationEntity[]> {
+    return this.medicalExaminationRepository.find({
+      relations: ["patient"],
+      where: [{ nextInspectionDate }],
+    });
+  }
+
   async findByCurrentDates(currentDate: Date) {
     return this.medicalExaminationRepository.find({
       relations: ["patient"],
