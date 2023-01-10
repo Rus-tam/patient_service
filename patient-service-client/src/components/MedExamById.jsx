@@ -32,6 +32,17 @@ const MedExamById = () => {
     });
   }, [setMedExam, setInjectionDate, setNextInspectionDate]);
 
+  const updateMedExam = async (update) => {
+    const resp = await axios.put(`http://localhost:5000/patient/med-exam/${medExamId}/update`, update);
+    if (resp.status === 200) {
+      navigate({
+        pathname: `/patient-card/${medExam.patient.id}`,
+      });
+    } else {
+      alert("Произошла ошибка");
+    }
+  };
+
   const saveChanges = async (e) => {
     e.preventDefault();
     console.log(e);
@@ -44,14 +55,16 @@ const MedExamById = () => {
         examinationResult: e.target[3].value,
       };
 
-      const resp = await axios.put(`http://localhost:5000/patient/med-exam/${medExamId}/update`, update);
-      if (resp.status === 200) {
-        navigate({
-          pathname: `/patient-card/${medExam.patient.id}`,
-        });
-      } else {
-        alert("Произошла ошибка");
-      }
+      await updateMedExam(update);
+    } else {
+      const update = {
+        visualAcuity: e.target[0].value,
+        nextInspectionDate: e.target[1].value,
+        examinationResult: e.target[2].value,
+        VEGFTherapyHistory: e.target[3].value,
+      };
+
+      await updateMedExam(update);
     }
   };
 
@@ -142,7 +155,7 @@ const MedExamById = () => {
                 as="textarea"
                 rows={4}
                 placeholder="Введите результаты"
-                value={medExam.VEGFTherapyHistory}
+                defaultValue={medExam.VEGFTherapyHistory}
               />
             </Form.Group>
           </div>
