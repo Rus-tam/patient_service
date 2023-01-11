@@ -31,12 +31,15 @@ export class PatientService {
       throw new ConflictException(PatientError.DuplicatePatientData);
     }
 
+    console.log("newCard", cardData);
+
     const newCard = this.patientRepository.create({
       name: cardData.name.toUpperCase(),
       surname: cardData.surname.toUpperCase(),
       patronymic: cardData.patronymic.toUpperCase(),
       patientBirthDate: cardData.patientBirthDate,
       phone: cardData.phone,
+      kinsmenPhone: cardData.kinsmenPhone,
       medicalExaminations: [],
       tomography: [],
       createdAt: new Date(),

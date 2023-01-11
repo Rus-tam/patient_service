@@ -15,4 +15,7 @@ export class CreatePatientCardDto {
 
   @IsPhoneNumber()
   phone: string;
+
+  @IsPhoneNumber()
+  kinsmenPhone: string;
 }

@@ -11,20 +11,21 @@ const NewPatientCard = () => {
   const savePatientCard = async (e) => {
     e.preventDefault();
 
-    try {
-      const request = await axios.post("http://localhost:5000/patient/create", {
-        name: e.target[0].value,
-        surname: e.target[1].value,
-        patronymic: e.target[2].value,
-        patientBirthDate: moment(e.target[3].value).toDate(),
-        phone: e.target[4].value,
-      });
+    console.log(e);
 
-      if (request.status === 201) {
-        navigate(`/patient-card/${request.data.id}`);
-      }
-    } catch (err) {
-      console.log(err);
+    const request = await axios.post("http://localhost:5000/patient/create", {
+      name: e.target[0].value,
+      surname: e.target[1].value,
+      patronymic: e.target[2].value,
+      patientBirthDate: moment(e.target[3].value).toDate(),
+      phone: e.target[4].value,
+      kinsmenPhone: e.target[5].value,
+    });
+
+    if (request.status === 201) {
+      navigate(`/patient-card/${request.data.id}`);
+    } else {
+      alert("Не удается создать карточку пациента");
     }
   };
 
@@ -58,6 +59,11 @@ const NewPatientCard = () => {
 
           <Form.Group className="mb-3" controlId="phone">
             <Form.Label>Номер телефона в формате +7XXXXXXXXXX</Form.Label>
+            <Form.Control type="tel" name="phone" placeholder="Номер телефона" />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="kinsmenPhone">
+            <Form.Label>Номер телефона родственника в формате +7XXXXXXXXXX</Form.Label>
             <Form.Control type="tel" name="phone" placeholder="Номер телефона" />
           </Form.Group>
 

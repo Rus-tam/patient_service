@@ -24,19 +24,6 @@ export class AppService {
     const inspections = await this.medicalExaminationsService.findByNextInspectionDate(
       plusSevenDays,
     );
-    // const medicalExaminations = await this.medicalExaminationsService.findByDates(
-    //   plusSevenDays,
-    //   plusSevenDays,
-    // );
-    // medicalExaminations.forEach((elem) => {
-    //   const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
-    //   if (minPatientInfo.AMDType === "wet") {
-    //     AMDWet.push(minPatientInfo);
-    //   } else {
-    //     AMDDry.push(minPatientInfo);
-    //   }
-    // });
-
     injections.forEach((elem) => {
       const minPatientInfo: MinPatientInfoInterface = this.makeMinPatientInfoObj(elem);
       AMDWet.push(minPatientInfo);

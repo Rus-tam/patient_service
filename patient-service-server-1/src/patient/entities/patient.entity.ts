@@ -23,6 +23,9 @@ export class PatientEntity {
   @Column()
   phone: string;
 
+  @Column({ nullable: true })
+  kinsmenPhone: string;
+
   @OneToMany(() => MedicalExaminationEntity, (medicalExaminations) => medicalExaminations.patient, {
     cascade: ["remove"],
   })
