@@ -16,6 +16,7 @@ const PatientCard = () => {
     patronymic: "",
     patientBirthDate: "",
     phone: "",
+    kinsmenPhone: "",
     medicalExaminations: [],
     tomography: [],
   });
@@ -79,6 +80,10 @@ const PatientCard = () => {
       <p>
         <strong>Телефон пациента: </strong>
         {patientData.phone}
+      </p>
+      <p>
+        <strong>Телефон родственника: </strong>
+        {patientData.kinsmenPhone}
       </p>
       {lastExamination.AMDType !== undefined && (
         <p>

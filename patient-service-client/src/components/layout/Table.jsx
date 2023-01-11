@@ -15,6 +15,7 @@ const TableComp = ({ list }) => {
               <th>Отчество</th>
               <th>Дата рождения</th>
               <th>Телефон</th>
+              <th>Телефон родственника</th>
               <th>Карта пациента</th>
             </tr>
           </thead>
@@ -27,6 +28,7 @@ const TableComp = ({ list }) => {
                 <td>{elem.patronymic}</td>
                 <td>{elem.patientBirthDate}</td>
                 <td>{elem.phone}</td>
+                <td>{elem.kinsmenPhone}</td>
                 <td>
                   <Link to={{ pathname: `/patient-card/${elem.id}` }}>Открыть</Link>
                 </td>
