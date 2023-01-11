@@ -10,6 +10,7 @@ import CallList from "./components/CallList";
 import MissedPatientsList from "./components/MissedPatientsList";
 import Error from "./components/Error";
 import AllPatients from "./components/AllPatients";
+import PatientCardUpdate from "./components/PatientCardUpdate";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route exact path="/" element={<StartPage />}></Route>
           <Route path="/new-patient-card" element={<NewPatientCard />}></Route>
           <Route path="/patient-card/:id" element={<PatientCard />}></Route>
-          <Route path="patient/med-examination/:id" element={<MedExam />}></Route>
+          <Route path="/patient-card/:id/update" element={<PatientCardUpdate />}></Route>
+          <Route path="/patient/med-examination/:id" element={<MedExam />}></Route>
           <Route path="/medexam/:medExamId" element={<MedExamById />}></Route>
           <Route path="/find-patient" element={<FindPatient />}></Route>
           <Route path="/seven-days-list" element={<CallList />}></Route>

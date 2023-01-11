@@ -117,7 +117,10 @@ const PatientCard = () => {
         <strong>Результаты осмотра: </strong> <br />
         {lastExamination.examinationResult}
       </p>
-      <Button onClick={() => navigate({ pathname: `/patient/med-examination/${id}` })}>Новое обследование</Button>
+      <Button className="me-3" onClick={() => navigate({ pathname: `/patient/med-examination/${id}` })}>
+        Новое обследование
+      </Button>
+      <Button onClick={() => navigate({ pathname: `/patient-card/${id}/update` })}>Редактировать личные данные</Button>
       <hr />
 
       <h2 className="mb-3 pt-3">История осмотров: </h2>

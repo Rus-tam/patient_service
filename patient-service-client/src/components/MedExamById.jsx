@@ -45,7 +45,6 @@ const MedExamById = () => {
 
   const saveChanges = async (e) => {
     e.preventDefault();
-    console.log(e);
 
     if (medExam.AMDType === "wet") {
       const update = {

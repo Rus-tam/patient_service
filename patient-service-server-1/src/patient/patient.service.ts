@@ -1,10 +1,11 @@
 import { ConflictException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PatientEntity } from "./entities/patient.entity";
-import { LessThan, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
+import { UpdateResult } from "typeorm";
 const moment = require("moment");
 
 @Injectable()
@@ -46,6 +47,10 @@ export class PatientService {
     await this.patientRepository.save(newCard);
 
     return newCard;
+  }
+
+  async updatePatientCard(id: number, update: CreatePatientCardDto): Promise<UpdateResult> {
+    return this.patientRepository.update(id, update);
   }
 
   async getAllPatientCards(): Promise<PatientEntity[]> {

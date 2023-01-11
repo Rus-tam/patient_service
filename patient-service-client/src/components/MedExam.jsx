@@ -33,17 +33,12 @@ const MedExam = () => {
 
   const uploadMedExams = async (e) => {
     e.preventDefault();
-
-    console.log(e);
-
     const formData = new FormData();
     let tomographyFile;
     let medExams = {};
     let formOfDisease = "";
 
     e.target[0].checked ? (AMDType = "wet") : (AMDType = "dry");
-
-    console.log("AMDType", AMDType);
 
     if (AMDType === "wet") {
       tomographyFile = e.target[6].files[0];
@@ -74,8 +69,6 @@ const MedExam = () => {
       formData.append("file", tomographyFile);
     }
 
-    console.log(formData);
-
     try {
       const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
       const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
@@ -91,6 +84,7 @@ const MedExam = () => {
       }
     } catch (err) {
       console.log(err);
+      alert("Произошла ошибка");
     }
   };
 

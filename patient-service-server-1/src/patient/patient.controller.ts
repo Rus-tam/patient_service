@@ -21,6 +21,7 @@ import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface"
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { Readable } from "stream";
 import { Response } from "express";
+import { UpdateResult } from "typeorm";
 
 @Controller("patient")
 export class PatientController {
@@ -75,8 +76,19 @@ export class PatientController {
   }
 
   @Put("med-exam/:id/update")
-  async updateMedExamById(@Param("id") id: number, @Body() update: MedicalExaminationDto) {
+  async updateMedExamById(
+    @Param("id") id: number,
+    @Body() update: MedicalExaminationDto,
+  ): Promise<MedicalExaminationDto> {
     return this.medicalExaminationService.updateMedExam(id, update);
+  }
+
+  @Put("/:id/update")
+  async updatePatientCard(
+    @Param("id") id: number,
+    @Body() update: CreatePatientCardDto,
+  ): Promise<UpdateResult> {
+    return this.patientService.updatePatientCard(id, update);
   }
 
   @Get("med-exam/:id")
