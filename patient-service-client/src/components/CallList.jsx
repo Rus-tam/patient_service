@@ -12,7 +12,7 @@ const CallList = () => {
 
   useEffect(() => {
     axios.get("http://localhost:5000/check/seven-days-list").then((resp) => {
-      setPlusSevenDaysInjectionList(resp.data.injectionDate);
+      setPlusSevenDaysInjectionList(resp.data.nextInjectionDate);
       setPlusSevenDaysInspectionList(resp.data.nextInspectionDate);
     });
   }, [setPlusSevenDaysInjectionList, setPlusSevenDaysInspectionList]);

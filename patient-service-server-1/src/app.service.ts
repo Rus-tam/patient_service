@@ -20,7 +20,7 @@ export class AppService {
     const AMDDry: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
     const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days").toDate();
-    const injections = await this.medicalExaminationsService.findByInjectionDate(plusSevenDays);
+    const injections = await this.medicalExaminationsService.findBynextInjectionDate(plusSevenDays);
     const inspections = await this.medicalExaminationsService.findByNextInspectionDate(
       plusSevenDays,
     );
@@ -33,7 +33,7 @@ export class AppService {
       AMDDry.push(minPatientInfo);
     });
 
-    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
+    return { nextInjectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
   async getCurrentDatePatientsList(): Promise<PatientListInterface> {
@@ -50,7 +50,7 @@ export class AppService {
       }
     });
 
-    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
+    return { nextInjectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
   async getMissedPatientList() {
@@ -75,7 +75,7 @@ export class AppService {
       const lastExam = await this.medicalExaminationsService.getById(id);
       // console.log("Last Exam", lastExam);
       if (
-        moment(new Date()).isAfter(lastExam.injectionDate) ||
+        moment(new Date()).isAfter(lastExam.nextInjectionDate) ||
         moment(new Date()).isAfter(lastExam.nextInspectionDate)
       ) {
         const minPatientInfo = this.makeMinPatientInfoObj(lastExam);
@@ -88,7 +88,7 @@ export class AppService {
       }
     }
 
-    return { injectionDate: AMDWet, nextInspectionDate: AMDDry };
+    return { nextInjectionDate: AMDWet, nextInspectionDate: AMDDry };
   }
 
   async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface[], date: string) {
@@ -129,7 +129,7 @@ export class AppService {
       patientBirthDate: medExam.patient.patientBirthDate,
       phone: medExam.patient.phone,
       AMDType: medExam.AMDType,
-      injectionDate: medExam.injectionDate,
+      nextInjectionDate: medExam.nextInjectionDate,
       nextInspectionDate: medExam.nextInspectionDate,
     };
   }

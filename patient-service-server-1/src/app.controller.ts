@@ -26,7 +26,7 @@ export class AppController {
   @Get("send-message")
   async sendMessage() {
     const patientsList = await this.appService.sevenDaysPatientList();
-    const patients = [...patientsList.injectionDate, ...patientsList.nextInspectionDate];
+    const patients = [...patientsList.nextInjectionDate, ...patientsList.nextInspectionDate];
     const plusSevenDays = moment(new Date()).add(7, "days").format("DD-MM-YYYY").toString();
     await this.appService.sendMessageToWhatsapp(patients, plusSevenDays);
   }

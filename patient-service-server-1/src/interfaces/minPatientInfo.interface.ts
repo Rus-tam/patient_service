@@ -6,6 +6,6 @@ export interface MinPatientInfoInterface {
   patientBirthDate: Date;
   phone: string;
   AMDType?: string;
-  injectionDate?: Date;
+  nextInjectionDate?: Date;
   nextInspectionDate?: Date;
 }

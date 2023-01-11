@@ -40,15 +40,19 @@ const MedExam = () => {
 
     e.target[0].checked ? (AMDType = "wet") : (AMDType = "dry");
 
+    console.log(e);
+
     if (AMDType === "wet") {
-      tomographyFile = e.target[6].files[0];
+      tomographyFile = e.target[7].files[0];
 
       medExams = {
         AMDType: AMDType,
         visualAcuity: e.target[2].value,
-        injectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
-        nextInspectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
-        examinationResult: e.target[5].value,
+        nextInjectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
+        nextInspectionDate: moment(e.target[5].value).format("YYYY-MM-DD").toString(),
+        injectionDate: moment(new Date()).format("YYYY-MM-DD HH:MM").toString(),
+        drugName: e.target[3].value,
+        examinationResult: e.target[6].value,
       };
 
       formData.append("file", tomographyFile);
@@ -145,12 +149,21 @@ const MedExam = () => {
         </Form.Group>
 
         {additionalFields === "wet" && (
-          <Form.Group className="mb-3" controlId="injectionDate">
-            <Form.Label>
-              <strong>Дата инъекции: </strong>
-            </Form.Label>
-            <Form.Control type="date" name="injectionDate" placeholder="Дата инъекции" />
-          </Form.Group>
+          <>
+            <Form.Group className="mb-3" controlId="drugName">
+              <Form.Label>
+                <strong>Наименование препарата для инъекции: </strong>
+              </Form.Label>
+              <Form.Control as="textarea" rows={1} placeholder="Введите наименование препарата" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="nextInjectionDate">
+              <Form.Label>
+                <strong>Дата следующей инъекции: </strong>
+              </Form.Label>
+              <Form.Control type="date" name="nextInjectionDate" placeholder="Дата инъекции" />
+            </Form.Group>
+          </>
         )}
 
         <Form.Group className="mb-3" controlId="nextInspectionDate">

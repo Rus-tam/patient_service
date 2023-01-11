@@ -16,10 +16,16 @@ export class MedicalExaminationEntity {
   visualAcuity: string;
 
   @Column({ type: "date", nullable: true })
-  injectionDate: Date | null;
+  nextInjectionDate: Date | null;
 
   @Column({ type: "date", nullable: true })
   nextInspectionDate: Date | null;
+
+  @Column({ type: "date", nullable: true })
+  injectionDate: Date | null;
+
+  @Column({ nullable: true })
+  drugName: string;
 
   @Column({ type: "text" })
   examinationResult: string;

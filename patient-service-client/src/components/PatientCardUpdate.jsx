@@ -26,6 +26,7 @@ const PatientCardUpdate = () => {
           patronymic: resp.data.patronymic,
           patientBirthDate: resp.data.patientBirthDate,
           phone: resp.data.phone,
+          kinsmenPhone: resp.data.kinsmenPhone,
         };
         setPatientInfo(patientData);
       } else {
@@ -43,6 +44,7 @@ const PatientCardUpdate = () => {
       patronymic: e.target[2].value.toUpperCase(),
       patientBirthDate: e.target[3].value,
       phone: e.target[4].value,
+      kinsmenPhone: e.target[5].value,
     };
 
     const resp = await axios.put(`http://localhost:5000/patient/${id}/update`, update);
@@ -103,6 +105,16 @@ const PatientCardUpdate = () => {
           <Form.Group className="mb-3" controlId="phone">
             <Form.Label>Номер телефона в формате +7XXXXXXXXXX</Form.Label>
             <Form.Control type="tel" name="phone" placeholder="Номер телефона" defaultValue={patientInfo.phone} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="kinsmenPhone">
+            <Form.Label>Номер телефона родственника в формате +7XXXXXXXXXX</Form.Label>
+            <Form.Control
+              type="tel"
+              name="phone"
+              placeholder="Номер телефона"
+              defaultValue={patientInfo.kinsmenPhone}
+            />
           </Form.Group>
 
           <div className="pt-3">

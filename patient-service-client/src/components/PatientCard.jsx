@@ -98,7 +98,7 @@ const PatientCard = () => {
       {lastExamination.AMDType === "wet" && (
         <p>
           <strong>Назначенная дата инъекции: </strong>
-          {lastExamination.injectionDate}
+          {lastExamination.nextInjectionDate}
         </p>
       )}
 
@@ -151,6 +151,30 @@ const PatientCard = () => {
           ))}
         </tbody>
       </Table>
+
+      {lastExamination.AMDType === "wet" && (
+        <>
+          <h2 className="mb-3 pt-3">История инъекция</h2>
+          <Table striped>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th className="pe-5">Дата инъекции</th>
+                <th>Препарат для инъекции</th>
+              </tr>
+            </thead>
+            <tbody>
+              {patientData.medicalExaminations.map((elem, index) => (
+                <tr key={elem.id}>
+                  <td>{index + 1}</td>
+                  <td>{moment(elem.injectionDate).format("YYYY-MM-DD HH:MM")}</td>
+                  <td>{elem.drugName}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
+      )}
 
       <h2 className="mb-3 pt-3">Снимки томографии: </h2>
       <Table striped>

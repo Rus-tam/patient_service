@@ -1,6 +1,6 @@
 import { MinPatientInfoInterface } from "./minPatientInfo.interface";
 
 export interface PatientListInterface {
-  injectionDate: MinPatientInfoInterface[];
+  nextInjectionDate: MinPatientInfoInterface[];
   nextInspectionDate: MinPatientInfoInterface[];
 }

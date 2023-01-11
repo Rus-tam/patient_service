@@ -23,7 +23,7 @@ const StartPage = () => {
   ]);
   useEffect(() => {
     axios.get(`http://localhost:5000/check/current-date-list`).then((resp) => {
-      setInjectionList(resp.data.injectionDate);
+      setInjectionList(resp.data.nextInjectionDate);
       setInspectionList(resp.data.nextInspectionDate);
     });
   }, [setInjectionList, setInspectionList]);

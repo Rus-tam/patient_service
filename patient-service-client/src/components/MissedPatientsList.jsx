@@ -9,7 +9,7 @@ const MissedPatientsList = () => {
 
   useEffect(() => {
     axios.get("http://localhost:5000/check/get-missed-list").then((resp) => {
-      setMissedInjectionList(resp.data.injectionDate);
+      setMissedInjectionList(resp.data.nextInjectionDate);
       setMissedInspectionList(resp.data.nextInspectionDate);
     });
   }, [setMissedInjectionList, setMissedInspectionList]);

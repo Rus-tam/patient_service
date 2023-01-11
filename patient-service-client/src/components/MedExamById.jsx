@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import moment from "moment";
 
 const MedExamById = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const MedExamById = () => {
     createdAt: "",
     AMDType: "",
     visualAcuity: "",
-    injectionDate: "",
+    nextInjectionDate: "",
     nextInspectionDate: "",
     examinationResult: "",
     patient: "",
@@ -21,16 +22,16 @@ const MedExamById = () => {
     VEGFTherapyHistory: "",
   });
 
-  const [injectionDate, setInjectionDate] = useState();
+  const [nextInjectionDate, setnextInjectionDate] = useState();
   const [nextInspectionDate, setNextInspectionDate] = useState();
 
   useEffect(() => {
     axios.get(`http://localhost:5000/patient/med-exam/${medExamId}`).then((resp) => {
       setMedExam(resp.data);
-      setInjectionDate(resp.data.injectionDate);
+      setnextInjectionDate(resp.data.nextInjectionDate);
       setNextInspectionDate(resp.data.nextInspectionDate);
     });
-  }, [setMedExam, setInjectionDate, setNextInspectionDate]);
+  }, [setMedExam, setnextInjectionDate, setNextInspectionDate]);
 
   const updateMedExam = async (update) => {
     const resp = await axios.put(`http://localhost:5000/patient/med-exam/${medExamId}/update`, update);
@@ -49,7 +50,7 @@ const MedExamById = () => {
     if (medExam.AMDType === "wet") {
       const update = {
         visualAcuity: e.target[0].value,
-        injectionDate: e.target[1].value,
+        nextInjectionDate: e.target[1].value,
         nextInspectionDate: e.target[2].value,
         examinationResult: e.target[3].value,
       };
@@ -68,7 +69,7 @@ const MedExamById = () => {
   };
 
   const setInjection = (e) => {
-    setInjectionDate(e.target.value);
+    setnextInjectionDate(e.target.value);
   };
 
   const setInspection = (e) => {
@@ -78,7 +79,7 @@ const MedExamById = () => {
   return (
     <div>
       <NavBar />
-      <h2 className="mb-3 pt-3">Результаты осмотра</h2>
+      <h2 className="mb-3 pt-3">Результаты осмотра {moment(medExam.createdAt).format("YYYY-MM-DD").toString()}</h2>
       <hr />
       <h2 className="pb-4">
         {medExam.patient.surname} {medExam.patient.name} {medExam.patient.patronymic}
@@ -101,16 +102,16 @@ const MedExamById = () => {
         </Form.Group>
 
         {medExam.AMDType === "wet" && (
-          <Form.Group className="mb-3" controlId="injectionDate">
+          <Form.Group className="mb-3" controlId="nextInjectionDate">
             <Form.Label>
-              <strong>Дата инъекции: </strong>
+              <strong>Дата следующей инъекции: </strong>
             </Form.Label>
             <Form.Control
               type="date"
-              name="injectionDate"
+              name="nextInjectionDate"
               placeholder="Дата инъекции"
               onChange={setInjection}
-              defaultValue={injectionDate}
+              defaultValue={nextInjectionDate}
             />
           </Form.Group>
         )}

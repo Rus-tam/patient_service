@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
-import { Repository, LessThan, Equal } from "typeorm";
+import { Repository, Equal } from "typeorm";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
 import { PatientEntity } from "./entities/patient.entity";
 
@@ -17,8 +17,10 @@ export class MedicalExaminationService {
       createdAt: new Date(),
       AMDType: examination.AMDType,
       visualAcuity: examination.visualAcuity,
-      injectionDate: examination.injectionDate,
+      nextInjectionDate: examination.nextInjectionDate,
       nextInspectionDate: examination.nextInspectionDate,
+      injectionDate: examination.injectionDate,
+      drugName: examination.drugName,
       examinationResult: examination.examinationResult,
       formOfDisease: examination.formOfDisease,
       VEGFTherapyHistory: examination.VEGFTherapyHistory,
@@ -34,17 +36,20 @@ export class MedicalExaminationService {
     return this.medicalExaminationRepository.find({ relations: ["patient"] });
   }
 
-  async findByDates(injectionDate: Date, nextInspectionDate: Date): Promise<MedicalExaminationEntity[]> {
+  async findByDates(
+    nextInjectionDate: Date,
+    nextInspectionDate: Date,
+  ): Promise<MedicalExaminationEntity[]> {
     return this.medicalExaminationRepository.find({
       relations: ["patient"],
-      where: [{ injectionDate, nextInspectionDate }],
+      where: [{ nextInjectionDate, nextInspectionDate }],
     });
   }
 
-  async findByInjectionDate(injectionDate: Date): Promise<MedicalExaminationEntity[]> {
+  async findBynextInjectionDate(nextInjectionDate: Date): Promise<MedicalExaminationEntity[]> {
     return this.medicalExaminationRepository.find({
       relations: ["patient"],
-      where: [{ injectionDate }],
+      where: [{ nextInjectionDate }],
     });
   }
 
@@ -58,7 +63,7 @@ export class MedicalExaminationService {
   async findByCurrentDates(currentDate: Date) {
     return this.medicalExaminationRepository.find({
       relations: ["patient"],
-      where: [{ injectionDate: Equal(currentDate), nextInspectionDate: Equal(currentDate) }],
+      where: [{ nextInjectionDate: Equal(currentDate), nextInspectionDate: Equal(currentDate) }],
     });
   }
 
@@ -70,8 +75,10 @@ export class MedicalExaminationService {
       createdAt: examination.createdAt,
       AMDType: examination.AMDType,
       visualAcuity: update.visualAcuity,
-      injectionDate: update.injectionDate,
+      nextInjectionDate: update.nextInjectionDate,
       nextInspectionDate: update.nextInspectionDate,
+      injectionDate: update.injectionDate,
+      drugName: update.drugName,
       examinationResult: update.examinationResult,
       formOfDisease: update.formOfDisease,
       VEGFTherapyHistory: update.VEGFTherapyHistory,

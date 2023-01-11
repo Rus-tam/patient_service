@@ -8,10 +8,16 @@ export class MedicalExaminationDto {
   visualAcuity: string;
 
   @IsDate()
-  injectionDate: Date;
+  nextInjectionDate: Date;
 
   @IsDate()
   nextInspectionDate: Date;
+
+  @IsDate()
+  injectionDate: Date;
+
+  @IsString()
+  drugName: string;
 
   @IsString()
   examinationResult: string;
