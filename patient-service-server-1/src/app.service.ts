@@ -21,7 +21,9 @@ export class AppService {
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
     const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days").toDate();
     const injections = await this.medicalExaminationsService.findByInjectionDate(plusSevenDays);
-    const inspections = await this.medicalExaminationsService.findByNextInspectionDate(plusSevenDays);
+    const inspections = await this.medicalExaminationsService.findByNextInspectionDate(
+      plusSevenDays,
+    );
     // const medicalExaminations = await this.medicalExaminationsService.findByDates(
     //   plusSevenDays,
     //   plusSevenDays,
@@ -75,12 +77,16 @@ export class AppService {
     allPatients.forEach((patient) => {
       let examId = 0;
       patient.medicalExaminations.forEach((exam) => {
-        exam.id > examId ? (examId = exam.id) : null;
+        if (exam.id > examId) {
+          examId = exam.id;
+          examIds.push(examId);
+        }
       });
-      examIds.push(examId);
     });
+
     for (let id of examIds) {
       const lastExam = await this.medicalExaminationsService.getById(id);
+      // console.log("Last Exam", lastExam);
       if (
         moment(new Date()).isAfter(lastExam.injectionDate) ||
         moment(new Date()).isAfter(lastExam.nextInspectionDate)
