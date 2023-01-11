@@ -104,4 +104,8 @@ export class PatientService {
     await this.patientRepository.save(patient);
     return patient;
   }
+
+  async deletePatient(id: number) {
+    await this.patientRepository.delete({ id });
+  }
 }

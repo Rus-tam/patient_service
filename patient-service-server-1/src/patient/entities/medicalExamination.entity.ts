@@ -30,7 +30,10 @@ export class MedicalExaminationEntity {
   @Column({ nullable: true, type: "text" })
   VEGFTherapyHistory: string;
 
-  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.medicalExaminations)
+  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.medicalExaminations, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   patient: PatientEntity;
 
   @DeleteDateColumn()

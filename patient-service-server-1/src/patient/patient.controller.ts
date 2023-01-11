@@ -9,6 +9,7 @@ import {
   Res,
   StreamableFile,
   Put,
+  Delete,
 } from "@nestjs/common";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
@@ -115,8 +116,11 @@ export class PatientController {
   @UseInterceptors(FileInterceptor("file"))
   async createNewTomographyPic(@Param("id") id: number, @UploadedFile() file: Express.Multer.File) {
     const patientCard = await this.patientService.getPatientById(id);
-    console.log(file);
-
     return this.tomographyService.createTomographyPic(file, patientCard);
+  }
+
+  @Delete("/delete/:id")
+  async deletePatientCard(@Param("id") id: number) {
+    await this.patientService.deletePatient(id);
   }
 }

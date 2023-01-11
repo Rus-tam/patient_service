@@ -23,10 +23,12 @@ export class PatientEntity {
   @Column()
   phone: string;
 
-  @OneToMany(() => MedicalExaminationEntity, (medicalExaminations) => medicalExaminations.patient)
+  @OneToMany(() => MedicalExaminationEntity, (medicalExaminations) => medicalExaminations.patient, {
+    cascade: ["remove"],
+  })
   medicalExaminations: MedicalExaminationEntity[];
 
-  @OneToMany(() => TomographyEntity, (tomography) => tomography.patient)
+  @OneToMany(() => TomographyEntity, (tomography) => tomography.patient, { cascade: ["remove"] })
   tomography: TomographyEntity[];
 
   @Column({ nullable: true })

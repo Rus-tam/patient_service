@@ -15,7 +15,10 @@ export class TomographyEntity {
   @Column({ type: "bytea" })
   image: Uint8Array;
 
-  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.tomography)
+  @ManyToOne(() => PatientEntity, (patient: PatientEntity) => patient.tomography, {
+    onDelete: "CASCADE",
+    orphanedRowAction: "delete",
+  })
   patient: PatientEntity;
 
   @DeleteDateColumn()
