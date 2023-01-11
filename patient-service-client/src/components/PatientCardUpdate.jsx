@@ -56,7 +56,16 @@ const PatientCardUpdate = () => {
     }
   };
 
-  const deletePatientCard = async () => {};
+  const deletePatientCard = async () => {
+    const resp = await axios.delete(`http://localhost:5000/patient/delete/${id}`);
+
+    if (resp.status === 200) {
+      alert("Карточка пациента удалена");
+      navigate({ pathname: "/" });
+    } else {
+      alert("Не удалось удалить карточку пациента");
+    }
+  };
 
   return (
     <div>
