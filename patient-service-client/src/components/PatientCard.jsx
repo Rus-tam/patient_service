@@ -80,10 +80,12 @@ const PatientCard = () => {
         <strong>Телефон пациента: </strong>
         {patientData.phone}
       </p>
-      <p>
-        <strong>Тип ВМД: </strong>
-        {lastExamination.AMDType === "wet" ? "Влажная" : "Сухая"}
-      </p>
+      {lastExamination.AMDType !== undefined && (
+        <p>
+          <strong>Тип ВМД: </strong>
+          {lastExamination.AMDType === "wet" ? "Влажная" : "Сухая"}
+        </p>
+      )}
       <p>
         <strong>Острота зрения: </strong>
         {lastExamination.visualAcuity}
