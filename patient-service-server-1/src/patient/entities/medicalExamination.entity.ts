@@ -13,7 +13,52 @@ export class MedicalExaminationEntity {
   AMDType: string;
 
   @Column()
-  visualAcuity: string;
+  visualAcuityOD: string;
+
+  @Column()
+  visualAcuityOS: string;
+
+  @Column()
+  tonometryOD: string;
+
+  @Column()
+  tonometryOS: string;
+
+  @Column()
+  refractometryODsph: string;
+
+  @Column()
+  refractometryODcyl: string;
+
+  @Column()
+  refractometryODax: string;
+
+  @Column()
+  refractometryOSsph: string;
+
+  @Column()
+  refractometryOScyl: string;
+
+  @Column()
+  refractometryOSax: string;
+
+  @Column()
+  biomicroscopyOD: string;
+
+  @Column()
+  biomicroscopyOS: string;
+
+  @Column()
+  eyeBottomOD: string;
+
+  @Column()
+  eyeBottomOS: string;
+
+  @Column()
+  additionalExamOD: string;
+
+  @Column()
+  additionalExamOS: string;
 
   @Column({ type: "date", nullable: true })
   nextInjectionDate: Date | null;
@@ -25,7 +70,7 @@ export class MedicalExaminationEntity {
   injectionDate: Date | null;
 
   @Column({ nullable: true })
-  drugName: string;
+  drugName: string | null;
 
   @Column({ type: "text" })
   examinationResult: string;
