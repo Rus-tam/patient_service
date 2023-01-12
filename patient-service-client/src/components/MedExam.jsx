@@ -43,53 +43,84 @@ const MedExam = () => {
     console.log(e);
 
     if (AMDType === "wet") {
-      tomographyFile = e.target[7].files[0];
+      tomographyFile = e.target[22].files[0];
 
       medExams = {
         AMDType: AMDType,
-        visualAcuity: e.target[2].value,
-        nextInjectionDate: moment(e.target[4].value).format("YYYY-MM-DD").toString(),
-        nextInspectionDate: moment(e.target[5].value).format("YYYY-MM-DD").toString(),
+        visualAcuityOD: e.target[2].value,
+        visualAcuityOS: e.target[3].value,
+        tonometryOD: e.target[4].value,
+        tonometryOS: e.target[5].value,
+        refractometryODsph: e.target[6].value,
+        refractometryODcyl: e.target[7].value,
+        refractometryODax: e.target[8].value,
+        refractometryOSsph: e.target[9].value,
+        refractometryOScyl: e.target[10].value,
+        refractometryOSax: e.target[11].value,
+        biomicroscopyOD: e.target[12].value,
+        biomicroscopyOS: e.target[13].value,
+        eyeBottomOD: e.target[14].value,
+        eyeBottomOS: e.target[15].value,
+        additionalExamOD: e.target[16].value,
+        additionalExamOS: e.target[17].value,
+        nextInjectionDate: moment(e.target[19].value).format("YYYY-MM-DD").toString(),
+        nextInspectionDate: moment(e.target[20].value).format("YYYY-MM-DD").toString(),
         injectionDate: moment(new Date()).format("YYYY-MM-DD HH:MM").toString(),
-        drugName: e.target[3].value,
-        examinationResult: e.target[6].value,
+        drugName: e.target[18].value,
+        examinationResult: e.target[21].value,
       };
 
       formData.append("file", tomographyFile);
     } else {
-      tomographyFile = e.target[7].files[0];
+      tomographyFile = e.target[22].files[0];
 
-      e.target[5].checked ? (formOfDisease = "wetFormResult") : (formOfDisease = "");
+      e.target[20].checked ? (formOfDisease = true) : (formOfDisease = false);
 
       medExams = {
         AMDType: AMDType,
-        visualAcuity: e.target[2].value,
-        nextInspectionDate: moment(e.target[3].value).format("YYYY-MM-DD").toString(),
-        examinationResult: e.target[4].value,
-        formOfDisease: formOfDisease,
-        VEGFTherapyHistory: e.target[7].value,
+        visualAcuityOD: e.target[2].value,
+        visualAcuityOS: e.target[3].value,
+        tonometryOD: e.target[4].value,
+        tonometryOS: e.target[5].value,
+        refractometryODsph: e.target[6].value,
+        refractometryODcyl: e.target[7].value,
+        refractometryODax: e.target[8].value,
+        refractometryOSsph: e.target[9].value,
+        refractometryOScyl: e.target[10].value,
+        refractometryOSax: e.target[11].value,
+        biomicroscopyOD: e.target[12].value,
+        biomicroscopyOS: e.target[13].value,
+        eyeBottomOD: e.target[14].value,
+        eyeBottomOS: e.target[15].value,
+        additionalExamOD: e.target[16].value,
+        additionalExamOS: e.target[17].value,
+        nextInspectionDate: moment(e.target[18].value).format("YYYY-MM-DD").toString(),
+        drugName: e.target[18].value,
+        formOfDisease,
+        examinationResult: e.target[19].value,
+        VEGFTherapyHistory: e.target[21].value,
       };
 
       formData.append("file", tomographyFile);
     }
 
-    // try {
-    //   const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
-    //   const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   });
-    //
-    //   if (medExamRes.status === 201 && tomographyRes.status === 201) {
-    //     navigate({
-    //       pathname: `/patient-card/${id}`,
-    //     });
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    //   alert("Произошла ошибка");
-    // }
+    try {
+      const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
+      const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (medExamRes.status === 201 && tomographyRes.status === 201) {
+        navigate({
+          pathname: `/patient-card/${id}`,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      alert("Произошла ошибка");
+    }
   };
 
   return (
