@@ -7,22 +7,7 @@ const DryAMDFormFragment = (
       <Form.Label>
         <strong>Форма заболевания: </strong>
       </Form.Label>
-      <Form.Check
-        type="radio"
-        label="Первичная"
-        name="formOfDisease"
-        value="primary"
-        // checked={additionalFields === "primary"}
-        // onChange={dryAMD}
-      />
-      <Form.Check
-        type="radio"
-        label="Вторичная"
-        name="formOfDisease"
-        value="secondary"
-        // checked={additionalFields === "dry"}
-        // onChange={dryAMD}
-      />
+      <Form.Check type="radio" label="Исход влажной формы" name="formOfDisease" value="wetFormResult" />
     </Form.Group>
 
     <Form.Group className="mb-3" controlId="VEGFTherapyHistory">

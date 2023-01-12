@@ -57,9 +57,9 @@ const MedExam = () => {
 
       formData.append("file", tomographyFile);
     } else {
-      tomographyFile = e.target[8].files[0];
+      tomographyFile = e.target[7].files[0];
 
-      e.target[6].checked ? (formOfDisease = "primary") : (formOfDisease = "secondary");
+      e.target[5].checked ? (formOfDisease = "wetFormResult") : (formOfDisease = "");
 
       medExams = {
         AMDType: AMDType,
@@ -73,23 +73,23 @@ const MedExam = () => {
       formData.append("file", tomographyFile);
     }
 
-    try {
-      const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
-      const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      if (medExamRes.status === 201 && tomographyRes.status === 201) {
-        navigate({
-          pathname: `/patient-card/${id}`,
-        });
-      }
-    } catch (err) {
-      console.log(err);
-      alert("Произошла ошибка");
-    }
+    // try {
+    //   const medExamRes = await axios.post(`http://localhost:5000/patient/${id}/examinations`, medExams);
+    //   const tomographyRes = await axios.post(`http://localhost:5000/patient/${id}/tomography`, formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   });
+    //
+    //   if (medExamRes.status === 201 && tomographyRes.status === 201) {
+    //     navigate({
+    //       pathname: `/patient-card/${id}`,
+    //     });
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    //   alert("Произошла ошибка");
+    // }
   };
 
   return (
@@ -142,10 +142,77 @@ const MedExam = () => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="visualAcuity">
-          <Form.Label>
+          <p>
             <strong>Острота зрения: </strong>
-          </Form.Label>
-          <Form.Control as="textarea" rows={2} placeholder="Введите данные по остроте зрения" />
+          </p>
+          <Form.Label>OD</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD" />
+          <Form.Label>OS</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="tonometry">
+          <p>
+            <strong>Тонометрия: </strong>
+          </p>
+          <Form.Label>OD</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD, мм.рт.ст." />
+          <Form.Label>OS</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS, мм.рт.ст." />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="refractometry">
+          <p>
+            <strong>Рефрактометрия: </strong>
+          </p>
+          <p>
+            <strong>OD: </strong>
+          </p>
+          <Form.Label>sph</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD, sph" />
+          <Form.Label>cyl</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD, cyl" />
+          <Form.Label>ax</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD, ax" />
+          <p className="mt-2">
+            <strong>OS: </strong>
+          </p>
+          <Form.Label>sph</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS, sph" />
+          <Form.Label>cyl</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS, cyl" />
+          <Form.Label>ax</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS, ax" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="biomicroscopy">
+          <p>
+            <strong>Биомикроскопия: </strong>
+          </p>
+          <Form.Label>OD</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD" />
+          <Form.Label>OS</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="eyeBottom">
+          <p>
+            <strong>Глазное дно: </strong>
+          </p>
+          <Form.Label>OD</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OD" />
+          <Form.Label>OS</Form.Label>
+          <Form.Control as="textarea" rows={1} placeholder="OS" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="additionalExamination">
+          <p>
+            <strong>Дополнительные исследования: </strong>
+          </p>
+          <Form.Label>OD</Form.Label>
+          <Form.Control as="textarea" rows={2} placeholder="OD" />
+          <Form.Label>OS</Form.Label>
+          <Form.Control as="textarea" rows={2} placeholder="OS" />
         </Form.Group>
 
         {additionalFields === "wet" && (
