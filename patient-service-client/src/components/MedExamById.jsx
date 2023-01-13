@@ -183,9 +183,9 @@ const MedExamById = () => {
             <strong>Биомикроскопия: </strong>
           </p>
           <Form.Label>OD</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OD" defaultValue={medExam.biomicroscopyOD} />
+          <Form.Control as="textarea" rows={8} placeholder="Биомикроскопия OD" defaultValue={medExam.biomicroscopyOD} />
           <Form.Label>OS</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OS" defaultValue={medExam.biomicroscopyOS} />
+          <Form.Control as="textarea" rows={8} placeholder="Биомикроскопия OS" defaultValue={medExam.biomicroscopyOS} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="eyeBottom">
@@ -193,9 +193,9 @@ const MedExamById = () => {
             <strong>Глазное дно: </strong>
           </p>
           <Form.Label>OD</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OD" defaultValue={medExam.eyeBottomOD} />
+          <Form.Control as="textarea" rows={6} placeholder="Глазное дно OD" defaultValue={medExam.eyeBottomOD} />
           <Form.Label>OS</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OS" defaultValue={medExam.eyeBottomOS} />
+          <Form.Control as="textarea" rows={6} placeholder="Глазное дно OS" defaultValue={medExam.eyeBottomOS} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="additionalExamination">
@@ -203,9 +203,19 @@ const MedExamById = () => {
             <strong>Дополнительные исследования: </strong>
           </p>
           <Form.Label>OD</Form.Label>
-          <Form.Control as="textarea" rows={2} placeholder="OD" defaultValue={medExam.additionalExamOD} />
+          <Form.Control
+            as="textarea"
+            rows={15}
+            placeholder="Дополнительные исследования OD"
+            defaultValue={medExam.additionalExamOD}
+          />
           <Form.Label>OS</Form.Label>
-          <Form.Control as="textarea" rows={2} placeholder="OS" defaultValue={medExam.additionalExamOS} />
+          <Form.Control
+            as="textarea"
+            rows={15}
+            placeholder="Дополнительные исследования OS"
+            defaultValue={medExam.additionalExamOS}
+          />
         </Form.Group>
 
         {medExam.AMDType === "wet" && (

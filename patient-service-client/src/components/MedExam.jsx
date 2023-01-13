@@ -219,9 +219,9 @@ const MedExam = () => {
             <strong>Биомикроскопия: </strong>
           </p>
           <Form.Label>OD</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OD" />
+          <Form.Control as="textarea" rows={8} placeholder="Биомикроскопия OD" />
           <Form.Label>OS</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OS" />
+          <Form.Control as="textarea" rows={8} placeholder="Биомикроскопия OS" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="eyeBottom">
@@ -229,9 +229,9 @@ const MedExam = () => {
             <strong>Глазное дно: </strong>
           </p>
           <Form.Label>OD</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OD" />
+          <Form.Control as="textarea" rows={6} placeholder="Глазное дно OD" />
           <Form.Label>OS</Form.Label>
-          <Form.Control as="textarea" rows={1} placeholder="OS" />
+          <Form.Control as="textarea" rows={6} placeholder="Глазное дно OS" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="additionalExamination">
@@ -239,9 +239,9 @@ const MedExam = () => {
             <strong>Дополнительные исследования: </strong>
           </p>
           <Form.Label>OD</Form.Label>
-          <Form.Control as="textarea" rows={2} placeholder="OD" />
+          <Form.Control as="textarea" rows={15} placeholder="Дополнительные исследования OD" />
           <Form.Label>OS</Form.Label>
-          <Form.Control as="textarea" rows={2} placeholder="OS" />
+          <Form.Control as="textarea" rows={15} placeholder="Дополнительные исследования OS" />
         </Form.Group>
 
         {additionalFields === "wet" && (
