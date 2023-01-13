@@ -40,8 +40,6 @@ const MedExam = () => {
 
     e.target[0].checked ? (AMDType = "wet") : (AMDType = "dry");
 
-    console.log(e);
-
     if (AMDType === "wet") {
       tomographyFile = e.target[22].files[0];
 
