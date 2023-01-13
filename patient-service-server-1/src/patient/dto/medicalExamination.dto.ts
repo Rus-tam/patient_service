@@ -1,11 +1,57 @@
 import { IsDate, IsString } from "class-validator";
+import { Column } from "typeorm";
 
 export class MedicalExaminationDto {
   @IsString()
   AMDType: string;
 
   @IsString()
-  visualAcuity: string;
+  visualAcuityOD: string;
+
+  @IsString()
+  visualAcuityOS: string;
+
+  @IsString()
+  tonometryOD: string;
+
+  @IsString()
+  tonometryOS: string;
+
+  @IsString()
+  refractometryODsph: string;
+
+  @IsString()
+  refractometryODcyl: string;
+
+  @IsString()
+  refractometryODax: string;
+
+  @IsString()
+  refractometryOSsph: string;
+
+  @IsString()
+  refractometryOScyl: string;
+
+  @IsString()
+  refractometryOSax: string;
+
+  @IsString()
+  biomicroscopyOD: string;
+
+  @IsString()
+  biomicroscopyOS: string;
+
+  @IsString()
+  eyeBottomOD: string;
+
+  @IsString()
+  eyeBottomOS: string;
+
+  @IsString()
+  additionalExamOD: string;
+
+  @IsString()
+  additionalExamOS: string;
 
   @IsDate()
   nextInjectionDate: Date;
