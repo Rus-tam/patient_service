@@ -44,8 +44,6 @@ const PatientCard = () => {
     lastExamination.AMDType = "wet";
   }
 
-  console.log(lastExamination);
-
   // Переадресация на страницу с данными медиц. осмотра
   const navigateToMedExam = (medExamId) => {
     navigate({
@@ -93,85 +91,85 @@ const PatientCard = () => {
           {lastExamination.AMDType === "wet" ? "Влажная" : "Сухая"}
         </p>
       )}
-      <div>
-        <p>
-          <strong>Острота зрения: </strong>
-        </p>
-        <p>
-          <strong>OD: </strong>
-          {lastExamination.visualAcuityOD}
-        </p>
-        <p>
-          <strong>OS: </strong>
-          {lastExamination.visualAcuityOS}
-        </p>
-      </div>
+      {/*<div>*/}
+      {/*  <p>*/}
+      {/*    <strong>Острота зрения: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OD: </strong>*/}
+      {/*    {lastExamination.visualAcuityOD}*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OS: </strong>*/}
+      {/*    {lastExamination.visualAcuityOS}*/}
+      {/*  </p>*/}
+      {/*</div>*/}
 
-      <div>
-        <p>
-          <strong>Тонометрия, мм.рт.ст.: </strong>
-        </p>
-        <p>
-          <strong>OD: </strong>
-          {lastExamination.tonometryOD}
-        </p>
-        <p>
-          <strong>OS: </strong>
-          {lastExamination.tonometryOS}
-        </p>
-      </div>
+      {/*<div>*/}
+      {/*  <p>*/}
+      {/*    <strong>Тонометрия, мм.рт.ст.: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OD: </strong>*/}
+      {/*    {lastExamination.tonometryOD}*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OS: </strong>*/}
+      {/*    {lastExamination.tonometryOS}*/}
+      {/*  </p>*/}
+      {/*</div>*/}
 
-      <div>
-        <p>
-          <strong>Рефрактометрия: </strong>
-        </p>
-        <p>
-          <strong>OD: </strong> {lastExamination.refractometryODsph} sph, {lastExamination.refractometryODcyl} cyl,{" "}
-          {lastExamination.refractometryODax} ax
-        </p>
-        <p>
-          <strong>OS: </strong> {lastExamination.refractometryOSsph} sph, {lastExamination.refractometryOScyl} cyl,{" "}
-          {lastExamination.refractometryOSax} ax
-        </p>
-      </div>
+      {/*<div>*/}
+      {/*  <p>*/}
+      {/*    <strong>Рефрактометрия: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OD: </strong> {lastExamination.refractometryODsph} sph, {lastExamination.refractometryODcyl} cyl,{" "}*/}
+      {/*    {lastExamination.refractometryODax} ax*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OS: </strong> {lastExamination.refractometryOSsph} sph, {lastExamination.refractometryOScyl} cyl,{" "}*/}
+      {/*    {lastExamination.refractometryOSax} ax*/}
+      {/*  </p>*/}
+      {/*</div>*/}
 
-      <div>
-        <p>
-          <strong>Биомикроскопия: </strong>
-        </p>
-        <p>
-          <strong>OD: </strong> {lastExamination.biomicroscopyOD}
-        </p>
-        <p>
-          <strong>OS: </strong> {lastExamination.biomicroscopyOS}
-        </p>
-      </div>
+      {/*<div>*/}
+      {/*  <p>*/}
+      {/*    <strong>Биомикроскопия: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OD: </strong> {lastExamination.biomicroscopyOD}*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OS: </strong> {lastExamination.biomicroscopyOS}*/}
+      {/*  </p>*/}
+      {/*</div>*/}
 
-      <div>
-        <p>
-          <strong>Глазное дно: </strong>
-        </p>
-        <p>
-          <strong>OD: </strong> {lastExamination.eyeBottomOD}
-        </p>
-        <p>
-          <strong>OS: </strong> {lastExamination.eyeBottomOS}
-        </p>
-      </div>
+      {/*<div>*/}
+      {/*  <p>*/}
+      {/*    <strong>Глазное дно: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OD: </strong> {lastExamination.eyeBottomOD}*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OS: </strong> {lastExamination.eyeBottomOS}*/}
+      {/*  </p>*/}
+      {/*</div>*/}
 
-      <div>
-        <p>
-          <strong>Дополнительные исследования: </strong>
-        </p>
-        <p>
-          <strong>OD: </strong>
-        </p>
-        <p>{lastExamination.additionalExamOD}</p>
-        <p>
-          <strong>OS: </strong>
-        </p>
-        <p>{lastExamination.additionalExamOS}</p>
-      </div>
+      {/*<div>*/}
+      {/*  <p>*/}
+      {/*    <strong>Дополнительные исследования: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OD: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>{lastExamination.additionalExamOD}</p>*/}
+      {/*  <p>*/}
+      {/*    <strong>OS: </strong>*/}
+      {/*  </p>*/}
+      {/*  <p>{lastExamination.additionalExamOS}</p>*/}
+      {/*</div>*/}
 
       {lastExamination.AMDType === "wet" && (
         <p>
@@ -189,19 +187,19 @@ const PatientCard = () => {
         <div>
           <p>
             <strong>Форма заболевания: </strong>
-            {lastExamination.formOfDisease === "primary" ? "Первичная" : "Вторичная"}
+            {lastExamination.formOfDisease ? "Исход влажной формы" : "Не является исходом влажной формы"}
           </p>
-          <p>
-            <strong>Данные по ранее проводимой анти-VEGF терапии: </strong> <br />
-            {lastExamination.VEGFTherapyHistory}
-          </p>
+          {/*<p>*/}
+          {/*  <strong>Данные по ранее проводимой анти-VEGF терапии: </strong> <br />*/}
+          {/*  {lastExamination.VEGFTherapyHistory}*/}
+          {/*</p>*/}
         </div>
       )}
 
-      <p>
-        <strong>Результаты осмотра: </strong> <br />
-        {lastExamination.examinationResult}
-      </p>
+      {/*<p>*/}
+      {/*  <strong>Результаты осмотра: </strong> <br />*/}
+      {/*  {lastExamination.examinationResult}*/}
+      {/*</p>*/}
       <Button className="me-3" onClick={() => navigate({ pathname: `/patient/med-examination/${id}` })}>
         Новое обследование
       </Button>

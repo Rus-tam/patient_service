@@ -249,7 +249,8 @@ const MedExamById = () => {
         {medExam.AMDType === "dry" && (
           <div>
             <p>
-              <strong>Форма заболевания: {medExam.formOfDisease === "primary" ? "Первичная" : "Вторичная"}</strong>
+              <strong>Форма заболевания:</strong>{" "}
+              {medExam.formOfDisease ? "Исход влажной формы" : "Не является исходом влажной формы"}{" "}
             </p>
 
             <Form.Group className="mb-3" controlId="VEGFTherapyHistory">
