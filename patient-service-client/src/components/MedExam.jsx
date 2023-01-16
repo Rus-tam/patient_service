@@ -286,6 +286,11 @@ const MedExam = () => {
         </Form.Group>
 
         <div className="d-grid gap-2 pb-3">
+          {additionalFields === "wet" && (
+            <Button variant="success" size="lg">
+              Сформировать приглашение
+            </Button>
+          )}
           <Button variant="primary" type="submit" size="lg">
             Загрузить в базу данных
           </Button>
