@@ -41,7 +41,7 @@ const MedExam = () => {
     e.target[0].checked ? (AMDType = "wet") : (AMDType = "dry");
 
     if (AMDType === "wet") {
-      tomographyFile = e.target[22].files[0];
+      tomographyFile = e.target[24].files[0];
 
       medExams = {
         AMDType: AMDType,
@@ -61,18 +61,18 @@ const MedExam = () => {
         eyeBottomOS: e.target[15].value,
         additionalExamOD: e.target[16].value,
         additionalExamOS: e.target[17].value,
-        nextInjectionDate: moment(e.target[19].value).format("YYYY-MM-DD").toString(),
-        nextInspectionDate: moment(e.target[20].value).format("YYYY-MM-DD").toString(),
+        nextInjectionDate: moment(e.target[19].value).format("YYYY-MM-DD").toString() + " " + e.target[20].value,
+        nextInspectionDate: moment(e.target[21].value).format("YYYY-MM-DD").toString() + " " + e.target[22].value,
         injectionDate: moment(new Date()).format("YYYY-MM-DD HH:MM").toString(),
         drugName: e.target[18].value,
-        examinationResult: e.target[21].value,
+        examinationResult: e.target[23].value,
       };
 
       formData.append("file", tomographyFile);
     } else {
-      tomographyFile = e.target[22].files[0];
+      tomographyFile = e.target[23].files[0];
 
-      e.target[20].checked ? (formOfDisease = true) : (formOfDisease = false);
+      e.target[21].checked ? (formOfDisease = true) : (formOfDisease = false);
 
       medExams = {
         AMDType: AMDType,
@@ -92,11 +92,10 @@ const MedExam = () => {
         eyeBottomOS: e.target[15].value,
         additionalExamOD: e.target[16].value,
         additionalExamOS: e.target[17].value,
-        nextInspectionDate: moment(e.target[18].value).format("YYYY-MM-DD").toString(),
-        drugName: e.target[18].value,
+        nextInspectionDate: moment(e.target[18].value).format("YYYY-MM-DD").toString() + " " + e.target[19].value,
         formOfDisease,
-        examinationResult: e.target[19].value,
-        VEGFTherapyHistory: e.target[21].value,
+        examinationResult: e.target[20].value,
+        VEGFTherapyHistory: e.target[22].value,
       };
 
       formData.append("file", tomographyFile);
@@ -259,6 +258,13 @@ const MedExam = () => {
               </Form.Label>
               <Form.Control type="date" name="nextInjectionDate" placeholder="Дата инъекции" />
             </Form.Group>
+
+            <Form.Group className="mb-3" controlId="nextInjectionTime">
+              <Form.Label>
+                <strong>Время следующей инъекции: </strong>
+              </Form.Label>
+              <Form.Control type="time" name="nextInjectionTime" placeholder="Время инъекции" />
+            </Form.Group>
           </>
         )}
 
@@ -267,6 +273,13 @@ const MedExam = () => {
             <strong>Дата следующего осмотра: </strong>
           </Form.Label>
           <Form.Control type="date" name="nextInspectionDate" placeholder="Дата следующего осмотра" />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="nextInspectionTime">
+          <Form.Label>
+            <strong>Время следующего осмотра: </strong>
+          </Form.Label>
+          <Form.Control type="time" name="nextInspectionTime" placeholder="Время следующего осмотра" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="medicalexam">
