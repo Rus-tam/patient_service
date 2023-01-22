@@ -128,6 +128,7 @@ export class AppService {
       patronymic: medExam.patient.patronymic,
       patientBirthDate: medExam.patient.patientBirthDate,
       phone: medExam.patient.phone,
+      kinsmenPhone: medExam.patient.kinsmenPhone,
       AMDType: medExam.AMDType,
       nextInjectionDate: medExam.nextInjectionDate,
       nextInspectionDate: medExam.nextInspectionDate,

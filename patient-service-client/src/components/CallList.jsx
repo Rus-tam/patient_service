@@ -3,7 +3,6 @@ import NavBar from "./layout/Navbar";
 import moment from "moment";
 import axios from "axios";
 import { Button, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import TableComp from "./layout/Table";
 
 const CallList = () => {
@@ -19,9 +18,10 @@ const CallList = () => {
 
   const sendMessage = async () => {
     const resp = await axios.get("http://localhost:5000/send-message");
-    console.log(resp.status);
     window.location.reload();
   };
+
+  console.log(plusSevenDaysInspectionList);
 
   return (
     <div>
