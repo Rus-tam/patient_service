@@ -108,6 +108,7 @@ export class PatientController {
     @Body() examination: MedicalExaminationDto,
   ): Promise<MedicalExaminationEntity> {
     // const patientCard = await this.patientService.getPatientById(id);
+    console.log(examination);
     const patientCard = await this.patientService.setLastVisit(id);
     return this.medicalExaminationService.createMedicalExamination(examination, patientCard);
   }

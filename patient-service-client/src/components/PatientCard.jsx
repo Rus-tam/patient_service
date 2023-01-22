@@ -91,96 +91,17 @@ const PatientCard = () => {
           {lastExamination.AMDType === "wet" ? "Влажная" : "Сухая"}
         </p>
       )}
-      {/*<div>*/}
-      {/*  <p>*/}
-      {/*    <strong>Острота зрения: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OD: </strong>*/}
-      {/*    {lastExamination.visualAcuityOD}*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OS: </strong>*/}
-      {/*    {lastExamination.visualAcuityOS}*/}
-      {/*  </p>*/}
-      {/*</div>*/}
-
-      {/*<div>*/}
-      {/*  <p>*/}
-      {/*    <strong>Тонометрия, мм.рт.ст.: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OD: </strong>*/}
-      {/*    {lastExamination.tonometryOD}*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OS: </strong>*/}
-      {/*    {lastExamination.tonometryOS}*/}
-      {/*  </p>*/}
-      {/*</div>*/}
-
-      {/*<div>*/}
-      {/*  <p>*/}
-      {/*    <strong>Рефрактометрия: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OD: </strong> {lastExamination.refractometryODsph} sph, {lastExamination.refractometryODcyl} cyl,{" "}*/}
-      {/*    {lastExamination.refractometryODax} ax*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OS: </strong> {lastExamination.refractometryOSsph} sph, {lastExamination.refractometryOScyl} cyl,{" "}*/}
-      {/*    {lastExamination.refractometryOSax} ax*/}
-      {/*  </p>*/}
-      {/*</div>*/}
-
-      {/*<div>*/}
-      {/*  <p>*/}
-      {/*    <strong>Биомикроскопия: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OD: </strong> {lastExamination.biomicroscopyOD}*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OS: </strong> {lastExamination.biomicroscopyOS}*/}
-      {/*  </p>*/}
-      {/*</div>*/}
-
-      {/*<div>*/}
-      {/*  <p>*/}
-      {/*    <strong>Глазное дно: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OD: </strong> {lastExamination.eyeBottomOD}*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OS: </strong> {lastExamination.eyeBottomOS}*/}
-      {/*  </p>*/}
-      {/*</div>*/}
-
-      {/*<div>*/}
-      {/*  <p>*/}
-      {/*    <strong>Дополнительные исследования: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OD: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>{lastExamination.additionalExamOD}</p>*/}
-      {/*  <p>*/}
-      {/*    <strong>OS: </strong>*/}
-      {/*  </p>*/}
-      {/*  <p>{lastExamination.additionalExamOS}</p>*/}
-      {/*</div>*/}
 
       {lastExamination.AMDType === "wet" && (
         <p>
           <strong>Назначенная дата инъекции: </strong>
-          {lastExamination.nextInjectionDate}
+          {lastExamination.nextInjectionDate} {lastExamination.nextInjectionTime}
         </p>
       )}
 
       <p>
         <strong>Назначенная дата осмотра: </strong>
-        {lastExamination.nextInspectionDate}
+        {lastExamination.nextInspectionDate} {lastExamination.nextInspectionTime}
       </p>
 
       {lastExamination.AMDType === "dry" && (
@@ -219,7 +140,7 @@ const PatientCard = () => {
           {patientData.medicalExaminations.map((elem, index) => (
             <tr key={elem.id}>
               <td>{index + 1}</td>
-              <td>{moment(elem.createdAt).format("YYYY-MM-DD HH:MM")}</td>
+              <td>{moment(elem.createdAt).format("YYYY-MM-DD HH:mm")}</td>
               <td>
                 <Link to={{ pathname: `/medexam/${elem.id}` }}>Открыть</Link>
               </td>
@@ -243,7 +164,7 @@ const PatientCard = () => {
               {patientData.medicalExaminations.map((elem, index) => (
                 <tr key={elem.id}>
                   <td>{index + 1}</td>
-                  <td>{moment(elem.injectionDate).format("YYYY-MM-DD HH:MM")}</td>
+                  <td>{moment(elem.injectionDate).format("YYYY-MM-DD HH:mm")}</td>
                   <td>{elem.drugName}</td>
                 </tr>
               ))}

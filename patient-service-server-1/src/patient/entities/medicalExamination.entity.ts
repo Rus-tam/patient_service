@@ -63,8 +63,14 @@ export class MedicalExaminationEntity {
   @Column({ type: "date", nullable: true })
   nextInjectionDate: Date | null;
 
+  @Column({ type: "time", nullable: true })
+  nextInjectionTime: Date | null;
+
   @Column({ type: "date", nullable: true })
   nextInspectionDate: Date | null;
+
+  @Column({ type: "time", nullable: true })
+  nextInspectionTime: Date | null;
 
   @Column({ type: "date", nullable: true })
   injectionDate: Date | null;
