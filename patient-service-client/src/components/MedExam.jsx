@@ -41,7 +41,7 @@ const MedExam = () => {
     e.target[0].checked ? (AMDType = "wet") : (AMDType = "dry");
 
     if (AMDType === "wet") {
-      tomographyFile = e.target[24].files[0];
+      tomographyFile = e.target[25].files[0];
 
       medExams = {
         AMDType: AMDType,
@@ -68,11 +68,14 @@ const MedExam = () => {
         injectionDate: moment(new Date()).format("YYYY-MM-DD HH:mm").toString(),
         drugName: e.target[18].value,
         examinationResult: e.target[23].value,
+        clinicAddress: e.target[24].value,
       };
 
       formData.append("file", tomographyFile);
+
+      window.open(`http://localhost:3000/inviting-form/${id}`, "_blank", "noopener,noreferrer");
     } else {
-      tomographyFile = e.target[23].files[0];
+      tomographyFile = e.target[24].files[0];
 
       e.target[21].checked ? (formOfDisease = true) : (formOfDisease = false);
 
@@ -99,6 +102,7 @@ const MedExam = () => {
         formOfDisease,
         examinationResult: e.target[20].value,
         VEGFTherapyHistory: e.target[22].value,
+        clinicAddress: e.target[23].value,
       };
 
       formData.append("file", tomographyFile);
@@ -294,6 +298,13 @@ const MedExam = () => {
 
         {additionalFields === "dry" && DryAMDFormFragment}
 
+        <Form.Group className="mb-3" controlId="clinicAddress">
+          <Form.Label>
+            <strong>Адрес клиники </strong>
+          </Form.Label>
+          <Form.Control as="textarea" rows={2} placeholder="Введите адрес клиники" />
+        </Form.Group>
+
         <Form.Group controlId="tomography" className="mb-3">
           <Form.Label>
             <strong>Введите файл снимка: </strong>
@@ -302,11 +313,6 @@ const MedExam = () => {
         </Form.Group>
 
         <div className="d-grid gap-2 pb-3">
-          {additionalFields === "wet" && (
-            <Button variant="success" size="lg">
-              Сформировать приглашение
-            </Button>
-          )}
           <Button variant="primary" type="submit" size="lg">
             Загрузить в базу данных
           </Button>

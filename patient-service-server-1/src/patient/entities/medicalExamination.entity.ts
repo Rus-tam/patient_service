@@ -75,6 +75,9 @@ export class MedicalExaminationEntity {
   @Column({ type: "date", nullable: true })
   injectionDate: Date | null;
 
+  @Column({ type: "text" })
+  clinicAddress: string;
+
   @Column({ nullable: true })
   drugName: string | null;
 

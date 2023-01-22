@@ -11,6 +11,7 @@ import MissedPatientsList from "./components/MissedPatientsList";
 import Error from "./components/Error";
 import AllPatients from "./components/AllPatients";
 import PatientCardUpdate from "./components/PatientCardUpdate";
+import InvitingForm from "./components/InvitingForm";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/seven-days-list" element={<CallList />}></Route>
           <Route path="/missed-list" element={<MissedPatientsList />}></Route>
           <Route path="/all-patients" element={<AllPatients />}></Route>
+          <Route path="/inviting-form/:id" element={<InvitingForm />}></Route>
 
           <Route path="*" element={<Error />}></Route>
         </Routes>

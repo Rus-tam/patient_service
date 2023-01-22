@@ -65,6 +65,9 @@ export class MedicalExaminationDto {
   @IsString()
   nextInspectionTime: string;
 
+  @IsString()
+  clinicAddress: string;
+
   @IsDate()
   injectionDate: Date;
 
