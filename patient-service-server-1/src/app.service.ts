@@ -97,15 +97,21 @@ export class AppService {
     let patronymic: string = "";
     let phone: string = "";
     let FIO: string = "";
+    let time: string = "";
 
     patientInfo.forEach((patient) => {
       phone += patient.phone + ",";
       FIO += `${patient.name}` + " " + `${patient.patronymic}` + ",";
+      patient.nextInspectionTime
+        ? (time += `${patient.nextInspectionTime}` + ",")
+        : (time += `${patient.nextInjectionTime}` + ",");
     });
+
+    console.log("Patient Info", patientInfo);
 
     const FIOtotal = Buffer.from(FIO, "utf-8").toString();
 
-    const process: any = spawn("python", ["./src/python/script.py", FIOtotal, phone, date]);
+    const process: any = spawn("python", ["./src/python/script.py", FIOtotal, phone, date, time]);
 
     process.stdout.on("data", (data) => {
       console.log("typescript data", data.toString());
@@ -132,6 +138,8 @@ export class AppService {
       AMDType: medExam.AMDType,
       nextInjectionDate: medExam.nextInjectionDate,
       nextInspectionDate: medExam.nextInspectionDate,
+      nextInjectionTime: medExam.nextInjectionTime,
+      nextInspectionTime: medExam.nextInspectionTime,
     };
   }
 }

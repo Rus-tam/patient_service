@@ -21,8 +21,6 @@ const CallList = () => {
     window.location.reload();
   };
 
-  console.log(plusSevenDaysInspectionList);
-
   return (
     <div>
       <NavBar />

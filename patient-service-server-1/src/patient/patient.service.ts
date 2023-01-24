@@ -31,8 +31,6 @@ export class PatientService {
       throw new ConflictException(PatientError.DuplicatePatientData);
     }
 
-    console.log("newCard", cardData);
-
     const newCard = this.patientRepository.create({
       name: cardData.name.toUpperCase(),
       surname: cardData.surname.toUpperCase(),
