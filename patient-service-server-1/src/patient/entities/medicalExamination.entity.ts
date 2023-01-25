@@ -79,6 +79,9 @@ export class MedicalExaminationEntity {
   clinicAddress: string;
 
   @Column({ nullable: true })
+  phoneForInformation: string;
+
+  @Column({ nullable: true })
   drugName: string | null;
 
   @Column({ type: "text" })

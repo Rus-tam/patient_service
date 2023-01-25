@@ -68,6 +68,9 @@ export class MedicalExaminationDto {
   @IsString()
   clinicAddress: string;
 
+  @IsString()
+  phoneForInformation: string;
+
   @IsDate()
   injectionDate: Date;
 

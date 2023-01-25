@@ -92,9 +92,6 @@ export class AppService {
   }
 
   async sendMessageToWhatsapp(patientInfo: MinPatientInfoInterface[], date: string) {
-    let name: string = "";
-    let surname: string = "";
-    let patronymic: string = "";
     let phone: string = "";
     let FIO: string = "";
     let time: string = "";
@@ -106,8 +103,6 @@ export class AppService {
         ? (time += `${patient.nextInspectionTime}` + ",")
         : (time += `${patient.nextInjectionTime}` + ",");
     });
-
-    console.log("Patient Info", patientInfo);
 
     const FIOtotal = Buffer.from(FIO, "utf-8").toString();
 

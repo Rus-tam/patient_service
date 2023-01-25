@@ -30,10 +30,4 @@ export class AppController {
     const plusSevenDays = moment(new Date()).add(7, "days").format("DD-MM-YYYY").toString();
     await this.appService.sendMessageToWhatsapp(patients, plusSevenDays);
   }
-
-  // @Post("playground")
-  // async sendMessage(@Body() patientInfo: MinPatientInfoInterface[]) {
-  //   const date: string = moment(new Date()).format("DD-MM-YYYY").toString();
-  //   await this.appService.sendMessageToWhatsapp(patientInfo, date);
-  // }
 }
