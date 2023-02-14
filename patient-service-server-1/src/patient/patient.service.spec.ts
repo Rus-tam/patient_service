@@ -10,7 +10,7 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-describe("PostgreSQL", () => {
+describe("Patient Service", () => {
   let app: INestApplication;
   let connection: Connection;
   let patientRepository: Repository<PatientEntity>;
@@ -50,5 +50,30 @@ describe("PostgreSQL", () => {
 
   it("should be defined", () => {
     expect(patientRepository).toBeDefined();
+  });
+
+  it("should create patient card", async () => {
+    const card = patientRepository.create({
+      name: "Иван",
+      surname: "Иванов",
+      patronymic: "Иванович",
+      patientBirthDate: "22.10.1980",
+      phone: "+79856784312",
+      kinsmenPhone: "+79864531234",
+      medicalExaminations: [],
+      tomography: [],
+      createdAt: new Date(),
+      updatedAt: null,
+      lastVisit: null,
+    });
+
+    await patientRepository.save(card);
+    const savedCard = await patientRepository.findOne({
+      where: { name: "Иван", surname: "Иванов" },
+    });
+
+    expect(savedCard).toBeDefined();
+    expect(savedCard.name).toEqual("Иван");
+    expect(savedCard.surname).toEqual("Иванов");
   });
 });
