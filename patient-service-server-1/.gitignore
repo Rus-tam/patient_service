@@ -2,6 +2,7 @@
 /dist
 /node_modules
 .env
+.env.test
 start-server.bat
 Текстовый документ.txt
 PyWhatKit_DB.txt

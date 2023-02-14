@@ -8,7 +8,7 @@ import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { TomographyEntity } from "./entities/tomography.entity";
 import * as dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: ".env.test" });
 
 describe("Patient Service", () => {
   let app: INestApplication;
@@ -22,11 +22,11 @@ describe("Patient Service", () => {
       imports: [
         TypeOrmModule.forRoot({
           type: "postgres",
-          host: process.env.DB_HOST,
-          port: Number(process.env.DB_PORT),
-          username: process.env.DB_USERNAME,
-          password: process.env.DB_PASSWORD,
-          database: process.env.DB_NAME,
+          host: process.env.TEST_DB_HOST,
+          port: Number(process.env.TEST_DB_PORT),
+          username: process.env.TEST_DB_USERNAME,
+          password: process.env.TEST_DB_PASSWORD,
+          database: process.env.TEST_DB_NAME,
           entities: [PatientEntity, MedicalExaminationEntity, TomographyEntity],
           synchronize: true,
         }),
@@ -75,5 +75,27 @@ describe("Patient Service", () => {
     expect(savedCard).toBeDefined();
     expect(savedCard.name).toEqual("Иван");
     expect(savedCard.surname).toEqual("Иванов");
+  });
+
+  it("should update patient card", async () => {
+    const patientCard = await patientRepository.findOne({
+      where: { surname: "Иванов" },
+    });
+    const id = patientCard.id;
+    const update = {
+      name: "Петр",
+      surname: "Иванов",
+      patronymic: "Иванович",
+      patientBirthDate: "22.10.1980",
+      phone: "+79856784312",
+      kinsmenPhone: "+79864531234",
+    };
+
+    await patientRepository.update(id, update);
+
+    const updatedCard = await patientRepository.findOneBy({ id });
+
+    expect(updatedCard).toBeDefined();
+    expect(updatedCard.name).toEqual("Петр");
   });
 });
