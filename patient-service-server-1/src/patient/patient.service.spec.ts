@@ -1,12 +1,14 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { INestApplication } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConflictException, INestApplication } from "@nestjs/common";
+import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
 import { Connection, Repository } from "typeorm";
 import { AppModule } from "../app.module";
 import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { TomographyEntity } from "./entities/tomography.entity";
 import * as dotenv from "dotenv";
+import { PatientService } from "./patient.service";
+import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 
 dotenv.config({ path: ".env.test" });
 
@@ -139,5 +141,66 @@ describe("PG", () => {
     const patientCard = await patientRepository.findOneBy({ id });
 
     expect(patientCard).toBeNull();
+  });
+});
+
+describe("PatientService", () => {
+  let patientService: PatientService;
+  let patientRepository: Repository<PatientEntity>;
+
+  const mockPatientRepository = {
+    find: jest.fn(),
+    findOne: jest.fn(),
+    create: jest.fn(),
+    save: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+  };
+
+  beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+      providers: [
+        PatientService,
+        {
+          provide: getRepositoryToken(PatientEntity),
+          useValue: mockPatientRepository,
+        },
+      ],
+    }).compile();
+
+    patientService = moduleRef.get<PatientService>(PatientService);
+    patientRepository = moduleRef.get<Repository<PatientEntity>>(getRepositoryToken(PatientEntity));
+  });
+
+  describe("createPatientCard", () => {
+    it("should create a new patient card", async () => {
+      const createPatientCardDto: CreatePatientCardDto = {
+        name: "John",
+        surname: "Doe",
+        patronymic: "Smith",
+        patientBirthDate: new Date("1990-01-01"),
+        phone: "1234567890",
+        kinsmenPhone: "0987654321",
+      };
+
+      const patient = new PatientEntity();
+      patient.name = createPatientCardDto.name;
+      patient.surname = createPatientCardDto.surname;
+      patient.patronymic = createPatientCardDto.patronymic;
+      patient.patientBirthDate = createPatientCardDto.patientBirthDate;
+      patient.phone = createPatientCardDto.phone;
+      patient.kinsmenPhone = createPatientCardDto.kinsmenPhone;
+      patient.createdAt = new Date();
+      patient.updatedAt = null;
+      patient.lastVisit = null;
+
+      mockPatientRepository.find.mockResolvedValue([]);
+
+      mockPatientRepository.create.mockReturnValue(patient);
+      mockPatientRepository.save.mockResolvedValue(patient);
+
+      const result = await patientService.createPatientCard(createPatientCardDto);
+      expect(result).toEqual(patient);
+    });
   });
 });
