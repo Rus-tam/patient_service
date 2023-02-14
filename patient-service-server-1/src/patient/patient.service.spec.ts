@@ -7,11 +7,10 @@ import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { TomographyEntity } from "./entities/tomography.entity";
 import * as dotenv from "dotenv";
-import exp from "constants";
 
 dotenv.config({ path: ".env.test" });
 
-describe("Patient Service", () => {
+describe("PG", () => {
   let app: INestApplication;
   let connection: Connection;
   let patientRepository: Repository<PatientEntity>;
@@ -111,9 +110,20 @@ describe("Patient Service", () => {
 
   it("should find all patient cards wit min info", async () => {
     const patientCards = await patientRepository.find();
-    console.log(patientCards);
 
     expect(patientCards.length).toBeGreaterThan(0);
     expect(patientCards[0].medicalExaminations).not.toBeDefined();
+  });
+
+  it("should find patient card by id", async () => {
+    const id = 1;
+    const patientCard = await patientRepository.findOne({
+      where: { id },
+      relations: ["medicalExaminations", "tomography"],
+    });
+
+    expect(patientCard).toBeDefined();
+    expect(patientCard.medicalExaminations).toBeDefined();
+    expect(patientCard.tomography).toBeDefined();
   });
 });
