@@ -7,6 +7,7 @@ import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { TomographyEntity } from "./entities/tomography.entity";
 import * as dotenv from "dotenv";
+import exp from "constants";
 
 dotenv.config({ path: ".env.test" });
 
@@ -69,7 +70,7 @@ describe("Patient Service", () => {
 
     await patientRepository.save(card);
     const savedCard = await patientRepository.findOne({
-      where: { name: "Иван", surname: "Иванов" },
+      where: { surname: "Иванов" },
     });
 
     expect(savedCard).toBeDefined();
@@ -97,5 +98,22 @@ describe("Patient Service", () => {
 
     expect(updatedCard).toBeDefined();
     expect(updatedCard.name).toEqual("Петр");
+  });
+
+  it("should find all patients cards", async () => {
+    const patientCards = await patientRepository.find({
+      relations: ["medicalExaminations"],
+    });
+
+    expect(patientCards.length).toBeGreaterThan(0);
+    expect(patientCards[0].medicalExaminations).toBeDefined();
+  });
+
+  it("should find all patient cards wit min info", async () => {
+    const patientCards = await patientRepository.find();
+    console.log(patientCards);
+
+    expect(patientCards.length).toBeGreaterThan(0);
+    expect(patientCards[0].medicalExaminations).not.toBeDefined();
   });
 });
