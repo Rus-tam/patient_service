@@ -16,6 +16,15 @@ describe("PG", () => {
   let patientRepository: Repository<PatientEntity>;
   let medicalExaminationRepository: Repository<MedicalExaminationEntity>;
   let tomographyRepository: Repository<TomographyEntity>;
+  let id: number;
+
+  beforeEach(async () => {
+    const card = await patientRepository.findOne({
+      where: { name: "Иван", surname: "Иванов" },
+    });
+
+    card.id !== undefined ? (id = card.id) : null;
+  });
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -69,7 +78,7 @@ describe("PG", () => {
 
     await patientRepository.save(card);
     const savedCard = await patientRepository.findOne({
-      where: { surname: "Иванов" },
+      where: { name: "Иван", surname: "Иванов" },
     });
 
     expect(savedCard).toBeDefined();
@@ -79,7 +88,7 @@ describe("PG", () => {
 
   it("should update patient card", async () => {
     const patientCard = await patientRepository.findOne({
-      where: { surname: "Иванов" },
+      where: { name: "Иван", surname: "Иванов" },
     });
     const id = patientCard.id;
     const update = {
@@ -92,7 +101,6 @@ describe("PG", () => {
     };
 
     await patientRepository.update(id, update);
-
     const updatedCard = await patientRepository.findOneBy({ id });
 
     expect(updatedCard).toBeDefined();
@@ -116,7 +124,6 @@ describe("PG", () => {
   });
 
   it("should find patient card by id", async () => {
-    const id = 1;
     const patientCard = await patientRepository.findOne({
       where: { id },
       relations: ["medicalExaminations", "tomography"],
@@ -125,5 +132,12 @@ describe("PG", () => {
     expect(patientCard).toBeDefined();
     expect(patientCard.medicalExaminations).toBeDefined();
     expect(patientCard.tomography).toBeDefined();
+  });
+
+  it("should delete patient by id", async () => {
+    await patientRepository.delete({ id });
+    const patientCard = await patientRepository.findOneBy({ id });
+
+    expect(patientCard).toBeNull();
   });
 });
