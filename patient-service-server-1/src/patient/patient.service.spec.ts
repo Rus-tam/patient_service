@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ConflictException, INestApplication } from "@nestjs/common";
 import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
-import { Connection, Repository } from "typeorm";
+import { Connection, Repository, UpdateResult } from "typeorm";
 import { AppModule } from "../app.module";
 import { PatientEntity } from "./entities/patient.entity";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
@@ -89,10 +89,6 @@ describe("PG", () => {
   });
 
   it("should update patient card", async () => {
-    const patientCard = await patientRepository.findOne({
-      where: { name: "Иван", surname: "Иванов" },
-    });
-    const id = patientCard.id;
     const update = {
       name: "Петр",
       surname: "Иванов",
@@ -144,6 +140,7 @@ describe("PG", () => {
   });
 });
 
+// Patient service
 describe("PatientService", () => {
   let patientService: PatientService;
   let patientRepository: Repository<PatientEntity>;
@@ -174,7 +171,7 @@ describe("PatientService", () => {
 
   describe("createPatientCard", () => {
     it("should create a new patient card", async () => {
-      const createPatientCardDto: CreatePatientCardDto = {
+      const createPatientCard: CreatePatientCardDto = {
         name: "John",
         surname: "Doe",
         patronymic: "Smith",
@@ -184,12 +181,12 @@ describe("PatientService", () => {
       };
 
       const patient = new PatientEntity();
-      patient.name = createPatientCardDto.name;
-      patient.surname = createPatientCardDto.surname;
-      patient.patronymic = createPatientCardDto.patronymic;
-      patient.patientBirthDate = createPatientCardDto.patientBirthDate;
-      patient.phone = createPatientCardDto.phone;
-      patient.kinsmenPhone = createPatientCardDto.kinsmenPhone;
+      patient.name = createPatientCard.name;
+      patient.surname = createPatientCard.surname;
+      patient.patronymic = createPatientCard.patronymic;
+      patient.patientBirthDate = createPatientCard.patientBirthDate;
+      patient.phone = createPatientCard.phone;
+      patient.kinsmenPhone = createPatientCard.kinsmenPhone;
       patient.createdAt = new Date();
       patient.updatedAt = null;
       patient.lastVisit = null;
@@ -199,8 +196,58 @@ describe("PatientService", () => {
       mockPatientRepository.create.mockReturnValue(patient);
       mockPatientRepository.save.mockResolvedValue(patient);
 
-      const result = await patientService.createPatientCard(createPatientCardDto);
+      const result = await patientService.createPatientCard(createPatientCard);
       expect(result).toEqual(patient);
+    });
+  });
+
+  describe("updatePatientCard", () => {
+    it("should update patient card", async () => {
+      const patientCard: PatientEntity = {
+        id: 1,
+        name: "John",
+        surname: "Doe",
+        patronymic: "Smith",
+        patientBirthDate: new Date("10-10-1980"),
+        phone: "+78905678904",
+        kinsmenPhone: "+7980987675423",
+        createdAt: new Date(),
+        medicalExaminations: [],
+        tomography: [],
+        updatedAt: null,
+        lastVisit: null,
+        deletedAt: null,
+      };
+      const updatedPatientCard: PatientEntity = {
+        id: 1,
+        name: "Will",
+        surname: "Doe",
+        patronymic: "Smith",
+        patientBirthDate: new Date("10-10-1980"),
+        phone: "+78906785645",
+        kinsmenPhone: "+78976543423",
+        createdAt: new Date(),
+        medicalExaminations: [],
+        tomography: [],
+        updatedAt: null,
+        lastVisit: null,
+        deletedAt: null,
+      };
+      const update: CreatePatientCardDto = {
+        name: "Will",
+        surname: "Doe",
+        patronymic: "Smith",
+        patientBirthDate: new Date("10-10-1980"),
+        phone: "+78906785645",
+        kinsmenPhone: "+78976543423",
+      };
+
+      mockPatientRepository.update.mockResolvedValue(UpdateResult);
+      mockPatientRepository.findOne.mockReturnValue(updatedPatientCard);
+      await patientService.updatePatientCard(patientCard.id, update);
+      const result = await patientService.getPatientById(patientCard.id);
+
+      expect(result).toEqual(updatedPatientCard);
     });
   });
 });
