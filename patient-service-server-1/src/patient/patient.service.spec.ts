@@ -272,4 +272,42 @@ describe("PatientService", () => {
       );
     });
   });
+
+  describe("getAllPatientsCardsMin", () => {
+    it("should return all patients cards with min information", async () => {
+      const mockMinPatientsCards = [
+        {
+          id: 1,
+          name: "John",
+          surname: "Doe",
+          patronymic: "Smith",
+          patientBirthDate: new Date("10-10-1980"),
+          phone: "+78905678904",
+          kinsmenPhone: "+7980987675423",
+          createdAt: new Date(),
+          updatedAt: null,
+          lastVisit: null,
+          deletedAt: null,
+        },
+        {
+          id: 2,
+          name: "John",
+          surname: "Doe",
+          patronymic: "Smith",
+          patientBirthDate: new Date("10-10-1980"),
+          phone: "+78905678904",
+          kinsmenPhone: "+7980987675423",
+          createdAt: new Date(),
+          updatedAt: null,
+          lastVisit: null,
+          deletedAt: null,
+        },
+      ];
+      mockPatientRepository.find.mockReturnValue(mockMinPatientsCards);
+
+      const result = await patientService.getAllPatientsCardsMin();
+
+      expect(result).toEqual(mockMinPatientsCards);
+    });
+  });
 });
