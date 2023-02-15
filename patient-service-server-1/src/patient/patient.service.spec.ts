@@ -11,6 +11,7 @@ import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
 import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
+import * as moment from "moment";
 
 dotenv.config({ path: ".env.test" });
 
@@ -363,6 +364,39 @@ describe("PatientService", () => {
       expect(mockPatientRepository.find).toHaveBeenCalledWith({
         where: { surname: "DOE" },
       });
+    });
+  });
+
+  describe("getPatientById", () => {
+    it("should get patient card by id", async () => {
+      const id = 1;
+      mockPatientRepository.findOne.mockReturnValue(patientCard);
+      const result = await patientService.getPatientById(id);
+      expect(result).toEqual(patientCard);
+    });
+  });
+
+  describe("setLastVisit", () => {
+    it("should set last visit to patient card", async () => {
+      const patientId = 1;
+      const patient = {
+        id: patientId,
+        lastVisit: moment("2022-02-20", "YYYY-MM-DD").toDate(),
+      };
+
+      // Mock the patient repository's findOne and save methods
+      patientRepository.findOne = jest.fn().mockResolvedValue(patient);
+      patientRepository.save = jest.fn().mockResolvedValue(patient);
+
+      // Call the method being tested
+      const updatedPatient = await patientService.setLastVisit(patientId);
+
+      expect(patientRepository.findOne).toHaveBeenCalledWith({
+        where: { id: patientId },
+      });
+      expect(updatedPatient.lastVisit).toEqual(expect.any(Date));
+      expect(patientRepository.save).toHaveBeenCalledWith(updatedPatient);
+      expect(updatedPatient).toEqual(patient);
     });
   });
 });
