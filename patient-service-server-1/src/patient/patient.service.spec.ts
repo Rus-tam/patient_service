@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ConflictException, INestApplication } from "@nestjs/common";
+import { ConflictException, INestApplication, NotFoundException } from "@nestjs/common";
 import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
 import { Connection, Repository, UpdateResult } from "typeorm";
 import { AppModule } from "../app.module";
@@ -9,6 +9,7 @@ import { TomographyEntity } from "./entities/tomography.entity";
 import * as dotenv from "dotenv";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
+import { PatientError } from "../errors/patient.error";
 
 dotenv.config({ path: ".env.test" });
 
@@ -141,6 +142,21 @@ describe("PG", () => {
 });
 
 // Patient service
+const patientCard: PatientEntity = {
+  id: 1,
+  name: "John",
+  surname: "Doe",
+  patronymic: "Smith",
+  patientBirthDate: new Date("10-10-1980"),
+  phone: "+78905678904",
+  kinsmenPhone: "+7980987675423",
+  createdAt: new Date(),
+  medicalExaminations: [],
+  tomography: [],
+  updatedAt: null,
+  lastVisit: null,
+  deletedAt: null,
+};
 describe("PatientService", () => {
   let patientService: PatientService;
   let patientRepository: Repository<PatientEntity>;
@@ -203,21 +219,6 @@ describe("PatientService", () => {
 
   describe("updatePatientCard", () => {
     it("should update patient card", async () => {
-      const patientCard: PatientEntity = {
-        id: 1,
-        name: "John",
-        surname: "Doe",
-        patronymic: "Smith",
-        patientBirthDate: new Date("10-10-1980"),
-        phone: "+78905678904",
-        kinsmenPhone: "+7980987675423",
-        createdAt: new Date(),
-        medicalExaminations: [],
-        tomography: [],
-        updatedAt: null,
-        lastVisit: null,
-        deletedAt: null,
-      };
       const updatedPatientCard: PatientEntity = {
         id: 1,
         name: "Will",
@@ -248,6 +249,27 @@ describe("PatientService", () => {
       const result = await patientService.getPatientById(patientCard.id);
 
       expect(result).toEqual(updatedPatientCard);
+    });
+  });
+
+  describe("getAllPatientCards", () => {
+    it("should get all patients cards", async () => {
+      const mockPatientCards: PatientEntity[] = [patientCard, patientCard];
+
+      mockPatientRepository.find.mockReturnValue(mockPatientCards);
+
+      const result = await patientService.getAllPatientCards();
+
+      expect(result).toEqual(mockPatientCards);
+      expect(result[0].medicalExaminations).toBeDefined();
+    });
+
+    it("should throw a NotFoundException if there are no patient cards in database", async () => {
+      mockPatientRepository.find.mockResolvedValue([]);
+
+      await expect(patientService.getAllPatientCards()).rejects.toThrowError(
+        new NotFoundException(PatientError.NotFound),
+      );
     });
   });
 });
