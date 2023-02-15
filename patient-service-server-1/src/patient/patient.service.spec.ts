@@ -10,6 +10,7 @@ import * as dotenv from "dotenv";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
+import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 
 dotenv.config({ path: ".env.test" });
 
@@ -308,6 +309,60 @@ describe("PatientService", () => {
       const result = await patientService.getAllPatientsCardsMin();
 
       expect(result).toEqual(mockMinPatientsCards);
+    });
+  });
+
+  describe("getPatientBySurname", () => {
+    it("shoult get patient card with min info by surname", async () => {
+      const surname = "Doe";
+
+      const mockPatients = [
+        {
+          id: 1,
+          name: "John",
+          surname: "Doe",
+          patronymic: "Smith",
+          patientBirthDate: new Date("1990-01-01"),
+          phone: "123-456-7890",
+        },
+        {
+          id: 2,
+          name: "Jane",
+          surname: "Doe",
+          patronymic: "Johnson",
+          patientBirthDate: new Date("1992-03-15"),
+          phone: "555-555-1212",
+        },
+      ];
+
+      mockPatientRepository.find.mockResolvedValueOnce(mockPatients);
+
+      const expected = [
+        {
+          id: 1,
+          name: "John",
+          surname: "Doe",
+          patronymic: "Smith",
+          patientBirthDate: new Date("1990-01-01"),
+          phone: "123-456-7890",
+        },
+        {
+          id: 2,
+          name: "Jane",
+          surname: "Doe",
+          patronymic: "Johnson",
+          patientBirthDate: new Date("1992-03-15"),
+          phone: "555-555-1212",
+        },
+      ];
+
+      const result = await patientService.getPatientBySurname(surname);
+
+      expect(result).toEqual(expected);
+      expect(mockPatientRepository.find).toHaveBeenCalledTimes(1);
+      expect(mockPatientRepository.find).toHaveBeenCalledWith({
+        where: { surname: "DOE" },
+      });
     });
   });
 });
