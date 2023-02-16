@@ -399,4 +399,15 @@ describe("PatientService", () => {
       expect(updatedPatient).toEqual(patient);
     });
   });
+
+  describe("deletePatient", () => {
+    it("should delete patient card by id", async () => {
+      const id = 1;
+      const deleteSpy = jest.spyOn(patientRepository, "delete").mockResolvedValueOnce(undefined);
+
+      await patientService.deletePatient(id);
+
+      expect(deleteSpy).toHaveBeenCalledWith({ id });
+    });
+  });
 });
