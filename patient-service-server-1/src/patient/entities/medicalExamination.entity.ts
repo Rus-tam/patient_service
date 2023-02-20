@@ -64,13 +64,13 @@ export class MedicalExaminationEntity {
   nextInjectionDate: Date | null;
 
   @Column({ type: "time", nullable: true })
-  nextInjectionTime: Date | null;
+  nextInjectionTime: Date | string | null;
 
   @Column({ type: "date", nullable: true })
   nextInspectionDate: Date | null;
 
   @Column({ type: "time", nullable: true })
-  nextInspectionTime: Date | null;
+  nextInspectionTime: Date | string | null;
 
   @Column({ type: "date", nullable: true })
   injectionDate: Date | null;

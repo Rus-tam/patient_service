@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { ConflictException, INestApplication, NotFoundException } from "@nestjs/common";
+import { INestApplication, NotFoundException } from "@nestjs/common";
 import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
 import { Connection, Repository, UpdateResult } from "typeorm";
 import { AppModule } from "../app.module";
@@ -10,7 +10,6 @@ import * as dotenv from "dotenv";
 import { PatientService } from "./patient.service";
 import { CreatePatientCardDto } from "./dto/createPatientCard.dto";
 import { PatientError } from "../errors/patient.error";
-import { MinPatientInfoInterface } from "../interfaces/minPatientInfo.interface";
 import * as moment from "moment";
 
 dotenv.config({ path: ".env.test" });
