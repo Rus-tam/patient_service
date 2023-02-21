@@ -166,4 +166,15 @@ describe("MedicalExaminationService", () => {
       expect(result).toEqual(newMedicalExamination);
     });
   });
+
+  describe("getAllMedExaminations", function () {
+    it("should find all medical examinations", async () => {
+      const mockMedExaminations = [medicalExamination, medicalExamination];
+
+      mockMedicalExaminationRepository.find.mockReturnValue(mockMedExaminations);
+      const result = await medicalExaminationService.getAllMedExaminations();
+
+      expect(result).toEqual(mockMedExaminations);
+    });
+  });
 });
