@@ -177,4 +177,20 @@ describe("MedicalExaminationService", () => {
       expect(result).toEqual(mockMedExaminations);
     });
   });
+
+  describe("findByDates", () => {
+    it("should find medical examination by dates", async () => {
+      const nextInspectionDate = new Date("2023-04-04");
+      const nextInjectionDate = new Date("2023-04-04");
+
+      mockMedicalExaminationRepository.find.mockReturnValue(medicalExamination);
+
+      const result = await medicalExaminationService.findByDates(
+        nextInjectionDate,
+        nextInspectionDate,
+      );
+
+      expect(result).toEqual(medicalExamination);
+    });
+  });
 });
