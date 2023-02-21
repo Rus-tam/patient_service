@@ -20,7 +20,7 @@ export class AppService {
     const AMDDry: MinPatientInfoInterface[] = [];
     const currentDate = moment(new Date()).format("DD.MM.YYYY");
     const plusSevenDays = moment(currentDate, "DD.MM.YYYY").add(7, "days").toDate();
-    const injections = await this.medicalExaminationsService.findBynextInjectionDate(plusSevenDays);
+    const injections = await this.medicalExaminationsService.findByNextInjectionDate(plusSevenDays);
     const inspections = await this.medicalExaminationsService.findByNextInspectionDate(
       plusSevenDays,
     );

@@ -193,4 +193,16 @@ describe("MedicalExaminationService", () => {
       expect(result).toEqual(medicalExamination);
     });
   });
+
+  describe("findByNextInjectionDate", () => {
+    it("should find medical examination by next injection date", async () => {
+      const nextInjection = new Date("2023-04-04");
+
+      mockMedicalExaminationRepository.find.mockReturnValue(medicalExamination);
+
+      const result = await medicalExaminationService.findByNextInjectionDate(nextInjection);
+
+      expect(result).toEqual(medicalExamination);
+    });
+  });
 });

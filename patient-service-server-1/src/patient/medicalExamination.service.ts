@@ -65,7 +65,7 @@ export class MedicalExaminationService {
     });
   }
 
-  async findBynextInjectionDate(nextInjectionDate: Date): Promise<MedicalExaminationEntity[]> {
+  async findByNextInjectionDate(nextInjectionDate: Date): Promise<MedicalExaminationEntity[]> {
     return this.medicalExaminationRepository.find({
       relations: ["patient"],
       where: [{ nextInjectionDate }],

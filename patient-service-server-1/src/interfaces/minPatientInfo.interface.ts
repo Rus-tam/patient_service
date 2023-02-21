@@ -9,6 +9,6 @@ export interface MinPatientInfoInterface {
   AMDType?: string;
   nextInjectionDate?: Date;
   nextInspectionDate?: Date;
-  nextInjectionTime?: Date;
-  nextInspectionTime?: Date;
+  nextInjectionTime?: Date | string;
+  nextInspectionTime?: Date | string;
 }
