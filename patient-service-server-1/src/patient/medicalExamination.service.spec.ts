@@ -6,6 +6,7 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { MedicalExaminationService } from "./medicalExamination.service";
 import { MedicalExaminationEntity } from "./entities/medicalExamination.entity";
 import { MedicalExaminationDto } from "./dto/medicalExamination.dto";
+import exp from "constants";
 
 const patientCard: PatientEntity = {
   id: 1,
@@ -170,10 +171,8 @@ describe("MedicalExaminationService", () => {
   describe("getAllMedExaminations", function () {
     it("should find all medical examinations", async () => {
       const mockMedExaminations = [medicalExamination, medicalExamination];
-
       mockMedicalExaminationRepository.find.mockReturnValue(mockMedExaminations);
       const result = await medicalExaminationService.getAllMedExaminations();
-
       expect(result).toEqual(mockMedExaminations);
     });
   });
@@ -182,9 +181,7 @@ describe("MedicalExaminationService", () => {
     it("should find medical examination by dates", async () => {
       const nextInspectionDate = new Date("2023-04-04");
       const nextInjectionDate = new Date("2023-04-04");
-
       mockMedicalExaminationRepository.find.mockReturnValue(medicalExamination);
-
       const result = await medicalExaminationService.findByDates(
         nextInjectionDate,
         nextInspectionDate,
@@ -197,12 +194,31 @@ describe("MedicalExaminationService", () => {
   describe("findByNextInjectionDate", () => {
     it("should find medical examination by next injection date", async () => {
       const nextInjection = new Date("2023-04-04");
-
       mockMedicalExaminationRepository.find.mockReturnValue(medicalExamination);
-
       const result = await medicalExaminationService.findByNextInjectionDate(nextInjection);
-
       expect(result).toEqual(medicalExamination);
     });
+  });
+
+  describe("findByNextInspectionDate", () => {
+    it("should find medical examination by next inspection date", async () => {
+      const nextInspection = new Date("2023-04-04");
+      mockMedicalExaminationRepository.find.mockReturnValue(medicalExamination);
+      const result = await medicalExaminationService.findByNextInspectionDate(nextInspection);
+      expect(result).toEqual(medicalExamination);
+    });
+  });
+
+  describe("findByCurrentDates", function () {
+    it("should find medical examination by current date", async () => {
+      const currentDate = new Date("2023-04-04");
+      mockMedicalExaminationRepository.find.mockReturnValue(medicalExamination);
+      const result = await medicalExaminationService.findByCurrentDates(currentDate);
+      expect(result).toEqual(medicalExamination);
+    });
+  });
+
+  describe("updateMedExam", () => {
+    it("should update medical examination", async () => {});
   });
 });
